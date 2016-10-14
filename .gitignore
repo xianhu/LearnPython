@@ -1,0 +1,16 @@
+# Created by .ignore support plugin (hsz.mobi)
+*.[oa]
+*.py[co]
+*.exe
+*.log
+*.out
+*.dat
+*.txt
+*.temp
+*.png
+.*
+
+test/
+data/
+build/
+captcha.jpeg
