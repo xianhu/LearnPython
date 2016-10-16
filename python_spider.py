@@ -23,7 +23,7 @@ response = urllib.request.urlopen(request, timeout=10)
 # 发送数据，即在urlopen()或者Request()中添加data参数
 url = "http://localhost/login.php"
 data = urllib.parse.urlencode({"act": "login", "email": "xianhu@qq.com", "password": "123456"})
-request1 = urllib.request.Request(url, data)			# POST方法
+request1 = urllib.request.Request(url, data)            # POST方法
 request2 = urllib.request.Request(url + "?%s" % data)   # GET方法
 response = urllib.request.urlopen(request, timeout=10)
 
@@ -31,7 +31,7 @@ response = urllib.request.urlopen(request, timeout=10)
 # 发送Header，即在urlopen()或者Request()中添加headers参数
 headers = {"User-Agent": "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)"}
 request = urllib.request.Request(url, data=data, headers=headers)   # 参数中添加header参数
-request.add_header("Referer", "http://www.baidu.com")		        # add_header函数，另一种添加header的方法
+request.add_header("Referer", "http://www.baidu.com")               # add_header函数，另一种添加header的方法
 response = urllib.request.urlopen(request, timeout=10)
 
 
@@ -49,10 +49,10 @@ except urllib.error.HTTPError as e:
 # 使用代理，以防止IP被封或IP次数受限：
 proxy = urllib.request.ProxyHandler({"http": "111.123.76.12:8080"})
 
-opener = urllib.request.build_opener(proxy)				# 利用代理创建opener实例（OpenerDirector实例）
-response = opener.open("https://www.baidu.com/")		# 直接利用opener实例打开url
+opener = urllib.request.build_opener(proxy)         # 利用代理创建opener实例（OpenerDirector实例）
+response = opener.open("https://www.baidu.com/")    # 直接利用opener实例打开url
 
-urllib.request.install_opener(opener)					# 安装、设置全局的opener，然后利用urlopen打开url
+urllib.request.install_opener(opener)               # 安装、设置全局的opener，然后利用urlopen打开url
 response = urllib.request.urlopen("https://www.baidu.com/")
 
 
