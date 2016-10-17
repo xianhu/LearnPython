@@ -2,7 +2,7 @@
 
 """类型和运算----类型和运算----类型和运算----类型和运算----类型和运算----类型和运算----类型和运算----类型和运算----类型和运算----类型和运算----类型和运算"""
 
-#-- 寻求帮助：
+#-- 寻求帮助:
     dir(obj)            # 简单的列出对象obj所包含的方法名称，返回一个字符串列表
     help(obj.func)      # 查询obj.func的具体介绍和用法
     
@@ -13,21 +13,21 @@
         
 #-- Python数据类型：哈希类型、不可哈希类型
     # 哈希类型，即在原地不能改变的变量类型，不可变类型。可利用hash函数查看其hash值，也可以作为字典的key
-        "数字类型：int, float, decimal.Decimal, fractions.Fraction, complex"
-        "字符串类型：str, bytes"
-        "元组：tuple"
-        "冻结集合：frozenset"
-        "布尔类型：True, False"
-        "None"
+    "数字类型：int, float, decimal.Decimal, fractions.Fraction, complex"
+    "字符串类型：str, bytes"
+    "元组：tuple"
+    "冻结集合：frozenset"
+    "布尔类型：True, False"
+    "None"
     # 不可hash类型：原地可变类型：list、dict和set。它们不可以作为字典的key。
-    
+
 #-- 数字常量
     1234, -1234, 0, 999999999                    # 整数
     1.23, 1., 3.14e-10, 4E210, 4.0e+210          # 浮点数
     0o177, 0x9ff, 0X9FF, 0b101010                # 八进制、十六进制、二进制数字
     3+4j, 3.0+4.0j, 3J                           # 复数常量，也可以用complex(real, image)来创建
     hex(I), oct(I), bin(I)                       # 将十进制数转化为十六进制、八进制、二进制表示的“字符串”
-    int(str, base)                               # 将字符串转化为整数，base为进制数
+    int(string, base)                            # 将字符串转化为整数，base为进制数
     # 2.x中，有两种整数类型：一般整数（32位）和长整数（无穷精度）。可以用l或L结尾，迫使一般整数成为长整数
     float('inf'), float('-inf'), float('nan')    # 无穷大, 无穷小, 非数
     
@@ -44,8 +44,8 @@
     x<<y, x>>y                                   # 位操作：x左移、右移y位
     +, -, *, /, //, %, **                        # 真除法、floor除法：返回不大于真除法结果的整数值、取余、幂运算
     -x, +x, ~x                                   # 一元减法、识别、按位求补（取反）
-    x[i], x[i:j:k], x(……)                        # 索引、分片、调用
-    int(3.14),  float(3)                         # 强制类型转换
+    x[i], x[i:j:k]                               # 索引、分片、调用
+    int(3.14), float(3)                          # 强制类型转换
     
 #-- 整数可以利用bit_length函数测试所占的位数
     a = 1;       a.bit_length()    # 1
@@ -76,18 +76,18 @@
     set支持x in set, len(set), for x in set。
     set不记录元素位置或者插入点, 因此不支持indexing, slicing, 或其它类序列的操作
     """
-    s = set([3,5,9,10])                                  # 创建一个数值集合，返回{3, 5, 9, 10}
-    t = set("Hello")                                     # 创建一个唯一字符的集合返回{}
-    a = t | s          t.union(s)                        # t 和 s的并集
-    b = t & s         t.intersection(s)                  # t 和 s的交集
-    c = t – s         t.difference(s)                    # 求差集（项在t中, 但不在s中）  
-    d = t ^ s          t.symmetric_difference(s)         # 对称差集（项在t或s中, 但不会同时出现在二者中）
-    t.add('x')         t.remove('H')                     # 增加/删除一个item
-     t.update([10,37,42])                                # 利用[......]更新s集合
-    x in s,  x not in s                                  # 集合中是否存在某个值
-    s.issubset(t)   s.issuperset(t)   s.copy()  s.discard(x)  s.clear()
-    {x**2 for x in [1, 2, 3, 4]}                         # 集合解析，结果：{16, 1, 4, 9}
-    {x for x in 'spam'}                                  # 集合解析，结果：{'a', 'p', 's', 'm'}
+    s = set([3,5,9,10])                          # 创建一个数值集合，返回{3, 5, 9, 10}
+    t = set("Hello")                             # 创建一个唯一字符的集合返回{}
+    a = t | s;    t.union(s)                     # t 和 s的并集
+    b = t & s;    t.intersection(s)              # t 和 s的交集
+    c = t – s;    t.difference(s)                # 求差集（项在t中, 但不在s中）
+    d = t ^ s;    t.symmetric_difference(s)      # 对称差集（项在t或s中, 但不会同时出现在二者中）
+    t.add('x');   t.remove('H')                  # 增加/删除一个item
+    t.update([10,37,42])                         # 利用[......]更新s集合
+    x in s,  x not in s                          # 集合中是否存在某个值
+    s.issubset(t); s.issuperset(t); s.copy(); s.discard(x); s.clear()
+    {x**2 for x in [1, 2, 3, 4]}                 # 集合解析，结果：{16, 1, 4, 9}
+    {x for x in 'spam'}                          # 集合解析，结果：{'a', 'p', 's', 'm'}
     
 #-- 集合frozenset，不可变对象
     """
@@ -103,7 +103,7 @@
 #-- 布尔类型bool
     type(True)                   # 返回<class 'bool'>
     isinstance(False, int)       # bool类型属于整形，所以返回True
-    True == 1, True is 1         # 输出(True, False)
+    True == 1; True is 1         # 输出(True, False)
     
 #-- 动态类型简介
     """
@@ -135,20 +135,21 @@
     ','.join(['a', 'b', 'c'])               # 字符串输出，结果：a,b,c
     
 #-- 内置str处理函数：
-    str.upper()  str.lower()  str.swapcase()  str.capitalize()  str.title()     # 全部大写，全部小写、大小写转换，首字母大写，每个单词的首字母都大写
-    str.ljust(width)                        # 获取固定长度，右对齐，左边不够用空格补齐
-    str.rjust(width)                        # 获取固定长度，左对齐，右边不够用空格补齐
-    str.center(width)                       # 获取固定长度，中间对齐，两边不够用空格补齐
-    str.zfill(width)                        # 获取固定长度，右对齐，左边不足用0补齐
-    str.find('t',start,end)                 # 查找字符串，可以指定起始及结束位置搜索
-    str.rfind('t')                          # 从右边开始查找字符串
-    str.count('t')                          # 查找字符串出现的次数
+    str1 = "stringobject"
+    str1.upper(); str1.lower(); str1.swapcase(); str1.capitalize(); str1.title()        # 全部大写，全部小写、大小写转换，首字母大写，每个单词的首字母都大写
+    str1.ljust(width)                       # 获取固定长度，右对齐，左边不够用空格补齐
+    str1.rjust(width)                       # 获取固定长度，左对齐，右边不够用空格补齐
+    str1.center(width)                      # 获取固定长度，中间对齐，两边不够用空格补齐
+    str1.zfill(width)                       # 获取固定长度，右对齐，左边不足用0补齐
+    str1.find('t',start,end)                # 查找字符串，可以指定起始及结束位置搜索
+    str1.rfind('t')                         # 从右边开始查找字符串
+    str1.count('t')                         # 查找字符串出现的次数
     #上面所有方法都可用index代替，不同的是使用index查找不到会抛异常，而find返回-1
-    str.replace('old','new')                # 替换函数，替换old为new，参数中可以指定maxReplaceTimes，即替换指定次数的old为new
-    str.strip()  str.lstrip()  str.rstrip()  str.strip('d')  str.lstrip('d')  str.rstrip('d')
-    str.startswith('start')                 # 是否以start开头
-    str.endswith('end')                     # 是否以end结尾
-    str.isalnum()  str.isalpha()  str.isdigit()   str.islower()   str.isupper()  # 判断字符串是否全为字符、数字、大写、小写
+    str1.replace('old','new')               # 替换函数，替换old为new，参数中可以指定maxReplaceTimes，即替换指定次数的old为new
+    str1.strip(); str1.lstrip(); str1.rstrip(); str1.strip('d'); str1.lstrip('d'); str1.rstrip('d')
+    str1.startswith('start')                # 是否以start开头
+    str1.endswith('end')                    # 是否以end结尾
+    str1.isalnum(); str1.isalpha(); str1.isdigit(); str1.islower(); str1.isupper()      # 判断字符串是否全为字符、数字、大写、小写
 
 #-- 三重引号编写多行字符串块，并且在代码折行处嵌入换行字符\n
     mantra = """hello world
@@ -157,20 +158,20 @@
     # mantra为"""hello world \n hello python \n hello my friend"""
     
 #-- 索引和分片：
-    S[0], S[len(S) – 1], S[-1]               # 索引
-    S[1:3], S[1:], S[:-1], S[1:10:2]         # 分片，第三个参数指定步长
+    S[0], S[len(S)–1], S[-1]                # 索引
+    S[1:3], S[1:], S[:-1], S[1:10:2]        # 分片，第三个参数指定步长
 
 #-- 字符串转换工具：
-    int('42'),  str(42)                      # 返回(42, '42')
-    float('4.13'),  str(4.13)                # 返回(4.13, '4.13')
-    ord('s'),  chr(115)                      # 返回(115, 's')
-    int('1001', 2)                           # 将字符串作为二进制数字，转化为数字，返回13
-    bin(13), oct(13), hex(13)                # 将整数转化为二进制/八进制/十六进制字符串，返回('1001', '0o15', '0xd')
+    int('42'), str(42)                      # 返回(42, '42')
+    float('4.13'), str(4.13)                # 返回(4.13, '4.13')
+    ord('s'), chr(115)                      # 返回(115, 's')
+    int('1001', 2)                          # 将字符串作为二进制数字，转化为数字，返回13
+    bin(13), oct(13), hex(13)               # 将整数转化为二进制/八进制/十六进制字符串，返回('1001', '0o15', '0xd')
     
 #-- 另类字符串连接
-    name = "wang" "hong"                     #单行，name = "wanghong"
+    name = "wang" "hong"                    # 单行，name = "wanghong"
     name = "wang" \
-            "hong"                           #多行，name = "wanghong"
+            "hong"                          # 多行，name = "wanghong"
 
 #-- Python中的字符串格式化实现1--字符串格式化表达式
     """
@@ -249,7 +250,7 @@
     D = dict(name = 'tom', age = 12)                  # {'age': 12, 'name': 'tom'}
     D = dict([('name', 'tom'), ('age', 12)])          # {'age': 12, 'name': 'tom'}
     D = dict(zip(['name', 'age'], ['tom', 12]))       # {'age': 12, 'name': 'tom'}
-    D.keys()    D.values()    D.items()               # 字典键、值以及键值对
+    D.keys(); D.values(); D.items()                   # 字典键、值以及键值对
     D.get(key, default)                               # get函数
     D.update(D_other)                                 # 合并字典，如果存在相同的键值，D_other的数据会覆盖掉D的数据
     D.pop(key, [D])                                   # 删除字典中键值为key的项，返回键值为key的值，如果不存在，返回默认值D，否则异常
@@ -356,14 +357,14 @@
 
 #-- Python的while语句或者for语句可以带else语句 当然也可以带continue/break/pass语句
     while a > 1:
-        ......
+        anything
     else:
-        ......
+        anything
     # else语句会在循环结束后执行，除非在循环中执行了break，同样的还有for语句
     for i in range(5):
-        ......
+        anything
     else:
-        ......
+        anything
 
 #-- for循环的元组赋值
     for (a, b) in [(1, 2), (3, 4)]:                   # 最简单的赋值
@@ -405,8 +406,8 @@
         class document
         """
         print()
-    print(func.__doc__)         # 输出函数文档字符串
-    print(Employee.__doc__)     # 输出类的文档字符串
+    print(func.__doc__)                # 输出函数文档字符串
+    print(Employee.__doc__)            # 输出类的文档字符串
     
 #-- 命名惯例:
     """
@@ -499,24 +500,24 @@
     
 #-- 函数参数，不可变参数通过“值”传递，可变参数通过“引用”传递
     def f(a, b, c): print(a, b, c)
-    f(1, 2, 3)                                   # 参数位置匹配
-    f(1, c = 3, b = 2)                           # 参数关键字匹配
-    def f(a, b = 1, c = 2): print(a, b, c)
-    f(1)                                         # 默认参数匹配
-    f(1, 2)                                      # 默认参数匹配
-    f(a = 1, c = 3)                              # 关键字参数和默认参数的混合
+    f(1, 2, 3)                         # 参数位置匹配
+    f(1, c = 3, b = 2)                 # 参数关键字匹配
+    def f(a, b=1, c=2): print(a, b, c)
+    f(1)                               # 默认参数匹配
+    f(1, 2)                            # 默认参数匹配
+    f(a = 1, c = 3)                    # 关键字参数和默认参数的混合
     # Keyword-Only参数:出现在*args之后 必须用关键字进行匹配
-    def keyOnly(a, *b, c): print('')             # c就为keyword-only匹配 必须使用关键字c = value匹配
-    def keyOnly(a, *, b, c): ......              # b c为keyword-only匹配 必须使用关键字匹配
-    def keyOnly(a, *, b = 1): ......             # b有默认值 或者省略 或者使用关键字参数b = value
+    def keyOnly(a, *b, c): print('')   # c就为keyword-only匹配 必须使用关键字c = value匹配
+    def keyOnly(a, *, b, c): ......    # b c为keyword-only匹配 必须使用关键字匹配
+    def keyOnly(a, *, b = 1): ......   # b有默认值 或者省略 或者使用关键字参数b = value
 
 #-- 可变参数匹配: * 和 **
-    def f(*args): print(args)                    # 在元组中收集不匹配的位置参数
-    f(1, 2, 3)                                   # 输出(1, 2, 3)
-    def f(**args): print(args)                   # 在字典中收集不匹配的关键字参数
-    f(a = 1, b = 2)                              # 输出{'a':1, 'b':2}
-    def f(a, *b **c): print(a, b, c)             # 两者混合使用
-    f(1, 2, 3, x = 4, y = 5)                     # 输出1, (2, 3), {'x':4, 'y':5}
+    def f(*args): print(args)          # 在元组中收集不匹配的位置参数
+    f(1, 2, 3)                         # 输出(1, 2, 3)
+    def f(**args): print(args)         # 在字典中收集不匹配的关键字参数
+    f(a = 1, b = 2)                    # 输出{'a':1, 'b':2}
+    def f(a, *b **c): print(a, b, c)   # 两者混合使用
+    f(1, 2, 3, x=4, y=5)               # 输出1, (2, 3), {'x':4, 'y':5}
     
 #-- 函数调用时的参数解包: * 和 ** 分别解包元组和字典
     func(1, *(2, 3))  <==>  func(1, 2, 3)
@@ -525,23 +526,23 @@
     
 #-- 函数属性:(自己定义的)函数可以添加属性
     def func():.....
-    func.count = 1                      # 自定义函数添加属性
-    print.count = 1                     # Error 内置函数不可以添加属性
+    func.count = 1                     # 自定义函数添加属性
+    print.count = 1                    # Error 内置函数不可以添加属性
     
 #-- 函数注解: 编写在def头部行 主要用于说明参数范围、参数类型、返回值类型等
     def func(a:'spam', b:(1, 10), c:float) -> int :
         print(a, b, c)
-    func.__annotations__                # {'c':<class 'float'>, 'b':(1, 10), 'a':'spam', 'return':<class 'int'>}
+    func.__annotations__               # {'c':<class 'float'>, 'b':(1, 10), 'a':'spam', 'return':<class 'int'>}
     # 编写注解的同时 还是可以使用函数默认值 并且注解的位置位于=号的前边
     def func(a:'spam'='a', b:(1, 10)=2, c:float=3) -> int :
         print(a, b, c)
 
 #-- 匿名函数:lambda
-    f = lambda x, y, z : x + y + z      # 普通匿名函数，使用方法f(1, 2, 3)
-    f = lambda x = 1, y = 1: x + y      # 带默认参数的lambda函数
-    def action(x):                      # 嵌套lambda函数
+    f = lambda x, y, z : x + y + z     # 普通匿名函数，使用方法f(1, 2, 3)
+    f = lambda x = 1, y = 1: x + y     # 带默认参数的lambda函数
+    def action(x):                     # 嵌套lambda函数
         return (lambda y : x + y)
-    f = lambda: a if xxx() else b       # 无参数的lambda函数，使用方法f()
+    f = lambda: a if xxx() else b      # 无参数的lambda函数，使用方法f()
 
 #-- lambda函数与map filter reduce函数的结合
     list(map((lambda x: x + 1), [1, 2, 3]))              # [2, 3, 4]
@@ -552,61 +553,61 @@
 #-- 生成器函数:yield VS return
     def gensquare(N):
         for i in range(N):
-            yield i** 2                 # 状态挂起 可以恢复到此时的状态
-    for i in gensquare(5):              # 使用方法
-        print(i, end = ' ')             # [0, 1, 4, 9, 16]
-    x = gensquare(2)                    # x是一个生成对象
-    next(x)                             # 等同于x.__next__() 返回0
-    next(x)                             # 等同于x.__next__() 返回1
-    next(x)                             # 等同于x.__next__() 抛出异常StopIteration
+            yield i** 2                # 状态挂起 可以恢复到此时的状态
+    for i in gensquare(5):             # 使用方法
+        print(i, end = ' ')            # [0, 1, 4, 9, 16]
+    x = gensquare(2)                   # x是一个生成对象
+    next(x)                            # 等同于x.__next__() 返回0
+    next(x)                            # 等同于x.__next__() 返回1
+    next(x)                            # 等同于x.__next__() 抛出异常StopIteration
     
 #-- 生成器表达式:小括号进行列表解析
-    G = (x ** 2 for x in range(3))      # 使用小括号可以创建所需结果的生成器generator object
-    next(G), next(G), next(G)           # 和上述中的生成器函数的返回值一致
+    G = (x ** 2 for x in range(3))     # 使用小括号可以创建所需结果的生成器generator object
+    next(G), next(G), next(G)          # 和上述中的生成器函数的返回值一致
     #（1）生成器(生成器函数/生成器表达式)是单个迭代对象
     G = (x ** 2 for x in range(4))
-    I1 = iter(G)                        # 这里实际上iter(G) = G
-    next(I1)                            # 输出0
-    next(G)                             # 输出1
-    next(I1)                            # 输出4
+    I1 = iter(G)                       # 这里实际上iter(G) = G
+    next(I1)                           # 输出0
+    next(G)                            # 输出1
+    next(I1)                           # 输出4
     #（2）生成器不保留迭代后的结果
     gen = (i for i in range(4))
-    2 in gen                            # 返回True
-    3 in gen                            # 返回True
-    1 in gen                            # 返回False，其实检测2的时候，1已经就不在生成器中了，即1已经被迭代过了，同理2、3也不在了
+    2 in gen                           # 返回True
+    3 in gen                           # 返回True
+    1 in gen                           # 返回False，其实检测2的时候，1已经就不在生成器中了，即1已经被迭代过了，同理2、3也不在了
 
 #-- 本地变量是静态检测的
-    X = 22                              # 全局变量X的声明和定义
+    X = 22                             # 全局变量X的声明和定义
     def test():
-        print(X)                        # 如果没有下一语句 则该句合法 打印全局变量X
-        X = 88                          # 这一语句使得上一语句非法 因为它使得X变成了本地变量 上一句变成了打印一个未定义的本地变量(局部变量)
-        if False:                       # 即使这样的语句 也会把print语句视为非法语句 因为:
-            X = 88                      # Python会无视if语句而仍然声明了局部变量X
-    def test():                         # 改进
-        global X                        # 声明变量X为全局变量
-        print(X)                        # 打印全局变量X
-        X = 88                          # 改变全局变量X
+        print(X)                       # 如果没有下一语句 则该句合法 打印全局变量X
+        X = 88                         # 这一语句使得上一语句非法 因为它使得X变成了本地变量 上一句变成了打印一个未定义的本地变量(局部变量)
+        if False:                      # 即使这样的语句 也会把print语句视为非法语句 因为:
+            X = 88                     # Python会无视if语句而仍然声明了局部变量X
+    def test():                        # 改进
+        global X                       # 声明变量X为全局变量
+        print(X)                       # 打印全局变量X
+        X = 88                         # 改变全局变量X
         
 #-- 函数的默认值是在函数定义的时候实例化的 而不是在调用的时候 例子:
-    def foo(numbers=[]):                # 这里的[]是可变的
+    def foo(numbers=[]):               # 这里的[]是可变的
         numbers.append(9)    
         print(numbers)
-    foo()                               # first time, like before, [9]
-    foo()                               # second time, not like before, [9, 9]
-    foo()                               # third time, not like before too, [9, 9, 9]
+    foo()                              # first time, like before, [9]
+    foo()                              # second time, not like before, [9, 9]
+    foo()                              # third time, not like before too, [9, 9, 9]
     # 改进:
     def foo(numbers=None):
         if numbers is None: numbers = []
         numbers.append(9)
         print(numbers)
     # 另外一个例子 参数的默认值为不可变的:
-    def foo(count=0):                   # 这里的0是数字, 是不可变的
+    def foo(count=0):                  # 这里的0是数字, 是不可变的
         count += 1
         print(count)
-    foo()                               # 输出1
-    foo()                               # 还是输出1
-    foo(3)                              # 输出4
-    foo()                               # 还是输出1
+    foo()                              # 输出1
+    foo()                              # 还是输出1
+    foo(3)                             # 输出4
+    foo()                              # 还是输出1
     
 
 """函数例子----函数例子----函数例子----函数例子----函数例子----函数例子----函数例子----函数例子----函数例子----函数例子----函数例子----函数例子----函数例子"""
@@ -823,12 +824,12 @@
             def action(self): pass
         x = Super()                     # 返回 TypeError: Can't instantiate abstract class Super with abstract methods action
     
-#-- # OOP和继承: "is - a"的关系
+#-- # OOP和继承: "is-a"的关系
     class A(B):
         pass
     a = A()
     isinstance(a, B)                    # 返回True, A是B的子类 a也是B的一种
-    # OOP和组合: "has- a"的关系
+    # OOP和组合: "has-a"的关系
     pass
     # OOP和委托: "包装"对象 在Python中委托通常是以"__getattr__"钩子方法实现的, 这个方法会拦截对不存在属性的读取
     # 包装类(或者称为代理类)可以使用__getattr__把任意读取转发给被包装的对象
@@ -1308,5 +1309,4 @@
     lists[0].append(3)                                     # 结果为[[3], [], []]
     lists[1].append(6)                                     # 结果为[[3], [6], []]
     lists[2].append(9)                                     # 结果为[[3], [6], [9]]
-    lists = [[[] for j in range(4)] for i in range(3)]
-    lists                                                  # 3行4列，且每一个元素为[]
+    lists = [[[] for j in range(4)] for i in range(3)]     # 3行4列，且每一个元素为[]
