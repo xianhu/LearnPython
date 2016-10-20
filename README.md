@@ -8,7 +8,7 @@
 
 ### python_spider.py: 一个很“水”的Python爬虫入门代码文件
 
-### python_spider.py: “史上最详细”的Python模拟登录新浪微博流程
+### python_weibo.py: “史上最详细”的Python模拟登录新浪微博流程
 ============================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request
