@@ -1,5 +1,9 @@
 # _*_ coding: utf-8 _*_
 
+"""
+python_weibo.py by xianhu
+"""
+
 import re
 import rsa
 import ssl
