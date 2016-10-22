@@ -191,7 +191,7 @@
     # 普通调用
     "{0}, {1} and {2}".format('spam', 'ham', 'eggs')            # 基于位置的调用
     "{motto} and {pork}".format(motto = 'spam', pork = 'ham')   # 基于Key的调用
-    "{motto} and {0}".format(ham, motto = 'spam')               # 混合调用
+    "{motto} and {0}".format('ham', motto = 'spam')               # 混合调用
     # 添加键 属性 偏移量 (import sys)
     "my {1[spam]} runs {0.platform}".format(sys, {'spam':'laptop'})                 # 基于位置的键和属性
     "{config[spam]} {sys.platform}".format(sys = sys, config = {'spam':'laptop'})   # 基于Key的键和属性
