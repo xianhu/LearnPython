@@ -11,6 +11,8 @@
 ### python_weibo.py: “史上最详细”的Python模拟登录新浪微博流程
 
 ### python_lda.py: 玩点高级的--带你入门Topic模型LDA（小改进+附源码）
+
+### python_sqlalchemy: SQLAlchemy入门代码文档
 ============================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request

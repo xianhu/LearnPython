@@ -137,8 +137,8 @@
 #-- 内置str处理函数：
     str1 = "stringobject"
     str1.upper(); str1.lower(); str1.swapcase(); str1.capitalize(); str1.title()        # 全部大写，全部小写、大小写转换，首字母大写，每个单词的首字母都大写
-    str1.ljust(width)                       # 获取固定长度，右对齐，左边不够用空格补齐
-    str1.rjust(width)                       # 获取固定长度，左对齐，右边不够用空格补齐
+    str1.ljust(width)                       # 获取固定长度，左对齐，右边不够用空格补齐
+    str1.rjust(width)                       # 获取固定长度，右对齐，左边不够用空格补齐
     str1.center(width)                      # 获取固定长度，中间对齐，两边不够用空格补齐
     str1.zfill(width)                       # 获取固定长度，右对齐，左边不足用0补齐
     str1.find('t',start,end)                # 查找字符串，可以指定起始及结束位置搜索
