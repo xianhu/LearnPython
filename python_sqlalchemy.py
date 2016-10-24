@@ -11,7 +11,7 @@ import sqlalchemy.ext.declarative
 # 利用数据库字符串构造engine, echo为True将打印所有的sql语句
 engine = sqlalchemy.create_engine("mysql+pymysql://username:password@hostname/dbname", encoding="utf8", echo=True)
 
-
+# tset
 """
 # 利用engine创建connection,这里不需要close操作
 with engine.connect() as conn:
@@ -43,6 +43,10 @@ Base = sqlalchemy.ext.declarative.declarative_base()
 # 构建模型User
 class User(Base):
     __tablename__ = "User"
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8'
+    }
     id = sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True)
     name = sqlalchemy.Column("name", sqlalchemy.String(50), default="", unique=True)
     age = sqlalchemy.Column("age", sqlalchemy.Integer, nullable=False)
