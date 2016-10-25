@@ -12,7 +12,7 @@
 
 ### python_lda.py: 玩点高级的--带你入门Topic模型LDA（小改进+附源码）
 
-### python_sqlalchemy: 作为一个Pythoner，不会SQLAlchemy都不好意思跟同行打招呼！
+### python_sqlalchemy.py: 作为一个Pythoner，不会SQLAlchemy都不好意思跟同行打招呼！
 ============================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request
