@@ -183,3 +183,5 @@ try:
 except Exception as excep:
     session.rollback()
     raise
+
+session.close()
