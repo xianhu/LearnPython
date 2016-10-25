@@ -55,10 +55,13 @@ class User(BaseModel):
     age = sqlalchemy.Column("age", sqlalchemy.Integer, default=0)
 
     # 添加角色id外键(关联到Role.id属性)
-    role_id = sqlalchemy.Column("role_id", sqlalchemy.Integer, sqlalchemy.ForeignKey("Roles.id"), default=-1)
+    role_id = sqlalchemy.Column("role_id", sqlalchemy.Integer, sqlalchemy.ForeignKey("Roles.id"))
 
     # 添加关系属性(关联到role_id外键上)
-    role = sqlalchemy.orm.relationship("Role", foreign_keys="User.role_id", backref="User_role")
+    role = sqlalchemy.orm.relationship("Role", foreign_keys="User.role_id")
+
+    # 添加关系属性(关联到role_id外键上),如果使用了这种方式,Role模型中的users可以省略
+    # role = sqlalchemy.orm.relationship("Role", foreign_keys="User.role_id", backref=sqlalchemy.orm.backref("users"))
 
 
 # 构建数据模型Role
@@ -74,7 +77,7 @@ class Role(BaseModel):
     name = sqlalchemy.Column("name", sqlalchemy.String(50), unique=True)
 
     # 添加关系属性(关联到User.role_id属性上)
-    users = sqlalchemy.orm.relationship("User", foreign_keys='User.role_id', backref="Role_users")
+    users = sqlalchemy.orm.relationship("User", foreign_keys="User.role_id")
 
 
 # 利用Session对象连接数据库
