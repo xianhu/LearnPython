@@ -54,13 +54,13 @@ class User(BaseModel):
     name = sqlalchemy.Column("name", sqlalchemy.String(50), nullable=False)
     age = sqlalchemy.Column("age", sqlalchemy.Integer, default=0)
 
-    # 添加角色id外键(关联到Role.id属性)
+    # 添加角色id外键,关联到表Roles的id属性
     role_id = sqlalchemy.Column("role_id", sqlalchemy.Integer, sqlalchemy.ForeignKey("Roles.id"))
 
-    # 添加关系属性(关联到role_id外键上)
+    # 添加关系属性,关联到本实例的role_id外键属性上
     role = sqlalchemy.orm.relationship("Role", foreign_keys="User.role_id")
 
-    # 添加关系属性(关联到role_id外键上),如果使用了这种方式,Role模型中的users可以省略
+    # 添加关系属性,关联到本实例的role_id外键属性上,如果使用了这种方式,Role模型中的users可以省略
     # role = sqlalchemy.orm.relationship("Role", foreign_keys="User.role_id", backref=sqlalchemy.orm.backref("users"))
 
 
@@ -76,7 +76,7 @@ class Role(BaseModel):
     id = sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True)
     name = sqlalchemy.Column("name", sqlalchemy.String(50), unique=True)
 
-    # 添加关系属性(关联到User.role_id属性上)
+    # 添加关系属性,关联到实例User的role_id外键属性上
     users = sqlalchemy.orm.relationship("User", foreign_keys="User.role_id")
 
 
