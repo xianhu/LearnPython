@@ -17,6 +17,8 @@
 ### python_oneline.py: 几个小例子告诉你, 一行Python代码能干哪些事
 
 ### python_requests.py: Python中最好用的爬虫库Requests代码实例
+
+### python_functional.py: Python进阶: 函数式编程实例（附代码）
 ============================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request
