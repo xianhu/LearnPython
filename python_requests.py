@@ -51,6 +51,7 @@ print(r.raw.read(10))       # "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\x03"
 with open("test", "wb") as fd:
     for chunk in r.iter_content(chunk_size=256):
         fd.write(chunk)
+# 注意: 设置的timeout对connect和read起作用. 但一旦和服务器建立连接, r.content或r.iter_content就处于一个read的状态, 不受timeout影响
 
 # 定制请求头: 一个字典
 headers = {"user-agent": "my-app/0.0.1"}
@@ -114,26 +115,26 @@ cookies = dict(cookies_are="working")
 r = requests.get("http://httpbin.org/cookies", cookies=cookies)
 print(r.text)
 
-# 会话对象: 会话对象让你能够跨请求保持某些参数, 它也会在同一个 Session 实例发出的所有请求之间保持cookie
+# 会话对象: 会话对象让你能够跨请求保持某些参数, 它也会在同一个Session实例发出的所有请求之间保持cookie
 s = requests.Session()
 s.get("http://httpbin.org/cookies/set/sessioncookie/123456789")
-r = s.get("http://httpbin.org/cookies")
-print(r.text)                                   # '{"cookies": {"sessioncookie": "123456789"}}'
+s.get("http://httpbin.org/cookies")
+for cookie in s.cookies:
+    print(cookie)
 
 # 会话也可用来为请求方法提供缺省数据, 这是通过为会话对象的属性提供数据来实现的
-s = requests.Session()
 s.auth = ("user", "pass")
 s.headers.update({"x-test": "true"})
-s.get("http://httpbin.org/headers", headers={"x-test2": "true"})    # both "x-test" and "x-test2" are sent
+s.get("http://httpbin.org/headers", headers={"x-test2": "true"})        # both "x-test" and "x-test2" are sent
 
-# 不过需要注意, 就算使用了会话, 方法级别的参数也不会被跨请求保持
-# 下面的例子只会和第一个请求发送cookie, 而非第二个
-s = requests.Session()
-r = s.get("http://httpbin.org/cookies", cookies={"from-my": "browser"})
-print(r.text)                                   # '{"cookies": {"from-my": "browser"}}'
-r = s.get("http://httpbin.org/cookies")
-print(r.text)                                   # '{"cookies": {}}'
-# 如果你要手动为会话添加 cookie, 就是用 Cookie utility 函数来操纵Session.cookies
+# 不过需要注意, 就算使用了会话, 方法级别的参数也不会被跨请求保持, 下面的例子只会给第一个请求发送cookie
+s.get("http://httpbin.org/cookies", cookies={"from-my": "browser"})     # 带有cookie
+s.get("http://httpbin.org/cookies")                                     # 不带cookie
+
+# 如果你要手动为会话添加cookie, 就是用Cookie utility函数来操纵Session.cookies
+requests.utils.add_dict_to_cookiejar(s.cookies, {"cookie_key": "cookie_value"})
+for cookie in s.cookies:
+    print(cookie)
 
 # 会话还可以用作前后文管理器
 with requests.Session() as s:
@@ -214,3 +215,6 @@ proxies = {
     "https": "socks5://user:pass@host:port"
 }
 requests.get("http://example.org", proxies=proxies)
+
+# 关闭InsecurePlatformWarning
+requests.packages.urllib3.disable_warnings()
