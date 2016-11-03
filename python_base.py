@@ -7,9 +7,12 @@
     help(obj.func)      # 查询obj.func的具体介绍和用法
     
 #-- 测试类型的三种方法，推荐第三种
-    if type(L) == type([]): print("L is list")
-    if type(L) == list: print("L is list")
-    if isinstance(L, list): print("L is list")
+    if type(L) == type([]):
+        print("L is list")
+    if type(L) == list:
+        print("L is list")
+    if isinstance(L, list):
+        print("L is list")
         
 #-- Python数据类型：哈希类型、不可哈希类型
     # 哈希类型，即在原地不能改变的变量类型，不可变类型。可利用hash函数查看其hash值，也可以作为字典的key
@@ -146,10 +149,15 @@
     str1.count('t')                         # 查找字符串出现的次数
     #上面所有方法都可用index代替，不同的是使用index查找不到会抛异常，而find返回-1
     str1.replace('old','new')               # 替换函数，替换old为new，参数中可以指定maxReplaceTimes，即替换指定次数的old为new
-    str1.strip(); str1.lstrip(); str1.rstrip(); str1.strip('d'); str1.lstrip('d'); str1.rstrip('d')
+    str1.strip();
+    str1.strip('d');                        # 删除str1字符串中开头、结尾处，位于 d 删除序列的字符
+    str1.lstrip();
+    str1.lstrip('d');                       # 删除str1字符串中开头处，位于 d 删除序列的字符
+    str1.rstrip();
+    str1.rstrip('d')                        # 删除str1字符串中结尾处，位于 d 删除序列的字符
     str1.startswith('start')                # 是否以start开头
     str1.endswith('end')                    # 是否以end结尾
-    str1.isalnum(); str1.isalpha(); str1.isdigit(); str1.islower(); str1.isupper()      # 判断字符串是否全为字符、数字、大写、小写
+    str1.isalnum(); str1.isalpha(); str1.isdigit(); str1.islower(); str1.isupper()      # 判断字符串是否全为字符、数字、小写、大写
 
 #-- 三重引号编写多行字符串块，并且在代码折行处嵌入换行字符\n
     mantra = """hello world
@@ -166,7 +174,7 @@
     float('4.13'), str(4.13)                # 返回(4.13, '4.13')
     ord('s'), chr(115)                      # 返回(115, 's')
     int('1001', 2)                          # 将字符串作为二进制数字，转化为数字，返回9
-    bin(13), oct(13), hex(13)               # 将整数转化为二进制/八进制/十六进制字符串，返回('1001', '0o15', '0xd')
+    bin(13), oct(13), hex(13)               # 将整数转化为二进制/八进制/十六进制字符串，返回('0b1101', '015', '0xd')
     
 #-- 另类字符串连接
     name = "wang" "hong"                    # 单行，name = "wanghong"
