@@ -102,7 +102,7 @@
 
 #-- 布尔类型bool
     type(True)                   # 返回<class 'bool'>
-    isinstance(False, int)       # bool类型属于整形，所以返回True
+    isinstance(False, int)       # bool类型属于整型，所以返回True
     True == 1; True is 1         # 输出(True, False)
     
 #-- 动态类型简介
