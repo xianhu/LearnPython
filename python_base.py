@@ -72,7 +72,7 @@
 #-- 集合set
     """
     set是一个无序不重复元素集, 基本功能包括关系测试和消除重复元素。
-    set支持union(联合), intersection(交), difference(差)和sysmmetric difference(对称差集)等数学运算。
+    set支持union(联合), intersection(交), difference(差)和symmetric difference(对称差集)等数学运算。
     set支持x in set, len(set), for x in set。
     set不记录元素位置或者插入点, 因此不支持indexing, slicing, 或其它类序列的操作
     """
