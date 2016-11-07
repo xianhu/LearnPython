@@ -86,7 +86,7 @@
     c = t – s;    t.difference(s)                # 求差集（项在t中, 但不在s中）
     d = t ^ s;    t.symmetric_difference(s)      # 对称差集（项在t或s中, 但不会同时出现在二者中）
     t.add('x');   t.remove('H')                  # 增加/删除一个item
-    t.update([10,37,42])                         # 利用[......]更新s集合
+    s.update([10,37,42])                         # 利用[......]更新s集合
     x in s,  x not in s                          # 集合中是否存在某个值
     s.issubset(t); s.issuperset(t); s.copy(); s.discard(x); s.clear()
     {x**2 for x in [1, 2, 3, 4]}                 # 集合解析，结果：{16, 1, 4, 9}
