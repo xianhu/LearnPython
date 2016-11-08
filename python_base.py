@@ -254,7 +254,7 @@
 #-- 常用字典常量和操作
     D = {}
     D = {'spam':2, 'tol':{'ham':1}}                   # 嵌套字典
-    D = dict.fromkeys(['s', 'd'], 8)                  # {'d': 8, 's': 8}
+    D = dict.fromkeys(['s', 'd'], 8)                  # {'s': 8, 'd': 8}
     D = dict(name = 'tom', age = 12)                  # {'age': 12, 'name': 'tom'}
     D = dict([('name', 'tom'), ('age', 12)])          # {'age': 12, 'name': 'tom'}
     D = dict(zip(['name', 'age'], ['tom', 12]))       # {'age': 12, 'name': 'tom'}
@@ -270,8 +270,8 @@
     # 字典注意事项：（1）对新索引赋值会添加一项（2）字典键不一定非得是字符串，也可以为任何的不可变对象
 
 #-- 字典解析
-    D = {k:8 for k in ['s', 'd']}                     # {'d': 8, 's': 8}
-    D = {k:v for (k, v) in zip(['name', 'age'], ['tom', 12])}
+    D = {k:8 for k in ['s', 'd']}                     # {'s': 8, 'd': 8}
+    D = {k:v for (k, v) in zip(['name', 'age'], ['tom', 12])}       # {'age': 12, 'name': tom}
     
 #-- 字典的特殊方法__missing__：当查找找不到key时，会执行该方法
     class Dict(dict):
@@ -335,8 +335,8 @@
 
 #-- 序列赋值 序列解包
     [a, b, c] = (1, 2, 3)                  # a = 1, b = 2, c = 3
-    a, b, c, d = "spam"                    # a = 's', b = 'p'
-    a, b, c = range(3)                     # a = 0, b = 1
+    a, b, c, d = "spam"                    # a = 's', b = 'p', c = 'a', d = 'm'
+    a, b, c = range(3)                     # a = 0, b = 1, c = 2
     a, *b = [1, 2, 3, 4]                   # a = 1, b = [2, 3, 4]
     *a, b = [1, 2, 3, 4]                   # a = [1, 2, 3], b = 4
     a, *b, c = [1, 2, 3, 4]                # a = 1, b = [2, 3], c = 4
