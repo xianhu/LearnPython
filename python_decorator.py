@@ -7,7 +7,7 @@ python_decorator.py by xianhu
 import functools
 
 
-# 构建不太参数的装饰器
+# 构建不带参数的装饰器
 def logging(func):
     @functools.wraps(func)
     def decorator(*args, **kwargs):
@@ -142,7 +142,26 @@ def test08(a, b, c):
     return a + b + c
 
 
-# 使用Python自带的装饰器
+# 使用Python自带的装饰器 @property
+class Person(object):
+
+    def __init__(self):
+        self._name = None
+        return
+
+    def get_name(self):
+        print("get_name")
+        return self._name
+
+    def set_name(self, name):
+        print("set_name")
+        self._name = name
+        return
+
+    name = property(fget=get_name, fset=set_name, doc="person name")
+
+
+# 使用Python自带的装饰器 @property
 class People(object):
 
     def __init__(self):
