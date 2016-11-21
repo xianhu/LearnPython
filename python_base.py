@@ -88,7 +88,11 @@
     t.add('x');   t.remove('H')                  # 增加/删除一个item
     s.update([10,37,42])                         # 利用[......]更新s集合
     x in s,  x not in s                          # 集合中是否存在某个值
-    s.issubset(t); s.issuperset(t); s.copy(); s.discard(x); s.clear()
+    s.issubset(t);      s <= t                   # 测试是否 s 中的每一个元素都在 t 中
+    s.issuperset(t);    s >= t                   # 测试是否 t 中的每一个元素都在 s 中 
+    s.copy(); 
+    s.discard(x);                                # 删除s中x
+    s.clear()                                    # 清空s
     {x**2 for x in [1, 2, 3, 4]}                 # 集合解析，结果：{16, 1, 4, 9}
     {x for x in 'spam'}                          # 集合解析，结果：{'a', 'p', 's', 'm'}
     
