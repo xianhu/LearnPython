@@ -23,6 +23,8 @@
 ### python_decorator.py: Python进阶: 通过实例详解装饰器（附代码）
 
 ### python_datetime.py: 你真的了解Python中的日期时间处理吗？
+
+### python_metaclass.py: Python进阶: 一步步理解Python中的元类metaclass
 ===============================================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request
