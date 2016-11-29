@@ -4,7 +4,7 @@
 python_requests.py by xianhu
 """
 
-import requests
+import requests.adapters
 
 # 不同方式获取网页内容, 返回一个Response对象, 请求的参数可以为url或Request对象
 r0 = requests.get("https://github.com/timeline.json")
@@ -181,7 +181,7 @@ requests.get("https://github.com", timeout=(3.05, 27))
 # 若请求超过了设定的最大重定向次数, 则会抛出一个 TooManyRedirects 异常
 # 所有Requests显式抛出的异常都继承自 requests.exceptions.RequestException
 
-# 所有异常
+# 所有异常:
 # exception requests.RequestException(*args, **kwargs): There was an ambiguous exception that occurred while handling your request.
 # exception requests.ConnectionError(*args, **kwargs): A Connection error occurred.
 # exception requests.HTTPError(*args, **kwargs): An HTTP error occurred.
@@ -223,13 +223,25 @@ proxies = {
 requests.get("http://example.org", proxies=proxies)
 # 若代理需要使用HTTP Basic Auth, 可以使用http://user:password@host:port/, 比如"http": "http://user:pass@10.10.1.10:3128/"
 
-# 除了基本的 HTTP 代理, Request 还支持 SOCKS 协议的代理
+# 除了基本的 HTTP 代理, Request 还支持 SOCKS 协议的代理, 此时需要单独安装:
 # $ pip install requests[socks]
 proxies = {
     "http": "socks5://user:pass@host:port",
     "https": "socks5://user:pass@host:port"
 }
 requests.get("http://example.org", proxies=proxies)
+
+# Requests 传输适配器
+# 从 v1.0.0 以后，Requests 的内部采用了模块化设计。部分原因是为了实现传输适配器（Transport Adapter）。
+# 传输适配器提供了一个机制，让你可以为 HTTP 服务定义交互方法。尤其是它允许你应用服务前的配置。
+# Requests 自带了一个传输适配器，也就是 HTTPAdapter。 这个适配器使用了强大的 urllib3，为 Requests 提供了默认的 HTTP 和 HTTPS 交互。
+# 每当 Session 被初始化，就会有适配器附着在 Session 上，其中一个供 HTTP 使用，另一个供 HTTPS 使用。
+# Request 允许用户创建和使用他们自己的传输适配器，实现他们需要的特殊功能。创建好以后，传输适配器可以被加载到一个会话对象上，附带着一个说明，告诉会话适配器应该应用在哪个 web 服务上。
+s = requests.Session()
+s.mount("http://baidu.com", requests.adapters.HTTPAdapter())
+
+# 出现错误: Connection pool is full, discarding connection: xxxx.com
+s.mount('https://', requests.adapters.HTTPAdapter(pool_connections=100, pool_maxsize=100))
 
 # 关闭InsecurePlatformWarning
 # requests.packages.urllib3.disable_warnings()
