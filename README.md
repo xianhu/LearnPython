@@ -27,6 +27,8 @@
 ### python_metaclass.py: Python进阶: 一步步理解Python中的元类metaclass
 
 ### python_coroutine.py: Python进阶：理解Python中的异步IO和协程(Coroutine), 并应用在爬虫中
+
+### python_aiohttp.py: Python中最好用的异步爬虫库Aiohttp代码实例
 ===================================================================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request
