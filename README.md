@@ -29,6 +29,8 @@
 ### python_coroutine.py: Python进阶: 理解Python中的异步IO和协程(Coroutine), 并应用在爬虫中
 
 ### python_aiohttp.py: Python中最好用的异步爬虫库Aiohttp代码实例
+
+### python_thread_multiprocess.py: Python进阶: 聊聊IO密集型任务、计算密集型任务，以及多线程、多进程
 ===================================================================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request
