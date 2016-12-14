@@ -31,6 +31,8 @@
 ### python_aiohttp.py: Python中最好用的异步爬虫库Aiohttp代码实例
 
 ### python_thread_multiprocess.py: Python进阶: 聊聊IO密集型任务、计算密集型任务，以及多线程、多进程
+
+### python_version36.py: Python3.6正式版要来了, 你期待哪些新特性？
 ===================================================================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request
