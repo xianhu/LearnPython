@@ -12,7 +12,7 @@
 
 ### python_lda.py: 玩点高级的--带你入门Topic模型LDA（小改进+附源码）
 
-### python_sqlalchemy.py: 作为一个Pythoner，不会SQLAlchemy都不好意思跟同行打招呼！
+### python_sqlalchemy.py: 作为一个Pythoner, 不会SQLAlchemy都不好意思跟同行打招呼！
 
 ### python_oneline.py: 几个小例子告诉你, 一行Python代码能干哪些事
 
@@ -26,9 +26,13 @@
 
 ### python_metaclass.py: Python进阶: 一步步理解Python中的元类metaclass
 
-### python_coroutine.py: Python进阶：理解Python中的异步IO和协程(Coroutine), 并应用在爬虫中
+### python_coroutine.py: Python进阶: 理解Python中的异步IO和协程(Coroutine), 并应用在爬虫中
 
 ### python_aiohttp.py: Python中最好用的异步爬虫库Aiohttp代码实例
+
+### python_thread_multiprocess.py: Python进阶: 聊聊IO密集型任务、计算密集型任务，以及多线程、多进程
+
+### python_version36.py: Python3.6正式版要来了, 你期待哪些新特性？
 ===================================================================================================
 
 ### 您可以fork该项目,并在修改后提交Pull request
