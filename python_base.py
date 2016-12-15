@@ -136,7 +136,7 @@
     S = u'spam'                             # Python2.6中的Unicode字符串
     s1+s2, s1*3, s[i], s[i:j], len(s)       # 字符串操作
     'a %s parrot' % 'kind'                  # 字符串格式化表达式
-    'a {0} parrot'.format('kind')           # 字符串格式化方法
+    'a {1} {0} parrot'.format('kind', 'red')# 字符串格式化方法
     for x in s: print(x)                    # 字符串迭代，成员关系
     [x*2 for x in s]                        # 字符串列表解析
     ','.join(['a', 'b', 'c'])               # 字符串输出，结果：a,b,c
@@ -153,7 +153,7 @@
     str1.count('t')                         # 查找字符串出现的次数
     #上面所有方法都可用index代替，不同的是使用index查找不到会抛异常，而find返回-1
     str1.replace('old','new')               # 替换函数，替换old为new，参数中可以指定maxReplaceTimes，即替换指定次数的old为new
-    str1.strip();
+    str1.strip();                           # 默认删除空白符
     str1.strip('d');                        # 删除str1字符串中开头、结尾处，位于 d 删除序列的字符
     str1.lstrip();
     str1.lstrip('d');                       # 删除str1字符串中开头处，位于 d 删除序列的字符
@@ -171,7 +171,7 @@
     
 #-- 索引和分片：
     S[0], S[len(S)–1], S[-1]                # 索引
-    S[1:3], S[1:], S[:-1], S[1:10:2]        # 分片，第三个参数指定步长
+    S[1:3], S[1:], S[:-1], S[1:10:2]        # 分片，第三个参数指定步长，如`S[1:10:2]`是从1位到10位没隔2位获取一个字符。
 
 #-- 字符串转换工具：
     int('42'), str(42)                      # 返回(42, '42')
