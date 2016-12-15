@@ -1313,3 +1313,5 @@
     lists[1].append(6)                                     # 结果为[[3], [6], []]
     lists[2].append(9)                                     # 结果为[[3], [6], [9]]
     lists = [[[] for j in range(4)] for i in range(3)]     # 3行4列，且每一个元素为[]
+
+    
