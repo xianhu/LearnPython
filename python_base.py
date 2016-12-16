@@ -88,7 +88,11 @@
     t.add('x');   t.remove('H')                  # 增加/删除一个item
     s.update([10,37,42])                         # 利用[......]更新s集合
     x in s,  x not in s                          # 集合中是否存在某个值
-    s.issubset(t); s.issuperset(t); s.copy(); s.discard(x); s.clear()
+    s.issubset(t);      s <= t                   # 测试是否 s 中的每一个元素都在 t 中
+    s.issuperset(t);    s >= t                   # 测试是否 t 中的每一个元素都在 s 中 
+    s.copy(); 
+    s.discard(x);                                # 删除s中x
+    s.clear()                                    # 清空s
     {x**2 for x in [1, 2, 3, 4]}                 # 集合解析，结果：{16, 1, 4, 9}
     {x for x in 'spam'}                          # 集合解析，结果：{'a', 'p', 's', 'm'}
     
@@ -132,7 +136,7 @@
     S = u'spam'                             # Python2.6中的Unicode字符串
     s1+s2, s1*3, s[i], s[i:j], len(s)       # 字符串操作
     'a %s parrot' % 'kind'                  # 字符串格式化表达式
-    'a {0} parrot'.format('kind')           # 字符串格式化方法
+    'a {1} {0} parrot'.format('kind', 'red')# 字符串格式化方法
     for x in s: print(x)                    # 字符串迭代，成员关系
     [x*2 for x in s]                        # 字符串列表解析
     ','.join(['a', 'b', 'c'])               # 字符串输出，结果：a,b,c
@@ -149,7 +153,7 @@
     str1.count('t')                         # 查找字符串出现的次数
     #上面所有方法都可用index代替，不同的是使用index查找不到会抛异常，而find返回-1
     str1.replace('old','new')               # 替换函数，替换old为new，参数中可以指定maxReplaceTimes，即替换指定次数的old为new
-    str1.strip();
+    str1.strip();                           # 默认删除空白符
     str1.strip('d');                        # 删除str1字符串中开头、结尾处，位于 d 删除序列的字符
     str1.lstrip();
     str1.lstrip('d');                       # 删除str1字符串中开头处，位于 d 删除序列的字符
@@ -167,7 +171,7 @@
     
 #-- 索引和分片：
     S[0], S[len(S)–1], S[-1]                # 索引
-    S[1:3], S[1:], S[:-1], S[1:10:2]        # 分片，第三个参数指定步长
+    S[1:3], S[1:], S[:-1], S[1:10:2]        # 分片，第三个参数指定步长，如`S[1:10:2]`是从1位到10位没隔2位获取一个字符。
 
 #-- 字符串转换工具：
     int('42'), str(42)                      # 返回(42, '42')
@@ -262,12 +266,15 @@
     D.get(key, default)                               # get函数
     D.update(D_other)                                 # 合并字典，如果存在相同的键值，D_other的数据会覆盖掉D的数据
     D.pop(key, [D])                                   # 删除字典中键值为key的项，返回键值为key的值，如果不存在，返回默认值D，否则异常
-    D.popitem()                                       # pop字典中的一项（一个键值对）
+    D.popitem()                                       # pop字典中随机的一项（一个键值对）
     D.setdefault(k[, d])                              # 设置D中某一项的默认值。如果k存在，则返回D[k]，否则设置D[k]=d，同时返回D[k]。
     del D                                             # 删除字典
     del D['key']                                      # 删除字典的某一项
     if key in D:   if key not in D:                   # 测试字典键是否存在
     # 字典注意事项：（1）对新索引赋值会添加一项（2）字典键不一定非得是字符串，也可以为任何的不可变对象
+    # 不可变对象：调用对象自身的任意方法，也不会改变该对象自身的内容，这些方法会创建新的对象并返回。
+    # 字符串、整数、tuple都是不可变对象，dict、set、list都是可变对象
+    D[(1,2,3)] = 2                                    # tuple作为字典的key
 
 #-- 字典解析
     D = {k:8 for k in ['s', 'd']}                     # {'s': 8, 'd': 8}
@@ -725,11 +732,20 @@
 #-- 查看全部的模块搜索路径
     import sys
     sys.path
-        
+    sys.argv                            # 获得脚本的参数
+    sys.builtin_module_names            # 查找内建模块
+    sys.platform                        # 返回当前平台 出现如： "win32" "linux" "darwin"等
+    sys.modules                         # 查找已导入的模块
+    sys.modules.keys()
+    sys.stdout                          # stdout 和 stderr 都是类文件对象，但是它们都是只写的。它们都没有 read 方法，只有 write 方法
+    sys.stdout.write("hello")
+    sys.stderr
+    sys.stdin   
+
 #-- 模块的使用代码
     import module1, module2             # 导入module1 使用module1.printer()
     from module1 import printer         # 导入module1中的printer变量 使用printer()
-    from module1 imoprt *               # 导入module1中的全部变量 使用不必添加module1前缀
+    from module1 import *               # 导入module1中的全部变量 使用不必添加module1前缀
 
 #-- 重载模块reload: 这是一个内置函数 而不是一条语句
     from imp import reload
