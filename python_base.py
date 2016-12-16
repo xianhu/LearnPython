@@ -266,12 +266,15 @@
     D.get(key, default)                               # get函数
     D.update(D_other)                                 # 合并字典，如果存在相同的键值，D_other的数据会覆盖掉D的数据
     D.pop(key, [D])                                   # 删除字典中键值为key的项，返回键值为key的值，如果不存在，返回默认值D，否则异常
-    D.popitem()                                       # pop字典中的一项（一个键值对）
+    D.popitem()                                       # pop字典中随机的一项（一个键值对）
     D.setdefault(k[, d])                              # 设置D中某一项的默认值。如果k存在，则返回D[k]，否则设置D[k]=d，同时返回D[k]。
     del D                                             # 删除字典
     del D['key']                                      # 删除字典的某一项
     if key in D:   if key not in D:                   # 测试字典键是否存在
     # 字典注意事项：（1）对新索引赋值会添加一项（2）字典键不一定非得是字符串，也可以为任何的不可变对象
+    # 不可变对象：调用对象自身的任意方法，也不会改变该对象自身的内容，这些方法会创建新的对象并返回。
+    # 字符串、整数、tuple都是不可变对象，dict、set、list都是可变对象
+    D[(1,2,3)] = 2                                    # tuple作为字典的key
 
 #-- 字典解析
     D = {k:8 for k in ['s', 'd']}                     # {'s': 8, 'd': 8}
@@ -729,11 +732,20 @@
 #-- 查看全部的模块搜索路径
     import sys
     sys.path
-        
+    sys.argv                            # 获得脚本的参数
+    sys.builtin_module_names            # 查找内建模块
+    sys.platform                        # 返回当前平台 出现如： "win32" "linux" "darwin"等
+    sys.modules                         # 查找已导入的模块
+    sys.modules.keys()
+    sys.stdout                          # stdout 和 stderr 都是类文件对象，但是它们都是只写的。它们都没有 read 方法，只有 write 方法
+    sys.stdout.write("hello")
+    sys.stderr
+    sys.stdin   
+
 #-- 模块的使用代码
     import module1, module2             # 导入module1 使用module1.printer()
     from module1 import printer         # 导入module1中的printer变量 使用printer()
-    from module1 imoprt *               # 导入module1中的全部变量 使用不必添加module1前缀
+    from module1 import *               # 导入module1中的全部变量 使用不必添加module1前缀
 
 #-- 重载模块reload: 这是一个内置函数 而不是一条语句
     from imp import reload
