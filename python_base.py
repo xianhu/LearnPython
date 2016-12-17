@@ -98,7 +98,7 @@
     
 #-- 集合frozenset，不可变对象
     """
-    set是可变对象，即不存在hash值，不能作为字典的键值。同样的还有list、tuple等
+    set是可变对象，即不存在hash值，不能作为字典的键值。同样的还有list等(tuple是可以作为字典key的)
     frozenset是不可变对象，即存在hash值，可作为字典的键值
     frozenset对象没有add、remove等方法，但有union/intersection/difference等方法
     """
