@@ -33,6 +33,8 @@
 ### python_thread_multiprocess.py: Python进阶: 聊聊IO密集型任务、计算密集型任务，以及多线程、多进程
 
 ### python_version36.py: Python3.6正式版要来了, 你期待哪些新特性？
+
+### python_magic_methods: Python进阶: 实例讲解Python中的魔法函数(Magic Methods)
 ===================================================================================================
 
-### 您可以fork该项目,并在修改后提交Pull request
+### 您可以fork该项目, 并在修改后提交Pull request
