@@ -35,6 +35,8 @@
 ### python_version36.py: Python3.6正式版要来了, 你期待哪些新特性？
 
 ### python_magic_methods: Python进阶: 实例讲解Python中的魔法函数(Magic Methods)
+
+### python_restful_api.py: 利用Python和Flask快速开发RESTful API
 ===================================================================================================
 
 ### 您可以fork该项目, 并在修改后提交Pull request
