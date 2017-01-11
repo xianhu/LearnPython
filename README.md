@@ -38,6 +38,8 @@
 
 ### python_restful_api.py: 利用Python和Flask快速开发RESTful API
 
+### python_restful_api.py: RESTful API进阶: 连接数据库、添加参数、Token认证、返回代码说明等
+
 ### python_context.py: With语句和上下文管理器ContextManager
 ===================================================================================================
 
