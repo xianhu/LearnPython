@@ -1,0 +1,60 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}MyShow{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <meta charset="utf-8">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet">
+
+    <!-- Loading Js Files  -->
+    <script src="{{ url_for('static', filename='js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-typeahead.min.js') }}"></script>
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="nav navbar-header navbar-left">
+            <a class="navbar-brand" href="/">数据展示</a>
+        </div>
+        <div id="navbar" class="nav navbar-nav navbar-right" style="margin-right: 10px">
+            {% if name %}
+            <div class="btn-group navbar-btn navbar-right">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    {{ name }}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" id="login_out_menu">
+                    <li><a href="/index/?action=login_out">退出登录</a></li>
+                </ul>
+            </div>
+            {% elif form %}
+            <form class="navbar-form navbar-right" role="form" method="post">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    {{ form.name(placeholder="Email...", class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.password(placeholder="Password...", class="form-control") }}
+                </div>
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% block page_content %}
+    {% endblock %}
+</div>
+{% endblock %}

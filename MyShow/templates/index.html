@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block head %}
+{{ super() }}
+
+<script type="text/javascript">
+var zhihu_topics = function () {
+    var zhi_graph = echarts.init(document.getElementById("show_data_zhihu"));
+    zhi_graph.showLoading();
+
+    var set_zhi_graph = function (data) {
+        zhi_graph.hideLoading();
+
+        var categories = [];
+        for (var i = 0; i < 3; i++) {
+            categories[i] = {
+                name: "级别" + (i + 1)
+            }
+        }
+
+        data.nodes.forEach(function (node) {
+            node.symbolSize = 10;
+            node.label = {
+                normal: {
+                    show: true,
+                    position: 'right'
+                }
+            };
+            node.draggable = true;
+            node.category = node.level
+        });
+
+        data.links.forEach(function (link) {
+            link.label = {
+                normal: {
+                    show: false
+                }
+            }
+        });
+
+        var option = {
+            title: {
+                text: '知乎话题关系图',
+                subtext: '展示知乎话题之间的关系',
+                top: 'top',
+                left: 'left'
+            },
+            legend: [{
+                data: categories.map(function (a) {
+                    return a.name;
+                })
+            }],
+            animation: false,
+            series: [
+                {
+                    type: 'graph',
+                    layout: data.type,
+                    data: data.nodes,
+                    links: data.links,
+                    categories: categories,
+                    roam: true,
+                    force: {
+                        repulsion: 100
+                    }
+                }
+            ]
+        };
+
+        zhi_graph.setOption(option);
+    };
+
+    $.post("/zhihu_get_topics_data/", {id: "19554449", name: "数据"}, set_zhi_graph);
+
+    var subjects = [
+        { id: 1, name: '北京' },
+        { id: 2, name: '南京' },
+        { id: 3, name: '广州' },
+        { id: 4, name: '深圳' }
+    ];
+
+    $('#zhihusearch').typeahead({
+        source: function (query, process) {
+            $.post("/zhihu_get_topics_list/", {key: query}, function (e) {
+                if (e.success) {
+                    process(e.data);
+                }
+            });
+        }, {#source: subjects,#}
+        items: 20,
+        minLength: 1,
+        updater: function (item) {
+            return item;
+        },
+        displayText: function (item) {
+            return ":" + item["name"];
+        },
+        afterSelect: function (item) {
+            $.ajax({
+                type: "post",
+                async: true,
+                url: "/zhihu_get_topics_data/",
+                data: item,
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    zhi_graph.showLoading();
+                    return true
+                },
+                success: function (result) {
+                    if (result) {
+                        set_zhi_graph(result)
+                    }
+                },
+                error: function (error) {
+                    alert("请求数据失败!");
+                    zhi_graph.hideLoading();
+                }
+            });
+        }
+    });
+};
+</script>
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+            <li class={% if page_type == "overview" %} "active" {% else %} "" {% endif %} >
+                <a href="/index/?action=overview">概 述</a>
+            </li>
+            <li class={% if page_type == "zhihu_topics" %} "active" {% else %} "" {% endif %} >
+                <a href="/index/?action=zhihu_topics">知乎话题关系</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="padding-left: 20px; padding-right: 20px">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        {% if page_type == "overview" %}
+            <h2>数据展示，点击左边菜单栏即可查看各类数据展示页面</h2>
+        {% elif page_type == "zhihu_topics" %}
+            <div class="nav navbar-nav navbar-right">
+                <input type="text" class="form-control" id="zhihusearch" data-provide="typeahead" placeholder="Search Topic...">
+            </div>
+            <div id="show_data_zhihu" style="width: 900px; height:600px;"></div>
+
+            <script type="text/javascript">
+                zhihu_topics();
+            </script>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+</script>
+{% endblock %}
