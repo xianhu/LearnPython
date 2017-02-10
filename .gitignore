@@ -5,7 +5,6 @@
 *.log
 *.out
 *.dat
-*.txt
 *.temp
 *.png
 .*
