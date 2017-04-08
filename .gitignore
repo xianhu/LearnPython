@@ -7,6 +7,9 @@
 *.dat
 *.temp
 *.png
+*.pkl
+*.mp3
+*.mp4
 .*
 
 test/
