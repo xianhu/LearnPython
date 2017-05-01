@@ -416,7 +416,7 @@
         function document
         """
         print()
-    class Employee:
+    class Employee(object):
         """
         class document
         """
@@ -807,7 +807,7 @@
     I1 = C1('bob')
     
 #-- Python的类没有基于参数的函数重载
-    class FirstClass:
+    class FirstClass(object):
         def test(self, string):
             print(string)
         def test(self):                 # 此时类中只有一个test函数 即后者test(self) 它覆盖掉前者带参数的test函数
@@ -857,7 +857,7 @@
     pass
     # OOP和委托: "包装"对象 在Python中委托通常是以"__getattr__"钩子方法实现的, 这个方法会拦截对不存在属性的读取
     # 包装类(或者称为代理类)可以使用__getattr__把任意读取转发给被包装的对象
-    class wrapper:
+    class wrapper(object):
         def __init__(self, object):
             self.wrapped = object
         def __getattr(self, attrname):
@@ -870,7 +870,7 @@
     list(x.keys())                      # 返回 "Trace: keys" ['a', 'b']
 
 #-- 类的伪私有属性:使用__attr
-    class C1:
+    class C1(object):
         def __init__(self, name):
             self.__name = name          # 此时类的__name属性为伪私有属性 原理 它会自动变成self._C1__name = name
         def __str__(self):
@@ -881,7 +881,7 @@
     I._C1__name = 'jeey'                # 这里可以修改成功 self.name = jeey
     
 #-- 类方法是对象:无绑定类方法对象 / 绑定实例方法对象
-    class Spam:
+    class Spam(object):
         def doit(self, message):
             print(message)
         def selfless(message)
@@ -945,7 +945,7 @@
     fooChild.bar('HelloWorld')
     
 #-- #实例方法 / 静态方法 / 类方法
-    class Methods:
+    class Methods(object):
         def imeth(self, x): print(self, x)      # 实例方法：传入的是实例和数据，操作的是实例的属性
         def smeth(x): print(x)                  # 静态方法：只传入数据 不传入实例，操作的是类的属性而不是实例的属性
         def cmeth(cls, x): print(cls, x)        # 类方法：传入的是类对象和数据
@@ -975,13 +975,13 @@
 #-- 类修饰器:是它后边的类的运行时的声明 由@符号以及后边紧跟的"元函数"(metafunction)组成
         def decorator(aClass):.....
         @decorator
-        class C:....
+        class C(object):....
     # 等同于:
-        class C:....
+        class C(object):....
         C = decorator(C)
 
 #-- 限制class属性: __slots__属性
-    class Student:
+    class Student(object):
         __slots__ = ('name', 'age')             # 限制Student及其实例只能拥有name和age属性
     # __slots__属性只对当前类起作用, 对其子类不起作用
     # __slots__属性能够节省内存
