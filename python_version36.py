@@ -27,7 +27,7 @@ print(test([3, 1], 2))
 primes: List[int] = []
 captain: str
 
-class Starship:
+class Starship(object):
     stats: Dict[str, int] = {}
 
 

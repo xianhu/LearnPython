@@ -5,7 +5,7 @@ python_metaclass.py by xianhu
 """
 
 
-class Foo:
+class Foo(object):
     def hello(self):
         print("hello world!")
         return
