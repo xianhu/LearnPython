@@ -5,9 +5,15 @@ python_visual.py by xianhu
 """
 
 import numpy as np
+import matplotlib
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 from mpl_toolkits.mplot3d import Axes3D
+
+# 解决中文乱码问题
+myfont = fm.FontProperties(fname="/Library/Fonts/Songti.ttc", size=14)
+matplotlib.rcParams["axes.unicode_minus"] = False
 
 
 def simple_plot():
@@ -18,27 +24,27 @@ def simple_plot():
     x = np.linspace(-np.pi, np.pi, 256, endpoint=True)
     y_cos, y_sin = np.cos(x), np.sin(x)
 
-    # 生成画布
+    # 生成画布，并设定标题
     plt.figure(figsize=(8, 6), dpi=80)
-    plt.title("plot title")
+    plt.title("plot title", fontproperties=myfont)
     plt.grid(True)
 
     # 设置X轴
-    plt.xlabel("x label")
+    plt.xlabel("X轴", fontproperties=myfont)
     plt.xlim(-4.0, 4.0)
     plt.xticks(np.linspace(-4, 4, 9, endpoint=True))
 
     # 设置Y轴
-    plt.ylabel("y label")
+    plt.ylabel("Y轴", fontproperties=myfont)
     plt.ylim(-1.0, 1.0)
     plt.yticks(np.linspace(-1, 1, 9, endpoint=True))
 
     # 画两条曲线
-    plt.plot(x, y_cos, "b--", linewidth=2.0, label="cos")
-    plt.plot(x, y_sin, "g-", linewidth=2.0, label="sin")
+    plt.plot(x, y_cos, "b--", linewidth=2.0, label="cos事例")
+    plt.plot(x, y_sin, "g-", linewidth=2.0, label="sin事例")
 
     # 设置图例位置,loc可以为[upper, lower, left, right, center]
-    plt.legend(loc="upper left", shadow=True)
+    plt.legend(loc="upper left", prop=myfont, shadow=True)
 
     # 图形显示
     plt.show()
@@ -54,7 +60,7 @@ def simple_advanced_plot():
     x = np.linspace(-np.pi, np.pi, 256, endpoint=True)
     y_cos, y_sin = np.cos(x), np.sin(x)
 
-    # 生成画布
+    # 生成画布, 并设定标题
     plt.figure(figsize=(8, 6), dpi=80)
     plt.title("plot title")
     plt.grid(True)
@@ -80,9 +86,9 @@ def simple_advanced_plot():
     ax_2.set_yticks(np.linspace(-2, 2, 9, endpoint=True))
 
     # 设置X轴(共同)
-    ax_2.set_xlabel("x label")
-    ax_2.set_xlim(-4.0, 4.0)
-    ax_2.set_xticks(np.linspace(-4, 4, 9, endpoint=True))
+    ax_1.set_xlabel("x label")
+    ax_1.set_xlim(-4.0, 4.0)
+    ax_1.set_xticks(np.linspace(-4, 4, 9, endpoint=True))
 
     # 图形显示
     plt.show()
@@ -105,6 +111,7 @@ def subplot_plot():
 
         # 子图的生成方式
         plt.subplot(2, 2, num+1)
+        plt.title("subplot %d" % (num+1))
         plt.plot(x, y, style_list[num])
 
     # 图形显示
@@ -122,6 +129,9 @@ def bar_plot():
     means_men = (20, 35, 30, 35, 27)
     means_women = (25, 32, 34, 20, 25)
 
+    # 设置标题
+    plt.title("plot title")
+
     # 设置相关参数
     index = np.arange(len(means_men))
     bar_width = 0.35
@@ -133,15 +143,15 @@ def bar_plot():
 
     # 设置柱状图标示
     for x, y in zip(index, means_men):
-        plt.text(x+(bar_width/2), y+0.3, y, ha="center", va="bottom")
+        plt.text(x, y+0.3, y, ha="center", va="bottom")
     for x, y in zip(index, means_women):
-        plt.text(x+bar_width+(bar_width/2), y+0.3, y, ha="center", va="bottom")
+        plt.text(x+bar_width, y+0.3, y, ha="center", va="bottom")
 
     # 设置刻度范围/坐标轴名称等
     plt.ylim(0, 45)
     plt.xlabel("Group")
     plt.ylabel("Scores")
-    plt.xticks(index+bar_width, ("A组", "B组", "C组", "D组", "E组"))
+    plt.xticks(index+(bar_width/2), ("A", "B", "C", "D", "E"))
 
     # 图形显示
     plt.show()
@@ -157,6 +167,9 @@ def barh_plot():
     means_men = (20, 35, 30, 35, 27)
     means_women = (25, 32, 34, 20, 25)
 
+    # 设置标题
+    plt.title("plot title")
+
     # 设置相关参数
     index = np.arange(len(means_men))
     bar_height = 0.35
@@ -168,15 +181,15 @@ def barh_plot():
 
     # 设置柱状图标示
     for x, y in zip(index, means_men):
-        plt.text(y+0.3, x+(bar_height/2), y, ha="left", va="center")
+        plt.text(y+0.3, x, y, ha="left", va="center")
     for x, y in zip(index, means_women):
-        plt.text(y+0.3, x+bar_height+(bar_height/2), y, ha="left", va="center")
+        plt.text(y+0.3, x+bar_height, y, ha="left", va="center")
 
     # 设置刻度范围/坐标轴名称等
     plt.xlim(0, 45)
     plt.xlabel("Scores")
     plt.ylabel("Group")
-    plt.yticks(index+bar_height, ("A组", "B组", "C组", "D组", "E组"))
+    plt.yticks(index+(bar_height/2), ("A", "B", "C", "D", "E"))
 
     # 图形显示
     plt.show()
@@ -192,6 +205,9 @@ def bar_advanced_plot():
     means_men = np.array((20, 35, 30, 35, 27, 25, 32, 34, 20, 25))
     means_women = np.array((25, 32, 34, 20, 25, 20, 35, 30, 35, 27))
 
+    # 设置标题
+    plt.title("plot title")
+
     # 设置相关参数
     index = np.arange(len(means_men))
     bar_width = 0.8
@@ -201,14 +217,14 @@ def bar_advanced_plot():
     plt.bar(index, -means_women, width=bar_width, alpha=0.4, color="r", label="Women")
 
     # 画折线图(两种,和柱状图对应)
-    plt.plot(index+(bar_width/2), means_men, marker="o", linestyle="-", color="r", label="Men line")
-    plt.plot(index+(bar_width/2), -means_women, marker=".", linestyle="--", color="b", label="Women line")
+    plt.plot(index, means_men, marker="o", linestyle="-", color="r", label="Men line")
+    plt.plot(index, -means_women, marker=".", linestyle="--", color="b", label="Women line")
 
     # 设置图形标示(两种,和柱状图对应)
     for x, y in zip(index, means_men):
-        plt.text(x+(bar_width/2), y+1, y, ha="center", va="bottom")
+        plt.text(x, y+1, y, ha="center", va="bottom")
     for x, y in zip(index, means_women):
-        plt.text(x+(bar_width/2), -y-1, y, ha="center", va="top")
+        plt.text(x, -y-1, y, ha="center", va="top")
 
     # 设置Y轴和图例位置
     plt.ylim(-45, 80)
@@ -231,6 +247,9 @@ def table_plot():
         [5, 3, 6, 4, 1]
     ])
 
+    # 设置标题
+    plt.title("plot title")
+
     # 设置相关参数
     index = np.arange(len(data[0]))
     color_index = ["r", "g", "b"]
@@ -240,7 +259,7 @@ def table_plot():
 
     # 依次画图,并更新底部位置
     for i in range(len(data)):
-        plt.bar(index+0.25, data[i], width=0.5, color=color_index[i], bottom=bottom, alpha=0.7, label="label %d" % i)
+        plt.bar(index, data[i], width=0.5, color=color_index[i], bottom=bottom, alpha=0.7, label="label %d" % i)
         bottom += data[i]
 
     # 设置图例位置
@@ -260,13 +279,13 @@ def histograms_plot():
     mu, sigma = 100, 15
     x = mu + sigma * np.random.randn(10000)
 
-    # 设置相关参数
-    num_bins = 50
+    # 设置标题
+    plt.title("plot title")
 
-    # 画直方图,并返回相关结果
-    n, bins, patches = plt.hist(x, bins=num_bins, normed=1, color="green", alpha=0.6, label="hist")
+    # 画直方图, 并返回相关结果
+    n, bins, patches = plt.hist(x, bins=50, normed=1, cumulative=False, color="green", alpha=0.6, label="hist")
 
-    # 根据直方图返回的结果,画折线图
+    # 根据直方图返回的结果, 画折线图
     y = mlab.normpdf(bins, mu, sigma)
     plt.plot(bins, y, "r--", label="line")
 
@@ -285,9 +304,14 @@ def pie_plot():
     """
     # 生成测试数据
     sizes = [15, 30, 45, 10]
-    explode = [0, 0.05, 0, 0]
     labels = ["Frogs", "Hogs", "Dogs", "Logs"]
     colors = ["yellowgreen", "gold", "lightskyblue", "lightcoral"]
+
+    # 设置标题
+    plt.title("plot title")
+
+    # 设置突出参数
+    explode = [0, 0.05, 0, 0]
 
     # 画饼状图
     plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct="%1.1f%%", shadow=True, startangle=90)
@@ -307,6 +331,9 @@ def scatter_plot():
     point_count = 1000
     x_index = np.random.random(point_count)
     y_index = np.random.random(point_count)
+
+    # 设置标题
+    plt.title("plot title")
 
     # 设置相关参数
     color_list = np.random.random(point_count)
@@ -329,13 +356,15 @@ def fill_plot():
     x = np.linspace(-2*np.pi, 2*np.pi, 1000, endpoint=True)
     y = np.sin(x)
 
+    # 设置标题
+    plt.title("plot title")
+
     # 画图
     plt.plot(x, y, color="blue", alpha=1.00)
 
-    # 填充图形
-    # plt.fill_between(x, y1, y2, where=None, *kwargs)
-    plt.fill_between(x, 0, y, y > 0, color="blue", alpha=.25)
-    plt.fill_between(x, 0, y, y < 0, color="red", alpha=.25)
+    # 填充图形, plt.fill_between(x, y1, y2, where=None, *kwargs)
+    plt.fill_between(x, 0, y, where=(y > 0), color="blue", alpha=0.25)
+    plt.fill_between(x, 0, y, where=(y < 0), color="red", alpha=0.25)
 
     # 图形显示
     plt.show()
@@ -349,7 +378,7 @@ def radar_plot():
     """
     # 生成测试数据
     labels = np.array(["A", "B", "C", "D", "E", "F"])
-    data = np.array([38, 43, 90, 67, 89, 73])
+    data = np.array([68, 83, 90, 77, 89, 73])
     theta = np.linspace(0, 2*np.pi, len(data), endpoint=False)
 
     # 数据预处理
@@ -358,10 +387,11 @@ def radar_plot():
 
     # 画图方式
     plt.subplot(111, polar=True)
+    plt.title("plot title")
 
     # 设置"theta grid"/"radar grid"
     plt.thetagrids(theta*(180/np.pi), labels=labels)
-    plt.rgrids(np.arange(20, 101, 20), labels=np.arange(20, 101, 20), angle=0)
+    plt.rgrids(np.arange(20, 100, 20), labels=np.arange(20, 100, 20), angle=0)
     plt.ylim(0, 100)
 
     # 画雷达图,并填充雷达图内部区域
@@ -379,17 +409,16 @@ def three_dimension_scatter():
     3d scatter plot
     """
     # 生成测试数据
-    number = 1000
-    x = np.random.random(number)
-    y = np.random.random(number)
-    z = np.random.random(number)
-    color = np.random.random(number)
-    scale = np.random.random(number) * 100
+    x = np.random.random(100)
+    y = np.random.random(100)
+    z = np.random.random(100)
+    color = np.random.random(100)
+    scale = np.random.random(100) * 100
 
     # 生成画布(两种形式)
     fig = plt.figure()
-    # ax = fig.gca(projection="3d")
-    ax = fig.add_subplot(111, projection="3d")
+    # ax = fig.gca(projection="3d", title="plot title")
+    ax = fig.add_subplot(111, projection="3d", title="plot title")
 
     # 画三维散点图
     ax.scatter(x, y, z, s=scale, c=color, marker=".")
@@ -415,15 +444,14 @@ def three_dimension_line():
     3d line plot
     """
     # 生成测试数据
-    number = 1000
-    x = np.linspace(0, 1, number)
-    y = np.linspace(0, 1, number)
+    x = np.linspace(0, 1, 1000)
+    y = np.linspace(0, 1, 1000)
     z = np.sin(x * 2 * np.pi) / (y + 0.1)
 
     # 生成画布(两种形式)
     fig = plt.figure()
-    ax = fig.gca(projection="3d")
-    # ax = fig.add_subplot(111, projection="3d")
+    ax = fig.gca(projection="3d", title="plot title")
+    # ax = fig.add_subplot(111, projection="3d", title="plot title")
 
     # 画三维折线图
     ax.plot(x, y, z, color="red", linestyle="-")
@@ -455,8 +483,7 @@ def three_dimension_bar():
 
     # 生成画布(两种形式)
     fig = plt.figure()
-    ax = fig.gca(projection="3d")
-    # ax = fig.add_subplot(111, projection="3d")
+    ax = fig.gca(projection="3d", title="plot title")
 
     # 画三维柱状图
     ax.bar3d(xpos, ypos, zpos, dx, dy, dz, alpha=0.5)
