@@ -26,7 +26,7 @@ def simple_plot():
 
     # 生成画布，并设定标题
     plt.figure(figsize=(8, 6), dpi=80)
-    plt.title("plot title", fontproperties=myfont)
+    plt.title("可视化标题", fontproperties=myfont)
     plt.grid(True)
 
     # 设置X轴
@@ -62,31 +62,31 @@ def simple_advanced_plot():
 
     # 生成画布, 并设定标题
     plt.figure(figsize=(8, 6), dpi=80)
-    plt.title("plot title")
+    plt.title("可视化标题", fontproperties=myfont)
     plt.grid(True)
 
     # 画图的另外一种方式
     ax_1 = plt.subplot(111)
-    ax_1.plot(x, y_cos, color="blue", linewidth=2.0, linestyle="--", label="cos in left")
-    ax_1.legend(loc="upper left", shadow=True)
+    ax_1.plot(x, y_cos, color="blue", linewidth=2.0, linestyle="--", label="左cos")
+    ax_1.legend(loc="upper left", prop=myfont, shadow=True)
 
     # 设置Y轴(左边)
-    ax_1.set_ylabel("y label for cos in left")
+    ax_1.set_ylabel("左cos的y轴", fontproperties=myfont)
     ax_1.set_ylim(-1.0, 1.0)
     ax_1.set_yticks(np.linspace(-1, 1, 9, endpoint=True))
 
     # 画图的另外一种方式
     ax_2 = ax_1.twinx()
-    ax_2.plot(x, y_sin, color="green", linewidth=2.0, linestyle="-", label="sin in right")
-    ax_2.legend(loc="upper right", shadow=True)
+    ax_2.plot(x, y_sin, color="green", linewidth=2.0, linestyle="-", label="右sin")
+    ax_2.legend(loc="upper right", prop=myfont, shadow=True)
 
     # 设置Y轴(右边)
-    ax_2.set_ylabel("y label for sin in right")
+    ax_2.set_ylabel("右sin的y轴", fontproperties=myfont)
     ax_2.set_ylim(-2.0, 2.0)
     ax_2.set_yticks(np.linspace(-2, 2, 9, endpoint=True))
 
     # 设置X轴(共同)
-    ax_1.set_xlabel("x label")
+    ax_1.set_xlabel("x轴", fontproperties=myfont)
     ax_1.set_xlim(-4.0, 4.0)
     ax_1.set_xticks(np.linspace(-4, 4, 9, endpoint=True))
 
@@ -111,11 +111,10 @@ def subplot_plot():
 
         # 子图的生成方式
         plt.subplot(2, 2, num+1)
-        plt.title("subplot %d" % (num+1))
+        plt.title("子图 %d" % (num+1), fontproperties=myfont)
         plt.plot(x, y, style_list[num])
 
     # 图形显示
-    plt.grid(True)
     plt.show()
     return
 # subplot_plot()
@@ -130,16 +129,16 @@ def bar_plot():
     means_women = (25, 32, 34, 20, 25)
 
     # 设置标题
-    plt.title("plot title")
+    plt.title("可视化标题", fontproperties=myfont)
 
     # 设置相关参数
     index = np.arange(len(means_men))
     bar_width = 0.35
 
     # 画柱状图
-    plt.bar(index, means_men, width=bar_width, alpha=0.2, color="b", label="Men")
-    plt.bar(index+bar_width, means_women, width=bar_width, alpha=0.8, color="r", label="Women")
-    plt.legend(loc="upper right", shadow=True)
+    plt.bar(index, means_men, width=bar_width, alpha=0.2, color="b", label="男生")
+    plt.bar(index+bar_width, means_women, width=bar_width, alpha=0.8, color="r", label="女生")
+    plt.legend(loc="upper right", prop=myfont, shadow=True)
 
     # 设置柱状图标示
     for x, y in zip(index, means_men):
@@ -149,9 +148,9 @@ def bar_plot():
 
     # 设置刻度范围/坐标轴名称等
     plt.ylim(0, 45)
-    plt.xlabel("Group")
-    plt.ylabel("Scores")
-    plt.xticks(index+(bar_width/2), ("A", "B", "C", "D", "E"))
+    plt.xlabel("分组Group", fontproperties=myfont)
+    plt.ylabel("得分Scores", fontproperties=myfont)
+    plt.xticks(index+(bar_width/2), ("A组", "B组", "C组", "D组", "E组"), fontproperties=myfont)
 
     # 图形显示
     plt.show()
@@ -248,7 +247,7 @@ def table_plot():
     ])
 
     # 设置标题
-    plt.title("plot title")
+    plt.title("可视化标题", fontproperties=myfont)
 
     # 设置相关参数
     index = np.arange(len(data[0]))
@@ -259,11 +258,11 @@ def table_plot():
 
     # 依次画图,并更新底部位置
     for i in range(len(data)):
-        plt.bar(index, data[i], width=0.5, color=color_index[i], bottom=bottom, alpha=0.7, label="label %d" % i)
+        plt.bar(index, data[i], width=0.5, color=color_index[i], bottom=bottom, alpha=0.7, label="标签 %d" % i)
         bottom += data[i]
 
     # 设置图例位置
-    plt.legend(loc="upper left", shadow=True)
+    plt.legend(loc="upper left", prop=myfont, shadow=True)
 
     # 图形显示
     plt.show()
@@ -280,17 +279,17 @@ def histograms_plot():
     x = mu + sigma * np.random.randn(10000)
 
     # 设置标题
-    plt.title("plot title")
+    plt.title("可视化标题", fontproperties=myfont)
 
     # 画直方图, 并返回相关结果
-    n, bins, patches = plt.hist(x, bins=50, normed=1, cumulative=False, color="green", alpha=0.6, label="hist")
+    n, bins, patches = plt.hist(x, bins=50, normed=1, cumulative=False, color="green", alpha=0.6, label="直方图")
 
     # 根据直方图返回的结果, 画折线图
     y = mlab.normpdf(bins, mu, sigma)
-    plt.plot(bins, y, "r--", label="line")
+    plt.plot(bins, y, "r--", label="线条")
 
     # 设置图例位置
-    plt.legend(loc="upper left", shadow=True)
+    plt.legend(loc="upper left", prop=myfont, shadow=True)
 
     # 图形显示
     plt.show()
@@ -304,17 +303,19 @@ def pie_plot():
     """
     # 生成测试数据
     sizes = [15, 30, 45, 10]
-    labels = ["Frogs", "Hogs", "Dogs", "Logs"]
+    labels = ["Frogs", "中文", "Dogs", "Logs"]
     colors = ["yellowgreen", "gold", "lightskyblue", "lightcoral"]
 
     # 设置标题
-    plt.title("plot title")
+    plt.title("可视化标题", fontproperties=myfont)
 
     # 设置突出参数
     explode = [0, 0.05, 0, 0]
 
     # 画饼状图
-    plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct="%1.1f%%", shadow=True, startangle=90)
+    patches, l_text, p_text = plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct="%1.1f%%", shadow=True, startangle=90)
+    for text in l_text:
+        text.set_fontproperties(myfont)
     plt.axis("equal")
 
     # 图形显示
@@ -333,7 +334,7 @@ def scatter_plot():
     y_index = np.random.random(point_count)
 
     # 设置标题
-    plt.title("plot title")
+    plt.title("可视化标题", fontproperties=myfont)
 
     # 设置相关参数
     color_list = np.random.random(point_count)
@@ -357,7 +358,7 @@ def fill_plot():
     y = np.sin(x)
 
     # 设置标题
-    plt.title("plot title")
+    plt.title("可视化标题", fontproperties=myfont)
 
     # 画图
     plt.plot(x, y, color="blue", alpha=1.00)
@@ -377,7 +378,7 @@ def radar_plot():
     radar plot
     """
     # 生成测试数据
-    labels = np.array(["A", "B", "C", "D", "E", "F"])
+    labels = np.array(["A组", "B组", "C组", "D组", "E组", "F组"])
     data = np.array([68, 83, 90, 77, 89, 73])
     theta = np.linspace(0, 2*np.pi, len(data), endpoint=False)
 
@@ -387,10 +388,10 @@ def radar_plot():
 
     # 画图方式
     plt.subplot(111, polar=True)
-    plt.title("plot title")
+    plt.title("可视化标题", fontproperties=myfont)
 
     # 设置"theta grid"/"radar grid"
-    plt.thetagrids(theta*(180/np.pi), labels=labels)
+    plt.thetagrids(theta*(180/np.pi), labels=labels, fontproperties=myfont)
     plt.rgrids(np.arange(20, 100, 20), labels=np.arange(20, 100, 20), angle=0)
     plt.ylim(0, 100)
 
