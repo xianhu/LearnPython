@@ -763,8 +763,8 @@
     """
     
 #-- 包相对导入:使用点号(.) 只能使用from语句
-    from . import spam                  # 导入当前目录下的spam模块（错误: 当前目录下的模块, 直接导入即可）
-    from .spam import name              # 导入当前目录下的spam模块的name属性（错误: 当前目录下的模块, 直接导入即可，不用加.）
+    from . import spam                  # 导入当前目录下的spam模块（Python2: 当前目录下的模块, 直接导入即可）
+    from .spam import name              # 导入当前目录下的spam模块的name属性（Python2: 当前目录下的模块, 直接导入即可，不用加.）
     from .. import spam                 # 导入当前目录的父目录下的spam模块
     
 #-- 包相对导入与普通导入的区别
