@@ -16,7 +16,7 @@ from itchat.content import *
 # 初始化
 my = itchat.new_instance()
 my.auto_login(hotReload=False, enableCmdQR=2)
-my.global_keys = ["创业", "算法", "人工智能"]
+my.global_keys = ["创业", "算法", "人工智能", "机器学习"]
 my.to_user_name = "filehelper"
 
 # my还包括的以下属性，注意用点.查看：
@@ -96,8 +96,8 @@ def text_reply(msg):
     msg_id, from_user_name, to_user_name, msg_type, msg_content, msg_time, \
         msg_file, msg_file_length, msg_voice_length, msg_play_length, msg_url, wind_name, nick_name, we_type, we_text = get_msg_list(msg)
 
-    # 消息过滤, 只监测文字、注解、分享、图片、语音、视频、附件等
-    if we_type not in ["Text", "Note", "Sharing", "Picture", "Recording", "Video", "Attachment"]:
+    # 消息过滤, 只监测文字、注解、分享、图片、语音等
+    if we_type not in ["Text", "Note", "Sharing", "Picture", "Recording"]:
         logging.warning("message type isn't included, ignored")
         return
 
@@ -130,16 +130,15 @@ def text_reply(msg):
 
         if we_type == "Text":
             msg_content = we_text
-        elif we_type in ["Picture", "Recording", "Video", "Attachment"]:
-            if (msg_file_length <= 500000) and (msg_voice_length <= 60000) and (msg_play_length <= 10):
-                try:
-                    we_text(".Cache/" + msg_file)
-                    logging.warning("downloading %s to .Cache/", msg_file)
-                except:
-                    logging.error("downloading %s to .Cache/ error", msg_file)
-            msg_content = msg_file
         elif we_type == "Sharing":
             msg_content = we_text + ": " + msg_url
+        elif we_type in ["Picture", "Recording"]:
+            try:
+                we_text(".Cache/" + msg_file)
+                logging.warning("downloading %s to .Cache/", msg_file)
+            except Exception as excep:
+                logging.error("downloading %s to .Cache/ error: %s", msg_file, excep)
+            msg_content = msg_file
 
         my.send("【%s】中有消息被撤回:\nFrom: %s\nType: %s\nTime: %s\n%s" % (wind_name, nick_name, we_type, msg_time, msg_content), toUserName=my.to_user_name)
     return
