@@ -12,7 +12,6 @@ python_wechat.py by xianhu
 import time
 import itchat
 import logging
-import datetime
 from itchat.content import *
 
 # 初始化
@@ -52,11 +51,10 @@ def get_msg_list(msg):
 
     msg_type = msg["MsgType"]                   # 消息类型
     msg_content = msg["Content"]                # 消息内容
-    msg_time = datetime.datetime.fromtimestamp(msg["CreateTime"])  # 消息发送时间
+    msg_time = msg["CreateTime"]                # 消息发送时间
 
     msg_file = msg["FileName"]                  # 消息中所带文件的名称
     msg_file_length = msg["FileSize"]           # 消息中所带文件的大小
-    msg_file_length = int(msg_file_length) if msg_file_length.strip() else 0
     msg_voice_length = msg["VoiceLength"]       # 消息中所带语音的长度（毫秒）
     msg_play_length = msg["PlayLength"]         # 消息中所带视频的长度（秒）
     msg_url = msg["Url"]                        # 消息中所带链接的地址
@@ -75,7 +73,7 @@ def get_msg_list(msg):
     we_type = msg["Type"]                       # 消息类型
     we_text = msg["Text"]                       # 消息内容
 
-    logging.warning("show: nick_name=%s, wind_name=%s, we_type=%s, we_text=%s, msg_time=%s", msg_nick_name, wind_name, we_type, we_text, msg_time)
+    logging.warning("show: msg_nick_name=%s, wind_name=%s, we_type=%s, we_text=%s", msg_nick_name, wind_name, we_type, we_text)
     return msg_id, from_user_name, to_user_name, msg_type, msg_content, msg_time, msg_file, msg_file_length, msg_voice_length, msg_play_length, msg_url, \
         wind_name, msg_user_name, msg_nick_name, is_at, we_type, we_text
 
@@ -84,25 +82,25 @@ def get_msg_list(msg):
 @my.msg_register([TEXT, PICTURE, RECORDING, VIDEO, MAP, CARD, NOTE, SHARING, ATTACHMENT], isFriendChat=True, isGroupChat=True)
 def text_reply(msg):
     """
-    消息自动接收, 接受全部的消息
+    消息自动接收, 接受全部的消息（自己发送的消息除外）
     """
-    # 消息提取
-    msg_id, from_user_name, to_user_name, msg_type, msg_content, msg_time, msg_file, msg_file_length, msg_voice_length, msg_play_length, msg_url, \
-        wind_name, msg_user_name, msg_nick_name, is_at, we_type, we_text = get_msg_list(msg)
+    # 跳过来自自己的消息
+    if msg["FromUserName"] == my.loginInfo["User"]["UserName"]:
+        return
 
-    # 消息过滤, 只监测文字、图片、语音、注解、分享等
-    if we_type not in ["Text", "Picture", "Recording", "Note", "Sharing"]:
+    # 消息提取
+    msg_list = get_msg_list(msg)
+    msg_id, from_user_name, to_user_name, msg_type, msg_content, msg_time, msg_file, msg_file_length, msg_voice_length, msg_play_length, msg_url, \
+        wind_name, msg_user_name, msg_nick_name, is_at, we_type, we_text = msg_list
+
+    # 消息过滤, 只监测文字、图片、语音、名片、注解、分享等
+    if we_type not in ["Text", "Picture", "Recording", "Card", "Note", "Sharing"]:
         logging.warning("message type isn't included, ignored")
         return
 
-    # 处理来自自己的消息
-    if from_user_name == my.loginInfo["User"]["UserName"]:
-        logging.warning("message is from myself, ignored")
-        return
-
     # 消息存储，删除过期消息
-    my.msg_store[msg_id] = msg
-    for _id in [_id for _id in my.msg_store if time.time() - my.msg_store[_id]["CreateTime"] > 120]:
+    my.msg_store[msg_id] = msg_list
+    for _id in [_id for _id in my.msg_store if time.time() - my.msg_store[_id][5] > 120]:
         my.msg_store.pop(_id)
 
     # 保存消息中的内容（图片、语音等），不保存动态图片
@@ -113,15 +111,15 @@ def text_reply(msg):
         except Exception as excep:
             logging.error("downloading %s to .Cache/ error: %s", msg_file, excep)
 
-    # ==== 处理红包消息 ====
+    # ==== 处理群消息 ====
     if from_user_name.startswith("@@"):
         # ==== 处理红包消息 ====
         if we_type == "Note" and we_text.find("收到红包，请在手机上查看") >= 0:
-            my.send("【%s】中【%s】发红包啦，快抢！" % (wind_name, msg_nick_name), toUserName=my.to_user_name)
+            my.send("【%s】中有人发红包啦，快抢！" % wind_name, toUserName=my.to_user_name)
         # ==== 处理关键词消息 ====
         for key in my.global_keys:
             if we_type == "Text" and we_text.find(key) >= 0:
-                my.send("【%s】中【%s】提及关键字：%s" % (wind_name, msg_nick_name, key), toUserName=my.to_user_name)
+                my.send("【%s】中【%s】提及了关键字：%s" % (wind_name, msg_nick_name, key), toUserName=my.to_user_name)
                 my.send(we_text, toUserName=my.to_user_name)
                 break
         # ==== 群内是否被@ ====
@@ -131,20 +129,22 @@ def text_reply(msg):
 
     # ==== 撤回消息处理（必须为最后一步） ====
     if we_type == "Note" and we_text.find("撤回了一条消息") >= 0:
-        old_msg = my.msg_store.get(msg_content[msg_content.find("<msgid>")+7: msg_content.find("</msgid>")])
-        if not old_msg:
+        msg_list = my.msg_store.get(msg_content[msg_content.find("<msgid>")+7: msg_content.find("</msgid>")])
+        if not msg_list:
             logging.warning("not message id in my.msg_store")
             return
 
         msg_id, from_user_name, to_user_name, msg_type, msg_content, msg_time, msg_file, msg_file_length, msg_voice_length, msg_play_length, msg_url, \
-            wind_name, msg_user_name, msg_nick_name, is_at, we_type, we_text = get_msg_list(old_msg)
+            wind_name, msg_user_name, msg_nick_name, is_at, we_type, we_text = msg_list
         my.send("【%s】中【%s】撤回了自己发送的消息:\nType: %s\nTime: %s\n%s" % (wind_name, msg_nick_name, we_type, msg_time, msg_file), toUserName=my.to_user_name)
 
-        if we_type == "Text":
-            my.send(we_text, toUserName=my.to_user_name)
+        if we_type in ["Text", "Card"]:
+            my.send(str(we_text), toUserName=my.to_user_name)
         elif we_type == "Sharing":
             my.send(we_text + "\n" + msg_url, toUserName=my.to_user_name)
-        elif (we_type in ["Picture", "Recording"]) and (not msg_file.endswith(".gif")):
+        elif we_type == "Recording":
+            my.send_file(".Cache/" + msg_file, toUserName=my.to_user_name)
+        elif we_type == "Picture" and (not msg_file.endswith(".gif")):
             my.send_image(".Cache/" + msg_file, toUserName=my.to_user_name)
 
     return
@@ -219,7 +219,7 @@ my.run(debug=False)
 """
 
 """
-群消息（来自别人）：
+群消息：
 {
     'MsgId': '7844877618948840992',
     'FromUserName': '@@8dc5df044444d1fb8e3972e755b47adf9d07f5a032cae90a4d822b74ee1e4880',
@@ -331,115 +331,5 @@ my.run(debug=False)
     }>,
     'Type': 'Text',
     'Text': '就是那个，那个协议我们手上有吗'
-}
-
-群消息（来自自己）：
-WARNING: root: message: {
-    'MsgId': '6658361167561279652',
-    'FromUserName': '@e79dde912b8f817514c01f399ca9ba12',
-    'ToUserName': '@@cbd264b76a28d4f5bad27197de60735bc082c95ab49891cf64d745ff4be17e30',
-    'MsgType': 1,
-    'Content': '看来最近是没有线下活动了',
-    'Status': 3,
-    'ImgStatus': 1,
-    'CreateTime': 1498455090,
-    'VoiceLength': 0,
-    'PlayLength': 0,
-    'FileName': '',
-    'FileSize': '',
-    'MediaId': '',
-    'Url': '',
-    'AppMsgType': 0,
-    'StatusNotifyCode': 0,
-    'StatusNotifyUserName': '',
-    'HasProductId': 0,
-    'Ticket': '',
-    'ImgHeight': 0,
-    'ImgWidth': 0,
-    'SubMsgType': 0,
-    'NewMsgId': 6658361167561279652,
-    'OriContent': '',
-    'ActualNickName': '齐现虎',
-    'IsAt': False,
-    'ActualUserName': '@e79dde912b8f817514c01f399ca9ba12',
-    'User': <Chatroom: {
-        'MemberList': <ContactList: [
-            <ChatroomMember: {
-                'MemberList': <ContactList: []>,
-                'Uin': 0,
-                'UserName': '@143b0d468a5be892768e372aae5d3c97f20dd73c6f28a99092fb96d4fc7862e3',
-                'NickName': '李小盛',
-                'AttrStatus': 235557,
-                'PYInitial': '',
-                'PYQuanPin': '',
-                'RemarkPYInitial': '',
-                'RemarkPYQuanPin': '',
-                'MemberStatus': 0,
-                'DisplayName': '',
-                'KeyWord': ''
-            }>,
-            <ChatroomMember: {
-                'MemberList': <ContactList: []>,
-                'Uin': 0,
-                'UserName': '@edb9eb66b235ef72237ad025290813159b6d3e9cdaa15284ad7f6748b38c2c1f',
-                'NickName': '小z@德研社',
-                'AttrStatus': 103461,
-                'PYInitial': '',
-                'PYQuanPin': '',
-                'RemarkPYInitial': '',
-                'RemarkPYQuanPin': '',
-                'MemberStatus': 0,
-                'DisplayName': '小z研值512',
-                'KeyWord': ''
-            }>,
-        ]>,
-        'Uin': 0,
-        'UserName': '@@cbd264b76a28d4f5bad27197de60735bc082c95ab49891cf64d745ff4be17e30',
-        'NickName': '德研社z战队',
-        'HeadImgUrl': '/cgi-bin/mmwebwx-bin/webwxgetheadimg?seq=688463282&username=@@cbd264b76a28d4f5bad27197de60735bc082c95ab49891cf64d745ff4be17e30&skey=',
-        'ContactFlag': 2,
-        'MemberCount': 70,
-        'RemarkName': '',
-        'HideInputBarFlag': 0,
-        'Sex': 0,
-        'Signature': '',
-        'VerifyFlag': 0,
-        'OwnerUin': 0,
-        'PYInitial': 'DYSZZD',
-        'PYQuanPin': 'deyanshezzhandui',
-        'RemarkPYInitial': '',
-        'RemarkPYQuanPin': '',
-        'StarFriend': 0,
-        'AppAccountFlag': 0,
-        'Statues': 0,
-        'AttrStatus': 0,
-        'Province': '',
-        'City': '',
-        'Alias': '',
-        'SnsFlag': 0,
-        'UniFriend': 0,
-        'DisplayName': '',
-        'ChatRoomId': 0,
-        'KeyWord': '',
-        'EncryChatRoomId': '@be08ab93d4d5440069d6617df937b689',
-        'IsOwner': 0,
-        'IsAdmin': None,
-        'Self': <ChatroomMember: {
-            'MemberList': <ContactList: []>,
-            'Uin': 0,
-            'UserName': '@e79dde912b8f817514c01f399ca9ba12',
-            'NickName': '齐现虎',
-            'AttrStatus': 2147600869,
-            'PYInitial': '',
-            'PYQuanPin': '',
-            'RemarkPYInitial': '',
-            'RemarkPYQuanPin': '',
-            'MemberStatus': 0,
-            'DisplayName': '',
-            'KeyWord': 'qix'
-        }>
-    }>,
-    'Type': 'Text',
-    'Text': '看来最近是没有线下活动了'
 }
 """
