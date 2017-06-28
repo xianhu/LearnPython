@@ -97,7 +97,7 @@ class Message(object):
         self.we_type = msg["Type"]                      # 消息类型
         self.we_text = msg["Text"]                      # 消息内容
 
-        logging.warning("show: wind_name=%s, actual_send_name=%s, we_type=%s, we_text=%s", self.wind_name, self.actual_remark_name, self.we_type, self.we_text)
+        logging.warning("wind_name=%s, send_name=%s, we_type=%s, we_text=%s", self.wind_name, self.actual_remark_name, self.we_type, self.we_text)
         return
 
 
@@ -148,11 +148,11 @@ def process_message_revoke(msg):
             return
 
         if old_msg.from_user_name.startswith("@@"):
-            my.send("【%s】中【%s】撤回了自己发送的消息:\nType: %s\nTime: %s\n%s" %
-                    (old_msg.wind_name, old_msg.actual_remark_name, old_msg.we_type, old_msg.msg_time, old_msg.msg_file), toUserName=my.to_user_name)
+            my.send("【%s】中【%s】撤回了自己发送的消息:\nType: %s\n%s" %
+                    (old_msg.wind_name, old_msg.actual_remark_name, old_msg.we_type, old_msg.msg_file), toUserName=my.to_user_name)
         else:
-            my.send("【%s】撤回了自己发送的消息:\nType: %s\nTime: %s\n%s" %
-                    (old_msg.wind_name, old_msg.we_type, old_msg.msg_time, old_msg.msg_file), toUserName=my.to_user_name)
+            my.send("【%s】撤回了自己发送的消息:\nType: %s\n%s" %
+                    (old_msg.wind_name, old_msg.we_type, old_msg.msg_file), toUserName=my.to_user_name)
 
         if old_msg.we_type in ["Text", "Card"]:
             my.send(str(old_msg.we_text), toUserName=my.to_user_name)
