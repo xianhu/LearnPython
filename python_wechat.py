@@ -24,7 +24,7 @@ my.auto_login(hotReload=False, enableCmdQR=-2)
 # (4) chatroomList 群聊列表，每一项为一个Chatroom字典类，包括UserName, NickName, RemarkName, MemberCount, MemberList, Self等
 # (5) mpList 订阅号列表，每一项为一个MassivePlatform字典类，包括UserName, NickName等
 
-my.global_keys = ["创业", "算法", "人工智能", "机器学习"]
+my.global_keys = ["创业", "人工智能", "企业服务"]
 my.to_user_name = "filehelper"      # 消息接受者
 my.update_time = time.time()        # 信息更新时间
 my.msg_store = {}                   # 消息存储队列
@@ -105,11 +105,6 @@ def process_message_group(msg):
     """
     处理群消息
     """
-    # 消息过滤, 只监测文字、图片、语音、名片、注解、分享等
-    if msg.we_type not in ["Text", "Picture", "Recording", "Card", "Note", "Sharing"]:
-        logging.warning("process_message_group: message type isn't included, ignored")
-        return
-
     # ==== 处理红包消息 ====
     if msg.we_type == "Note" and msg.we_text.find("收到红包，请在手机上查看") >= 0:
         my.send("【%s】中有人发红包啦，快抢！" % msg.wind_name, toUserName=my.to_user_name)
@@ -132,11 +127,6 @@ def process_message_revoke(msg):
     """
     处理撤回消息
     """
-    # 消息过滤, 只监测文字、图片、语音、名片、注解、分享等
-    if msg.we_type not in ["Text", "Picture", "Recording", "Card", "Note", "Sharing"]:
-        logging.warning("process_message_revoke: message type isn't included, ignored")
-        return
-
     # 消息存储，删除过期消息
     my.msg_store[msg.msg_id] = msg
     for _id in [_id for _id in my.msg_store if time.time() - my.msg_store[_id].msg_time > 120]:
@@ -186,6 +176,11 @@ def text_reply(msg):
 
     # 消息提取
     msg = Message(msg)
+
+    # 消息过滤, 只监测文字、图片、语音、名片、注解、分享等
+    if msg.we_type not in ["Text", "Picture", "Recording", "Card", "Note", "Sharing"]:
+        logging.warning("process_message_group: message type isn't included, ignored")
+        return
 
     # 处理群消息
     if msg.from_user_name.startswith("@@"):
