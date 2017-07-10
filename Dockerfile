@@ -1,5 +1,5 @@
 # Dockerfile by xianhu: build a docker image for spider or flask
-# usage: docker build -t user/centos:v06 .
+# usage: docker build -t user/centos:v08 .
 
 FROM centos:6.8
 
