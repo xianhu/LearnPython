@@ -5,8 +5,7 @@ python_wechat.py by xianhu
 主要包括如下功能：
 (1) 自动提醒群红包
 (2) 自动监测被撤回消息
-(3) 群统计：发言人数、发言次数等
-(4) 群关键字提醒，群被@提醒
+(3) 群关键字提醒，群被@提醒
 """
 
 import time
@@ -16,7 +15,8 @@ from itchat.content import *
 
 # 初始化
 my = itchat.new_instance()
-my.auto_login(hotReload=False, enableCmdQR=-2)
+my.auto_login(hotReload=False, enableCmdQR=2)
+
 # my还包括的以下属性，注意用点.查看：
 # (1) alive 是否还活着，isLogging 是否已登陆
 # (2) loginInfo 登陆信息，其中的User属性为自己的信息User字典类，包括UserName, NickName, RemarkName, Sex(1 or 2), Signature, Province, City等
