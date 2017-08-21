@@ -50,7 +50,7 @@ RUN make distclean
 ADD ./requirements.txt /root/
 WORKDIR /root/
 RUN pip3 install --upgrade pip
-RUN pip3 install -r Dockerfile_requirements.txt
+RUN pip3 install -r requirements.txt
 
 # clean everything
 RUN rm -rf /root/*
