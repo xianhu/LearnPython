@@ -1,5 +1,5 @@
 # Dockerfile by xianhu: build a docker image for spider or flask
-# usage: docker build -t user/centos:v08 .
+# usage: docker build -t user/centos:v09 .
 
 FROM centos:6.8
 
@@ -23,6 +23,12 @@ RUN yum install -y gcc
 RUN yum install -y make
 RUN yum install -y zlib-devel
 RUN yum install -y openssl-devel
+
+# install nginx
+ADD ./nginx.repo /etc/yum.repos.d/
+RUN yum install -y nginx
+
+# clean yum cache
 RUN yum clean all
 
 # restart crontab service
@@ -41,7 +47,7 @@ RUN make clean
 RUN make distclean
 
 # install libs of python3
-ADD ./Dockerfile_requirements.txt /root/
+ADD ./requirements.txt /root/
 WORKDIR /root/
 RUN pip3 install --upgrade pip
 RUN pip3 install -r Dockerfile_requirements.txt
