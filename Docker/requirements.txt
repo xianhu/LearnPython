@@ -17,6 +17,7 @@ Flask-Migrate
 Flask-Moment
 Flask-Script
 Flask-SQLAlchemy
+Flask-RESTful
 Flask-WTF
 gunicorn
 uWSGI
