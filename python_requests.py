@@ -116,7 +116,7 @@ r = requests.get("http://example.com/some/cookie/setting/url")
 print(r.cookies["example_cookie_name"])         # "example_cookie_value"
 
 # 要想发送你的cookies到服务器, 可以使用cookies参数(一个字典)
-cookies = dict(cookies_are="working")
+cookies = {"cookies_are": "working"}
 r = requests.get("http://httpbin.org/cookies", cookies=cookies)
 print(r.text)
 
@@ -206,7 +206,6 @@ requests.get("https://kennethreitz.com", cert="/wrong_path/server.pem")
 # 流式上传, 允许你发送大的数据流或文件而无需先把它们读入内存
 with open("massive-body") as f:
     requests.post("http://some.url/streamed", data=f)
-
 
 # 事件挂钩, 可用的钩子: response(从一个请求产生的响应)
 # 你可以通过传递一个 {hook_name: callback_function} 字典给 hooks 请求参数为每个请求分配一个钩子函数
