@@ -17,10 +17,11 @@ RUN yum update -y
 RUN yum install -y xz
 RUN yum install -y vim
 RUN yum install -y git
-RUN yum install -y wget
-RUN yum install -y crontabs
 RUN yum install -y gcc
 RUN yum install -y make
+RUN yum install -y wget
+RUN yum install -y screen
+RUN yum install -y crontabs
 RUN yum install -y zlib-devel
 RUN yum install -y openssl-devel
 
