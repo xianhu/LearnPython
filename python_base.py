@@ -285,11 +285,11 @@
         def __missing__(self, key):
             self[key] = []
             return self[key]
-    dct = Dict()
+    dct = dict()
     dct["foo"].append(1)    # 这有点类似于collections.defalutdict
     dct["foo"]              # [1]
     
-#-- 元组和列表的唯一区别在于元组是不可变对象，列表时可变对象
+#-- 元组和列表的唯一区别在于元组是不可变对象，列表是可变对象
     a = [1, 2, 3]           # a[1] = 0, OK
     a = (1, 2, 3)           # a[1] = 0, Error
     a = ([1, 2])            # a[0][1] = 0, OK
@@ -315,7 +315,7 @@
     fp.isatty()                             # 文件是否是一个终端设备文件（unix系统中的）
     fp.tell()                               # 返回文件操作标记的当前位置，以文件的开头为原点
     fp.next()                               # 返回下一行，并将文件操作标记位移到下一行。把一个file用于for … in file这样的语句时，就是调用next()函数来实现遍历的。
-    fp.seek(offset[,whence])                # 将文件打操作标记移到offset的位置。whence可以为0表示从头开始计算，1表示以当前位置为原点计算。2表示以文件末尾为原点进行计算。
+    fp.seek(offset[,whence])                # 将文件打开操作标记移到offset的位置。whence为0表示从头开始计算，1表示以当前位置为原点计算。2表示以文件末尾为原点进行计算。
     fp.seekable()                           # 是否可以seek
     fp.truncate([size])                     # 把文件裁成规定的大小，默认的是裁到当前文件操作标记的位置。
     for line in open('data'): 
@@ -368,7 +368,8 @@
     A = 1 if X else 2
     A = 1 if X else (2 if Y else 3)
     # 也可以使用and-or语句（一条语句实现多个if-else）
-    result = (a > 20 and "big than 20" or a > 10 and "big than 10" or a > 5 and "big than 5")
+    a = 6
+    result = (a > 20 and "big than 20" or a > 10 and "big than 10" or a > 5 and "big than 5")    # 返回"big than 20"
 
 #-- Python的while语句或者for语句可以带else语句 当然也可以带continue/break/pass语句
     while a > 1:
@@ -671,7 +672,8 @@
 
     """IO操作"""
     file(filename [, mode [, bufsize]]) # file类型的构造函数。
-    input([prompt])                     # 获取用户输入，推荐使用raw_input，因为该函数将不会捕获用户的错误输入
+    input([prompt])                     # 获取用户输入，推荐使用raw_input，因为该函数将不会捕获用户的错误输入，意思是自行判断类型
+    # 在 Built-in Functions 里有一句话是这样写的：Consider using the raw_input() function for general input from users.
     raw_input([prompt])                 # 设置输入，输入都是作为字符串处理
     open(name[, mode[, buffering]])     # 打开文件，与file有什么不同？推荐使用open
     
@@ -710,7 +712,7 @@
     repr(object)                        # 将一个对象变幻为可打印的格式
     slice(start, stop[, step])          # 产生分片对象
     type(object)                        # 返回该object的类型
-    vars([object])                      # 返回对象的变量名、变量值得字典
+    vars([object])                      # 返回对象的变量名、变量值的字典
         a = Class();                    # Class为一个空类
         a.name = 'qi', a.age = 9
         vars(a)                         # {'name':'qi', 'age':9}
@@ -828,7 +830,7 @@
 #-- 返回1中 数据属性spam是属于类 而不是对象
     I1 = C1('bob'); I2 = C2('tom')      # 此时I1和I2的spam都为42 但是都是返回的C1的spam属性
     C1.spam = 24                        # 此时I1和I2的spam都为24
-    I1.spam = 3                         # 此时I1新增自有属性spam 值为2 I2和C1的spam还都为24
+    I1.spam = 3                         # 此时I1新增自有属性spam 值为3 I2和C1的spam还都为24
     
 #-- 类方法调用的两种方式
     instance.method(arg...)
@@ -891,7 +893,7 @@
     x('hello world')
     x = Spam.doit                       # 类的无绑定方法对象 类名 + 函数
     x(obj, 'hello world')
-    x = Spam.selfless                   # 类的无绑定方法是函数 在3.0之前无效
+    x = Spam.selfless                   # 类的无绑定方法函数 在3.0之前无效
     x('hello world')
 
 #-- 获取对象信息: 属性和方法
@@ -1082,8 +1084,7 @@
     # 动态类型语言中 类可以动态创建 type函数可用于创建新类型
         def fn(self, name='world'):           # 先定义函数
             print('Hello, %s.' % name)
-        Hello = type('Hello', (object,), dict(hello=fn)) 
-        # 创建Hello类 type原型: type(name, bases, dict)
+        Hello = type('Hello', (object,), dict(hello=fn))    # 创建Hello类 type原型: type(name, bases, dict)
         h = Hello()                           # 此时的h和上边的h一致
 
 
