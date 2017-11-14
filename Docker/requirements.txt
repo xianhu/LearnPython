@@ -3,6 +3,7 @@ pylint
 lxml
 html5lib
 pybloom_live
+fake-useragent
 beautifulsoup4
 aiohttp
 requests
