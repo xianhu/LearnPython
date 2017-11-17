@@ -1,5 +1,5 @@
 # Dockerfile by xianhu: build a docker image for spider or flask
-# usage: docker build -t user/centos:v11 .
+# usage: docker build -t user/centos:v12 .
 
 FROM centos:6.8
 
@@ -11,6 +11,9 @@ ENV LC_ALL en_US.UTF-8
 
 # change system local time
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# fix: warning: rpmts_HdrFromFdno
+rpm --import /etc/pki/rpm-gpg/RPM*
 
 # update yum and install something
 RUN yum update -y
