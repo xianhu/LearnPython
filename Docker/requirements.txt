@@ -23,3 +23,5 @@ Flask-Bootstrap
 Flask-SQLAlchemy
 gunicorn
 uWSGI
+jupyter
+tensorflow

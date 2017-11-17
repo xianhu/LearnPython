@@ -23,6 +23,7 @@ RUN yum install -y wget
 RUN yum install -y screen
 RUN yum install -y crontabs
 RUN yum install -y zlib-devel
+RUN yum install -y sqlite-devel
 RUN yum install -y openssl-devel
 
 # install nginx
@@ -37,11 +38,11 @@ RUN service crond restart
 
 # download python3
 WORKDIR /root/
-RUN wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tar.xz
-RUN tar -xf Python-3.6.1.tar.xz
+RUN wget https://www.python.org/ftp/python/3.5.4/Python-3.5.4.tar.xz
+RUN tar -xf Python-3.5.4.tar.xz
 
 # install python3
-WORKDIR /root/Python-3.6.1
+WORKDIR /root/Python-3.5.4
 RUN ./configure
 RUN make install
 RUN make clean
