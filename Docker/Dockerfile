@@ -13,7 +13,7 @@ ENV LC_ALL en_US.UTF-8
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # fix: warning: rpmts_HdrFromFdno
-rpm --import /etc/pki/rpm-gpg/RPM*
+RUN rpm --import /etc/pki/rpm-gpg/RPM*
 
 # update yum and install something
 RUN yum update -y
