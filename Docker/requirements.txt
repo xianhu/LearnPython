@@ -23,4 +23,9 @@ Flask-Bootstrap
 Flask-SQLAlchemy
 gunicorn
 uWSGI
+numpy
+scipy
+matplotlib
+pandas
+scikit-learn
 jupyter
