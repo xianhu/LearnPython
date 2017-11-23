@@ -26,7 +26,7 @@ def simple_plot():
 
     # 生成画布，并设定标题
     plt.figure(figsize=(8, 6), dpi=80)
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("简单曲线图", fontproperties=myfont)
     plt.grid(True)
 
     # 设置X轴
@@ -40,8 +40,8 @@ def simple_plot():
     plt.yticks(np.linspace(-1, 1, 9, endpoint=True))
 
     # 画两条曲线
-    plt.plot(x, y_cos, "b--", linewidth=2.0, label="cos事例")
-    plt.plot(x, y_sin, "g-", linewidth=2.0, label="sin事例")
+    plt.plot(x, y_cos, "b--", linewidth=2.0, label="cos示例")
+    plt.plot(x, y_sin, "g-", linewidth=2.0, label="sin示例")
 
     # 设置图例位置,loc可以为[upper, lower, left, right, center]
     plt.legend(loc="upper left", prop=myfont, shadow=True)
@@ -62,7 +62,7 @@ def simple_advanced_plot():
 
     # 生成画布, 并设定标题
     plt.figure(figsize=(8, 6), dpi=80)
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("复杂曲线图", fontproperties=myfont)
     plt.grid(True)
 
     # 画图的另外一种方式
@@ -129,7 +129,7 @@ def bar_plot():
     means_women = (25, 32, 34, 20, 25)
 
     # 设置标题
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("柱状图", fontproperties=myfont)
 
     # 设置相关参数
     index = np.arange(len(means_men))
@@ -167,7 +167,7 @@ def barh_plot():
     means_women = (25, 32, 34, 20, 25)
 
     # 设置标题
-    plt.title("plot title")
+    plt.title("横向柱状图", fontproperties=myfont)
 
     # 设置相关参数
     index = np.arange(len(means_men))
@@ -205,7 +205,7 @@ def bar_advanced_plot():
     means_women = np.array((25, 32, 34, 20, 25, 20, 35, 30, 35, 27))
 
     # 设置标题
-    plt.title("plot title")
+    plt.title("高级柱状图", fontproperties=myfont)
 
     # 设置相关参数
     index = np.arange(len(means_men))
@@ -247,7 +247,7 @@ def table_plot():
     ])
 
     # 设置标题
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("层次柱状图", fontproperties=myfont)
 
     # 设置相关参数
     index = np.arange(len(data[0]))
@@ -279,7 +279,7 @@ def histograms_plot():
     x = mu + sigma * np.random.randn(10000)
 
     # 设置标题
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("直方图", fontproperties=myfont)
 
     # 画直方图, 并返回相关结果
     n, bins, patches = plt.hist(x, bins=50, normed=1, cumulative=False, color="green", alpha=0.6, label="直方图")
@@ -307,7 +307,7 @@ def pie_plot():
     colors = ["yellowgreen", "gold", "lightskyblue", "lightcoral"]
 
     # 设置标题
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("饼图", fontproperties=myfont)
 
     # 设置突出参数
     explode = [0, 0.05, 0, 0]
@@ -334,7 +334,7 @@ def scatter_plot():
     y_index = np.random.random(point_count)
 
     # 设置标题
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("散点图", fontproperties=myfont)
 
     # 设置相关参数
     color_list = np.random.random(point_count)
@@ -358,7 +358,7 @@ def fill_plot():
     y = np.sin(x)
 
     # 设置标题
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("填充图", fontproperties=myfont)
 
     # 画图
     plt.plot(x, y, color="blue", alpha=1.00)
@@ -388,7 +388,7 @@ def radar_plot():
 
     # 画图方式
     plt.subplot(111, polar=True)
-    plt.title("可视化标题", fontproperties=myfont)
+    plt.title("雷达图", fontproperties=myfont)
 
     # 设置"theta grid"/"radar grid"
     plt.thetagrids(theta*(180/np.pi), labels=labels, fontproperties=myfont)
@@ -418,8 +418,10 @@ def three_dimension_scatter():
 
     # 生成画布(两种形式)
     fig = plt.figure()
-    # ax = fig.gca(projection="3d", title="plot title")
-    ax = fig.add_subplot(111, projection="3d", title="plot title")
+    fig.suptitle("三维散点图", fontproperties=myfont)
+
+    # ax = fig.gca(projection="3d")
+    ax = fig.add_subplot(111, projection="3d")
 
     # 画三维散点图
     ax.scatter(x, y, z, s=scale, c=color, marker=".")
