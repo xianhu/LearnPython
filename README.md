@@ -6,6 +6,8 @@
 
 ### python_visual.py: 15张图入门Matplotlib
 
+### python_visual_animation.py: 使用Matplotlib画动态图实例
+
 ### python_spider.py: 一个很“水”的Python爬虫入门代码文件
 
 ### python_weibo.py: “史上最详细”的Python模拟登录新浪微博流程
