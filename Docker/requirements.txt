@@ -2,6 +2,7 @@ virtualenv
 pylint
 lxml
 html5lib
+xmltodict
 pybloom_live
 fake-useragent
 beautifulsoup4
