@@ -503,5 +503,3 @@ def three_dimension_bar():
     plt.show()
     return
 # three_dimension_bar()
-
-simple_plot()
