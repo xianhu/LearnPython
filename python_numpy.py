@@ -147,4 +147,60 @@ print(arr2_flat)
 for i in arr2.flat: # 也可以用arr2.flatten()
     print(i)
 
+# 矩阵合并与分割  
+# 矩阵合并
+arr1=np.array([1,2,3,6])
+arr2=np.arange(4)
+arr3=np.arange(2,16+1,2).reshape(2,4)
+print(arr1)
+print(arr2)
+print(arr3)
 
+arr_hor=np.hstack((arr1,arr2)) # 水平合并，horizontal
+arr_ver=np.vstack((arr1,arr3)) # 垂直合并，vertical
+print(arr_hor)
+print(arr_ver)
+
+# 矩阵分割
+print('arr3: ',arr3)
+print(np.split(arr3,4,axis=1)) # 将矩阵按列均分成4块
+print(np.split(arr3,2,axis=0)) # 将矩阵按行均分成2块
+print(np.hsplit(arr3,4)) # 将矩阵按列均分成4块
+print(np.vsplit(arr3,2)) # 将矩阵按行均分成2块
+print(np.array_split(arr3,3,axis=1)) # 将矩阵进行不均等划分  
+
+# numpy复制：浅复制，深复制  
+# 浅复制
+arr1=np.array([3,1,2,3])
+print(arr1)
+a1=arr1
+b1=a1
+# 通过上述赋值运算，arr1,a1,b1都指向了同一个地址（浅复制）
+print(a1 is arr1)
+print(b1 is arr1)
+print(id(a1))
+print(id(b1))
+print(id(arr1))
+
+# 会发现通过b1[0]改变内容，arr1,a1,b1的内容都改变了
+b1[0]=6
+print(b1)
+print(a1)
+print(arr1)
+
+# 深复制
+arr2=np.array([3,1,2,3])
+print('\n')
+print(arr2)
+b2=arr2.copy() # 深复制，此时b2拥有不同于arr2的空间
+a2=b2.copy()
+# 通过上述赋值运算，arr1,a1,b1都指向了不同的地址（深复制）
+print(id(arr2))
+print(id(a2))
+print(id(b2))
+# 此时改变b2,a2的值，互不影响
+b2[0]=1
+a2[0]=2
+print(b2)
+print(a2)
+print(arr2)
