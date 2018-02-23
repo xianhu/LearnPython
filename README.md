@@ -53,7 +53,9 @@
 
 ### python_wechat.py: 玩点好玩的--自己写一个微信小助手
 
-### python_csv.py: Python中CSV文件的简单读写
+### python_csv.py: Python中CSV文件的简单读写  
+
+### python_numpy.py: 使用numpy进行矩阵操作
 ===================================================================================================
 
 ### 您可以fork该项目, 并在修改后提交Pull request
