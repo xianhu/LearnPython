@@ -1,6 +1,5 @@
 # LearnPython
 以撸代码的形式学习Python, 具体说明在[知乎专栏-撸代码,学知识](https://zhuanlan.zhihu.com/pythoner)  
-[Python知识点总结](https://www.jianshu.com/p/2aeee1ed59ec)
 
 ===================================================================================================
 ### python_base.py: 千行代码入门Python
