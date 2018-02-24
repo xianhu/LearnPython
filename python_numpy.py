@@ -204,3 +204,115 @@ a2[0]=2
 print(b2)
 print(a2)
 print(arr2)
+  
+# 线性代数模块（linalg）
+# 求范数
+a=np.array([5,12])
+print(a)
+b=np.linalg.norm(a) # norm表示范数，默认求2范数，ord=1求1范数，ord=np.inf求无穷范数
+print(b)
+
+# 求矩阵的迹、行列式、秩、特征值、特征向量
+b = np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+print(np.trace(b))      # 15，求矩阵的迹（主对角线上各个元素的总和）
+
+c=np.linalg.det(b)
+print(c)                # 输出一个很小的值6.66133814775e-16，求矩阵的行列式值
+                        # 如果希望输出为0，使用round(c, 2)，四舍五入保留小数点后两位
+                        # 不过对精度要求高可以使用decimal模块
+
+c=np.linalg.matrix_rank(b)
+print(c)                # 2，求矩阵的秩
+
+u,v=np.linalg.eig(b) # u为特征值
+print(u)
+print(v)
+
+# 矩阵分解
+# Cholesky分解并重建
+d = np.array([
+    [2, 1],
+    [1, 2]
+])
+
+l = np.linalg.cholesky(d)
+print(l) # 得到下三角矩阵
+e=np.dot(l, l.T)
+print(e) # 重建得到矩阵d
+
+
+# 对不正定矩阵，进行SVD分解并重建
+U, s, V = np.linalg.svd(d)
+
+S = np.array([
+    [s[0], 0],
+    [0, s[1]]
+])
+
+print(np.dot(U, np.dot(S, V))) # 重建得到矩阵d
+
+# 矩阵乘法
+# https://docs.scipy.org/doc/numpy/reference/generated/numpy.dot.html#numpy.dot
+print(np.dot(3, 4)) # 12，0-D矩阵相乘（也就是标量相乘）
+
+print(np.dot([2j, 3j], [2j, 3j])) # (-13+0j)，1-D矩阵相乘（实际上是向量做点积）
+
+a=[[1, 0], [0, 1]]
+b=[[4, 1, 0], [2, 2, 0]]
+print(np.dot(a, b))
+'''
+array([[4, 1],
+    [2, 2]])
+2-D矩阵相乘
+这里是2*2矩阵和2*3矩阵相乘，结果为2*3矩阵
+'''
+
+a=[[1, 0], [1, 2]]
+b=[2,2]
+c=np.dot(a,b)
+print(c) 
+'''
+[2 6]
+注意这里b是向量
+numpy处理时并不是按照矩阵乘法规则计算
+而是向量点积
+也就是np.dot([1, 0],[1, 2])和np.dot([1, 2],[2,2])
+'''
+
+# 再做个实验来区别向量乘法和矩阵乘法
+b=np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+# 这里插播一下，np.array([1,0,1])是3维向量，而不是1*3的矩阵
+c1=np.array([[1,0,2]]) 
+print(c1.shape) # (1, 3)，这是一个1*3的矩阵
+c2=np.array([1,0,2])
+print(c2.shape) # (3,)，这是一个3维向量
+
+# print(np.dot(b,c1)) # 报错，不符合矩阵乘法规则
+print(np.dot(b,c2)) # [ 7 16 25]，点积运算
+
+print(np.dot(c1,b)) # [[15 18 21]]，矩阵乘法运算规则
+print(np.dot(c2,b)) # [15 18 21]，点积运算
+
+# 还要补充一下，如果是用python自带的*运算符计算则是广播机制
+print(b*c1) # print(b*c2)结果一样
+'''
+[[ 1  0  6]
+ [ 4  0 12]
+ [ 7  0 18]]
+'''
+print(b+c1) # print(b*c2)结果一样
+'''
+[[ 2  2  5]
+ [ 5  5  8]
+ [ 8  8 11]]
+'''
