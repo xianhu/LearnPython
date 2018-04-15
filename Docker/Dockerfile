@@ -1,5 +1,5 @@
 # Dockerfile by xianhu: build a docker image for spider or flask
-# usage: docker build -t user/centos:v14 .
+# usage: docker build -t user/centos:v15 .
 
 FROM centos:6.8
 
@@ -41,11 +41,11 @@ RUN service crond restart
 
 # download python3
 WORKDIR /root/
-RUN wget https://www.python.org/ftp/python/3.5.4/Python-3.5.4.tar.xz
-RUN tar -xf Python-3.5.4.tar.xz
+RUN wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz
+RUN tar -xf Python-3.6.5.tar.xz
 
 # install python3
-WORKDIR /root/Python-3.5.4
+WORKDIR /root/Python-3.6.5
 RUN ./configure
 RUN make install
 RUN make clean
