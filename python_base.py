@@ -369,7 +369,7 @@
     A = 1 if X else (2 if Y else 3)
     # 也可以使用and-or语句（一条语句实现多个if-else）
     a = 6
-    result = (a > 20 and "big than 20" or a > 10 and "big than 10" or a > 5 and "big than 5")    # 返回"big than 20"
+    result = (a > 20 and "big than 20" or a > 10 and "big than 10" or a > 5 and "big than 5")    # 返回"big than 5"
 
 #-- Python的while语句或者for语句可以带else语句 当然也可以带continue/break/pass语句
     while a > 1:

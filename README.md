@@ -1,5 +1,5 @@
 # LearnPython
-以撸代码的形式学习Python, 具体说明在[知乎专栏-撸代码,学知识](https://zhuanlan.zhihu.com/pythoner)
+以撸代码的形式学习Python, 具体说明在[知乎专栏-撸代码,学知识](https://zhuanlan.zhihu.com/pythoner)  
 
 ===================================================================================================
 ### python_base.py: 千行代码入门Python
@@ -52,7 +52,9 @@
 
 ### python_wechat.py: 玩点好玩的--自己写一个微信小助手
 
-### python_csv.py: Python中CSV文件的简单读写
+### python_csv.py: Python中CSV文件的简单读写  
+
+### python_numpy.py: 使用numpy进行矩阵操作
 ===================================================================================================
 
 ### 您可以fork该项目, 并在修改后提交Pull request
