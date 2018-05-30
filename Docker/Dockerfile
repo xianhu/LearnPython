@@ -1,6 +1,6 @@
 # Dockerfile by xianhu: build a docker image
 # usage: docker build -t user/centos .
-# usage: docker run -d --privileged user/centos
+# usage: docker run -dt --privileged user/centos
 # usage: docker exec -it containerid /bin/bash
 
 FROM centos:7
@@ -32,13 +32,13 @@ RUN yum install -y sqlite-devel
 RUN yum install -y openssl-devel
 
 # install python
-RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-RUN yum -y install python36u
-RUN yum -y install python36u-pip
-RUN yum -y install python36u-devel
+RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+RUN yum install -y python36u
+RUN yum install -y python36u-pip
+RUN yum install -y python36u-devel
 
 # install nginx
-ADD ./nginx.repo /etc/yum.repos.d/
+RUN yum install -y epel-release
 RUN yum install -y nginx
 
 # clean yum cache
