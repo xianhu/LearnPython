@@ -320,6 +320,10 @@
     fp.truncate([size])                     # 把文件裁成规定的大小，默认的是裁到当前文件操作标记的位置。
     for line in open('data'): 
         print(line)                         # 使用for语句，比较适用于打开比较大的文件
+    with open('data') as file:
+        print(file.readline())              # 使用with语句，可以保证文件关闭
+    with open('data') as file:
+        lines = file.readlines()            # 一次读入文件所有行，并关闭文件
     open('f.txt', encoding = 'latin-1')     # Python3.x Unicode文本文件
     open('f.bin', 'rb')                     # Python3.x 二进制bytes文件
     # 文件对象还有相应的属性：buffer closed encoding errors line_buffering name newlines等
