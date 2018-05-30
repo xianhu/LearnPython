@@ -1,5 +1,7 @@
 # Dockerfile by xianhu: build a docker image
-# usage: docker build -t user/centos:v16 .
+# usage: docker build -t user/centos .
+# usage: docker run -d --privileged user/centos
+# usage: docker exec -it containerid /bin/bash
 
 FROM centos:7
 MAINTAINER xianhu <qixianhu@qq.com>
@@ -52,4 +54,5 @@ RUN pip3.6 install -r requirements.txt
 RUN rm -rf /root/*
 
 # cmd command
-CMD /bin/bash
+# CMD /bin/bash
+ENTRYPOINT /usr/sbin/init
