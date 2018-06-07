@@ -1,9 +1,14 @@
 # Dockerfile by xianhu: build a docker image
-# usage: docker build -t user/centos .
-# usage: docker run -dt --privileged user/centos
-# usage: docker exec -it containerid /bin/bash
+# centos6:
+#         docker build -t user/centos6 .
+#         docker run -it --name test [-p -v] user/centos6
+#         docker attach test
+# centos7:
+#         docker build -t user/centos7 .
+#         docker run -dt --privileged --name test [-p -v] user/centos7
+#         docker exec -it test /bin/bash
 
-FROM centos:7
+FROM centos:6.9
 MAINTAINER xianhu <qixianhu@qq.com>
 
 # change system environments
@@ -32,7 +37,8 @@ RUN yum install -y sqlite-devel
 RUN yum install -y openssl-devel
 
 # install python
-RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+RUN yum install -y https://centos6.iuscommunity.org/ius-release.rpm
+# RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm
 RUN yum install -y python36u
 RUN yum install -y python36u-pip
 RUN yum install -y python36u-devel
@@ -53,6 +59,8 @@ RUN pip3.6 install -r requirements.txt
 # clean everything
 RUN rm -rf /root/*
 
-# cmd command
-# CMD /bin/bash
-ENTRYPOINT /usr/sbin/init
+# centos6
+CMD /bin/bash
+
+# centos7
+# ENTRYPOINT /usr/sbin/init
