@@ -4,6 +4,7 @@
 python_spider.py by xianhu
 """
 
+import requests
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -94,3 +95,12 @@ password_mgr.add_password(realm=None, uri=url, user='username', passwd='password
 handler = urllib.request.HTTPBasicAuthHandler(password_mgr)         # 创建HTTPBasicAuthHandler
 opener = urllib.request.build_opener(handler)                       # 创建opner
 response = opener.open(url, timeout=10)                             # 获取数据
+
+
+# 使用Sockets代理
+import socks
+import socket
+
+socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 1080)
+socket.socket =socks.socksocket
+requests.get("http://www.baidu.com/s?ie=utf-8&wd=ip")

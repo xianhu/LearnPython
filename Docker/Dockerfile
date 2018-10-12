@@ -1,8 +1,14 @@
-# Dockerfile by xianhu: build a docker image for spider or flask
-# usage: docker build -t user/centos:v14 .
+# Dockerfile by xianhu: build a docker image
+# centos6:
+#         docker build -t user/centos6 .
+#         docker run -it --name test [-p -v] user/centos6
+#         docker attach test
+# centos7:
+#         docker build -t user/centos7 .
+#         docker run -dt --privileged --name test [-p -v] user/centos7
+#         docker exec -it test /bin/bash
 
-FROM centos:6.8
-
+FROM centos:6.9
 MAINTAINER xianhu <qixianhu@qq.com>
 
 # change system environments
@@ -24,48 +30,37 @@ RUN yum install -y gcc
 RUN yum install -y make
 RUN yum install -y wget
 RUN yum install -y screen
+RUN yum install -y gcc-c++
 RUN yum install -y crontabs
 RUN yum install -y zlib-devel
 RUN yum install -y sqlite-devel
 RUN yum install -y openssl-devel
 
+# install python
+RUN yum install -y https://centos6.iuscommunity.org/ius-release.rpm
+# RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+RUN yum install -y python36u
+RUN yum install -y python36u-pip
+RUN yum install -y python36u-devel
+
 # install nginx
-ADD ./nginx.repo /etc/yum.repos.d/
+RUN yum install -y epel-release
 RUN yum install -y nginx
 
 # clean yum cache
 RUN yum clean all
 
-# restart crontab service
-RUN service crond restart
-
-# download python3
-WORKDIR /root/
-RUN wget https://www.python.org/ftp/python/3.5.4/Python-3.5.4.tar.xz
-RUN tar -xf Python-3.5.4.tar.xz
-
-# install python3
-WORKDIR /root/Python-3.5.4
-RUN ./configure
-RUN make install
-RUN make clean
-RUN make distclean
-
 # install libs of python3
 ADD ./requirements.txt /root/
 WORKDIR /root/
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+RUN pip3.6 install --upgrade pip
+RUN pip3.6 install -r requirements.txt
 
 # clean everything
 RUN rm -rf /root/*
 
-# change python to python3
-RUN ln -sf /usr/local/bin/python3 /usr/bin/python
-RUN ln -sf /usr/bin/python2.6 /usr/bin/python2
-
-# change /usr/bin/yum
-RUN sed -i 's/usr\/bin\/python/usr\/bin\/python2/g' /usr/bin/yum
-
-# cmd command
+# centos6
 CMD /bin/bash
+
+# centos7
+# ENTRYPOINT /usr/sbin/init
