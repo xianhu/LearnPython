@@ -26,7 +26,8 @@ gunicorn
 uWSGI
 numpy
 scipy
-matplotlib
 pandas
 scikit-learn
+matplotlib
+plotly
 jupyter
