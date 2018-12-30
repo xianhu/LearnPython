@@ -4,18 +4,10 @@
 Dash实例
 """
 
-import datetime
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_bootstrap_components as dbc
+import datetime
 from dash.dependencies import Output, Input, State
-from Dash.config import *
-from Dash.components import drop_down_list
-from Dash.components import email_input, password_input, email_input_row, password_input_row
-from Dash.components import radioitems, checklist, radioitems_inline, checklist_inline
-from Dash.components import tab1_content, tab2_content
-from Dash.components import generate_table
+from Dash.components import *
 
 
 # 创建应用
@@ -25,24 +17,20 @@ app.scripts.config.serve_locally = True
 # 创建布局
 app.layout = html.Div(children=[
     # DIV布局 ========================================================================================
-    dbc.Row(children=dbc.Col(
-        html.Div("单独的DIV", style={"backgroundColor": color_primary_light, "height": 100, "padding": 20, "margin": 5})
-    )),
+    dbc.Row(children=dbc.Col(html.Div("单独的DIV", style={"backgroundColor": color_primary_light, "height": 100, "padding": 10, "margin": 5}))),
     dbc.Row(children=[
-        dbc.Col(html.Div("One of three columns", style={"backgroundColor": color_info_light, "margin": 5})),
-        dbc.Col(html.Div("One of three columns", style={"backgroundColor": color_info_light, "margin": 5})),
-        dbc.Col(html.Div("One of three columns", style={"backgroundColor": color_info_light, "margin": 5})),
+        dbc.Col(html.Div("One of three columns", style={"backgroundColor": color_info_light, "padding": 10, "margin": 5})),
+        dbc.Col(html.Div("One of three columns", style={"backgroundColor": color_info_light, "padding": 10, "margin": 5})),
+        dbc.Col(html.Div("One of three columns", style={"backgroundColor": color_info_light, "padding": 10, "margin": 5})),
     ], no_gutters=True),
 
-    html.Div(children=[
-        dbc.Row(dbc.Col(html.Div("A single, half-width column, width=6"), width=6), style={"backgroundColor": color_primary_light, "margin": 5}),
-        dbc.Row(dbc.Col(html.Div("An automatically sized column"), width="auto"), style={"backgroundColor": color_secondary_light, "margin": 5}),
-        dbc.Row([
-            dbc.Col(html.Div("One of four columns"), width=3, style={"backgroundColor": color_danger_light}),
-            dbc.Col(html.Div("Two of four columns"), style={"backgroundColor": color_info_light}),
-            dbc.Col(html.Div("One of four columns"), width=3, style={"backgroundColor": color_warning_light}),
-        ], style={"margin": 5}),
-    ]),
+    dbc.Row(children=dbc.Col(html.Div("A single, half-width column, width=6", style={"backgroundColor": color_primary_light, "margin": 5}), width=6)),
+    dbc.Row(children=dbc.Col(html.Div("An automatically sized column", style={"backgroundColor": color_secondary_light, "margin": 5}), width="auto")),
+    dbc.Row(children=[
+        dbc.Col(html.Div("One of 4 columns", style={"backgroundColor": color_info_light, "padding": 10, "margin": 5}), width=3),
+        dbc.Col(html.Div("Two of 4 columns", style={"backgroundColor": color_info_light, "padding": 10, "margin": 5})),
+        dbc.Col(html.Div("One of 4 columns", style={"backgroundColor": color_info_light, "padding": 10, "margin": 5}), width=3),
+    ], no_gutters=True),
 
     html.Br(), html.Br(),
     # 显示文字 ========================================================================================
@@ -50,10 +38,9 @@ app.layout = html.Div(children=[
         html.H1(children="Hello Dash H1"),
         html.H2(children="Hello Dash H2"),
         html.H3(children="Hello Dash H3"),
-        html.H4(children="Hello Dash H4"),
+        html.H4(children=["This is a heading with a badge! ", dbc.Badge("New!", color="success")]),
         html.P(children=html.A(children="这是一个百度链接", href="http://baidu.com")),
         html.Label(children="这是一个Lable"),
-        html.H4(["This is a heading with a badge! ", dbc.Badge("New!", color="success")]),
         dcc.Markdown(children=markdown_text),
     ], style={"margin": 5}),
 
@@ -64,6 +51,7 @@ app.layout = html.Div(children=[
         dbc.Alert("info!", color="info"),
         dbc.Alert("warning!", color="warning"),
         dbc.Alert("danger!", color="danger"),
+        # dbc.Alert("link!", color="link"),
     ], style={"margin": 5}),
 
     html.Br(), html.Br(),
@@ -88,7 +76,7 @@ app.layout = html.Div(children=[
                 dbc.CardText("and some text, and a footer!"),
             ]),
             dbc.CardFooter("Footer"),
-        ], outline=True, color="primary")),
+        ], outline=True, color="danger")),
     ]), style={"margin": 5}),
 
     html.Br(), html.Br(),
@@ -99,8 +87,9 @@ app.layout = html.Div(children=[
         dbc.Button("Secondary", color="secondary", className="mr-2"),
         dbc.Button("Success", color="success", className="mr-3"),
         dbc.Button("Info", color="info", className="mr-4"),
-        dbc.Button("Warning", color="warning", className="mr-5"),
-        dbc.Button("Danger", color="danger", className="mr-1"),
+        dbc.Button("Warning", color="warning", className="mr-3"),
+        dbc.Button("Danger", color="danger", className="mr-2"),
+        dbc.Button("outline", outline=True),
     ], style={"margin": 5}),
 
     html.Div(children=[
@@ -119,7 +108,7 @@ app.layout = html.Div(children=[
             is_in=True,
             appear=False,
         ),
-    ], style={"margin": 5}),
+    ], style={"margin": 5, "marginTop": 20}),
 
     html.Div(children=[
         html.P(["Click on the word ", html.Span("popover", id="popover-target")]),
@@ -143,10 +132,10 @@ app.layout = html.Div(children=[
     ], style={"margin": 5}),
 
     html.Div(children=dcc.ConfirmDialogProvider(
-        dbc.Button("ConfirmDialogProvider", color="primary"),
         id="confirm",
+        children=dbc.Button("ConfirmDialogProvider", color="primary"),
         message="Danger danger! Are you sure you want to continue?"
-    ), style={"margin": 5}),
+    ), style={"margin": 5, "marginBottom": 20}),
 
     html.Div(children=dbc.Row(children=[
         dbc.Col(dbc.DropdownMenu(label="Menu-md", bs_size="md", children=drop_down_list)),
@@ -175,6 +164,7 @@ app.layout = html.Div(children=[
         dbc.Input(placeholder="A small input...", bs_size="sm", className="mb-3"),
         dbc.Input(placeholder="Valid input...", valid=True, className="mb-3"),
         dbc.Input(placeholder="Invalid input...", invalid=True, className="mb-3"),
+        dbc.Input(value=10, type="number", className="mb-3"),
         dcc.Textarea(placeholder="Enter a value...", style={"width": "50%"}),
     ], style={"margin": 5}),
 
@@ -204,8 +194,8 @@ app.layout = html.Div(children=[
 
     html.Br(), html.Br(),
     # 表单类 ========================================================================================
-    dbc.Form(children=[email_input, password_input], style={"margin": 20, "backgroundColor": color_secondary_light}),
-    dbc.Form(children=[email_input_row, password_input_row], style={"margin": 20, "backgroundColor": color_secondary_light}),
+    dbc.Form(children=[email_input, password_input], style={"margin": 5, "backgroundColor": color_secondary_light}),
+    dbc.Form(children=[email_input_row, password_input_row], style={"margin": 5, "backgroundColor": color_secondary_light}),
     dbc.Form(children=[
         dbc.FormGroup([
             dbc.Label("Email", className="mr-2"),
@@ -223,9 +213,10 @@ app.layout = html.Div(children=[
             dbc.Label("Date", className="mr-2"),
             dcc.DatePickerRange(id="date-picker-range", start_date=datetime.datetime(1997, 5, 3), end_date_placeholder_text="Select!")
         ], className="mr-3"),
-    ], inline=True, style={"margin": 20, "backgroundColor": color_secondary_light}),
+    ], inline=True, style={"margin": 5, "backgroundColor": color_secondary_light}),
 
     html.Br(), html.Br(),
+    # 表单类 ========================================================================================
     html.Div(children=[
         dbc.Label("Slider", html_for="slider"),
         dcc.Slider(min=0, max=9, marks={i: "Label {}".format(i) if i == 1 else str(i) for i in range(1, 6)}, value=5),
@@ -235,10 +226,10 @@ app.layout = html.Div(children=[
     ], style={"margin": 5}),
 
     html.Div(children=[
+        dbc.Label("Progress", html_for="progress"),
         dbc.Progress(id="progress", value=0, striped=True, animated=True),
         dcc.Interval(id="interval", interval=250, n_intervals=0),
     ], style={"margin": 5}),
-
     html.Div(children=[radioitems, checklist, radioitems_inline, checklist_inline], style={"margin": 5}),
 
     html.Br(), html.Br(),
@@ -249,7 +240,7 @@ app.layout = html.Div(children=[
         dbc.ListGroupItem("External link", href="https://google.com"),
         dbc.ListGroupItem("Disabled link", href="https://google.com", disabled=True),
         dbc.ListGroupItem("Button", id="button-item", n_clicks=0, action=True),
-    ], style={"margin": 20}),
+    ], style={"margin": 5}),
 
     dbc.ListGroup(children=[
         dbc.ListGroupItem("The primary item", color="primary"),
@@ -258,7 +249,7 @@ app.layout = html.Div(children=[
         dbc.ListGroupItem("A warning item", color="warning"),
         dbc.ListGroupItem("A dangerous item", color="danger"),
         dbc.ListGroupItem("An informative item", color="info"),
-    ], style={"margin": 20}),
+    ], style={"margin": 5}),
 
     dbc.ListGroup(children=[
         dbc.ListGroupItem([
@@ -269,7 +260,7 @@ app.layout = html.Div(children=[
             dbc.ListGroupItemHeading("This item also has a heading"),
             dbc.ListGroupItemText("And some more text underneath too"),
         ]),
-    ], style={"margin": 20}),
+    ], style={"margin": 5}),
 
     html.Br(), html.Br(),
     # Tab实例 ========================================================================================
@@ -344,4 +335,4 @@ def switch_tab(at):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(host="0.0.0.0", debug=True)

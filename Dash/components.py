@@ -38,12 +38,12 @@ password_input = dbc.FormGroup(children=[
 
 # ---------------------------------------------------------------------------------------
 email_input_row = dbc.FormGroup(children=[
-    dbc.Label("Email", html_for="example-email", width=2),
+    dbc.Label("Email", html_for="example-email-row", width=2),
     dbc.Col(dbc.Input(type="email", id="example-email-row", placeholder="Enter email"), width=10)
 ], row=True)
 
 password_input_row = dbc.FormGroup(children=[
-    dbc.Label("Password", html_for="example-password", width=2),
+    dbc.Label("Password", html_for="example-password-row", width=2),
     dbc.Col(dbc.Input(type="password", id="example-password-row", placeholder="Enter password"), width=10)
 ], row=True)
 
@@ -62,7 +62,7 @@ checklist = dbc.FormGroup(children=[
     dbc.Checklist(options=[
         {"label": "Option 1", "value": 1},
         {"label": "Option 2", "value": 2},
-    ], values=[]),
+    ], values=[1, 2]),
 ], style={"backgroundColor": color_info_light})
 
 
@@ -80,23 +80,21 @@ checklist_inline = dbc.FormGroup(children=[
     dbc.Checklist(options=[
         {"label": "Option 1", "value": 1},
         {"label": "Option 2", "value": 2},
-    ], values=[], inline=True),
+    ], values=[1, 2], inline=True),
 ], style={"backgroundColor": color_info_light})
 
 
 # ---------------------------------------------------------------------------------------
-tab1_content = dbc.Card(
-    dbc.CardBody([
+tab1_content = dbc.Card(children=dbc.CardBody([
         dbc.CardText("This is tab 1!"),
         dbc.Button("Click here", color="success"),
-    ]), className="mt-1",
+    ])
 )
 
-tab2_content = dbc.Card(
-    dbc.CardBody([
+tab2_content = dbc.Card(children=dbc.CardBody([
         dbc.CardText("This is tab 2!"),
         dbc.Button("Don't click here", color="danger"),
-    ]), className="mt-1",
+    ])
 )
 
 
@@ -105,18 +103,16 @@ def generate_table(dataframe, max_rows=10):
     创建表
     """
     # Header
-    header = [html.Thead(html.Tr([html.Th(col) for col in dataframe.columns]))]
+    header = html.Thead(children=html.Tr([html.Th(col) for col in dataframe.columns[:10]]))
 
     # Row
     rows = []
     for i in range(max_rows):
         td_list = []
-        for index, col in enumerate(dataframe.columns):
+        for index, col in enumerate(dataframe.columns[:10]):
             if index == 1:
                 td_list.append(html.Td(dcc.Link(dataframe.iloc[i][col], href=dataframe.iloc[i][col])))
             else:
                 td_list.append(html.Td(dataframe.iloc[i][col]))
         rows.append(html.Tr(td_list))
-    body = [html.Tbody(rows)]
-
-    return dbc.Table(header + body, striped=True, bordered=True, hover=True)
+    return dbc.Table([header, html.Tbody(rows)], striped=True, bordered=True, hover=True)
