@@ -8,6 +8,7 @@ fake-useragent
 beautifulsoup4
 aiohttp
 requests
+websocket-client
 redis
 PyMySQL
 elasticsearch
