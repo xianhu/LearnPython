@@ -7,7 +7,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-from Dash.config import *
 
 # ---------------------------------------------------------------------------------------
 drop_down_list = [
@@ -55,7 +54,7 @@ radioitems = dbc.FormGroup(children=[
         {"label": "Option 1", "value": 1},
         {"label": "Option 2", "value": 2},
     ], value=1)
-], style={"backgroundColor": color_success_light})
+], className="bg-light")
 
 checklist = dbc.FormGroup(children=[
     dbc.Label("Choose a bunch"),
@@ -63,7 +62,7 @@ checklist = dbc.FormGroup(children=[
         {"label": "Option 1", "value": 1},
         {"label": "Option 2", "value": 2},
     ], values=[1, 2]),
-], style={"backgroundColor": color_info_light})
+], className="bg-light")
 
 
 # ---------------------------------------------------------------------------------------
@@ -73,7 +72,7 @@ radioitems_inline = dbc.FormGroup(children=[
         {"label": "Option 1", "value": 1},
         {"label": "Option 2", "value": 2},
     ], value=1, inline=True),
-], style={"backgroundColor": color_success_light})
+], className="bg-light")
 
 checklist_inline = dbc.FormGroup(children=[
     dbc.Label("Choose a bunch"),
@@ -81,7 +80,7 @@ checklist_inline = dbc.FormGroup(children=[
         {"label": "Option 1", "value": 1},
         {"label": "Option 2", "value": 2},
     ], values=[1, 2], inline=True),
-], style={"backgroundColor": color_info_light})
+], className="bg-light")
 
 
 # ---------------------------------------------------------------------------------------
