@@ -234,9 +234,9 @@ app.layout = html.Div(children=[
     ], className="p-2 m-2"),
 
     html.Div(children=[
-        dbc.Label("Progress", html_for="progress"),
-        dbc.Progress(id="progress", value=0, striped=True, animated=True),
-        dcc.Interval(id="interval", interval=250, n_intervals=0),
+        dbc.Label(children="Progress: 0", html_for="progress", id="progresstext"),
+        dbc.Progress(id="progress", value=0, max=60, striped=True, animated=True),
+        dcc.Interval(id="interval", interval=1000, n_intervals=0),
     ], className="p-2 m-2"),
     html.Div(children=[
         radioitems, checklist, radioitems_inline, checklist_inline
@@ -289,7 +289,8 @@ app.layout = html.Div(children=[
 
     html.Br(), html.Br(),
     # 表格Table ========================================================================================
-    html.Div(children=generate_table(df), className="p-2 m-2"),
+    html.Div(children=generate_table(df, size="sm"), className="p-2 m-2"),
+    html.Div(children=generate_table(df, size="md"), className="p-2 m-2"),
 ])
 
 
@@ -330,7 +331,14 @@ def toggle_popover(n, is_open):
     Input("interval", "n_intervals")
 ])
 def advance_progress(n):
-    return min(n % 110, 100)
+    return n % 101
+
+
+@app.callback(Output("progresstext", "children"), [
+    Input("progress", "value"),
+])
+def advance_text(value):
+    return "Processtext: %d" % value
 
 
 @app.callback(Output("content", "children"), [
@@ -345,4 +353,4 @@ def switch_tab(at):
 
 
 if __name__ == "__main__":
-    app.run_server(host="0.0.0.0", debug=True)
+    app.run_server(host="0.0.0.0", debug=False)

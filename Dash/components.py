@@ -97,7 +97,7 @@ tab2_content = dbc.Card(children=dbc.CardBody([
 )
 
 
-def generate_table(dataframe, max_rows=10):
+def generate_table(dataframe, max_rows=10, size="md"):
     """
     创建表
     """
@@ -114,4 +114,4 @@ def generate_table(dataframe, max_rows=10):
             else:
                 td_list.append(html.Td(dataframe.iloc[i][col]))
         rows.append(html.Tr(td_list))
-    return dbc.Table([header, html.Tbody(rows)], striped=True, bordered=True, hover=True)
+    return dbc.Table([header, html.Tbody(rows)], striped=True, bordered=True, hover=True, size=size)
