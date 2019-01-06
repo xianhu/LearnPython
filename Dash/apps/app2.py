@@ -1,57 +1,102 @@
 # _*_ coding: utf-8 _*_
 
 """
-Dash实例
+app2实例
 """
 
 import dash
 import datetime
+import dash_core_components as dcc
+import dash_html_components as html
+import dash_bootstrap_components as dbc
 from dash.dependencies import Output, Input, State
-from Dash.components import *
-from Dash.config import *
+from Dash.app import app
 
-# 创建应用
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-app.scripts.config.serve_locally = True
+# 全局变量
+markdown_text = """
+### Dash and Markdown
 
-# 创建navbar
-navbar = dbc.Navbar(children=[
-    dbc.NavItem(dbc.NavLink("Link", href="#")),
-    dbc.DropdownMenu(children=drop_down_list, nav=True, in_navbar=True, label="Menu"),
-], brand="Demo", brand_href="#", sticky="top", color="light")
+Dash apps can be written in Markdown.
+Dash uses the [CommonMark](http://commonmark.org/)
+specification of Markdown.
+Check out their [60 Second Markdown Tutorial](http://commonmark.org/help/)
+if this is your first introduction to Markdown!
+"""
+
+# 构造components
+# ---------------------------------------------------------------------------------------
+drop_down_list = [
+    dbc.DropdownMenuItem("First"),
+    dbc.DropdownMenuItem(divider=True),
+    dbc.DropdownMenuItem("Links", header=True),
+    dbc.DropdownMenuItem("Internal link", href="/l/components/alerts"),
+    dbc.DropdownMenuItem("External link", href="https://baidu.com"),
+    dbc.DropdownMenuItem(divider=True),
+    dbc.DropdownMenuItem("Disabled", disabled=True),
+    dbc.DropdownMenuItem("Active", active=True)
+]
+
+# ---------------------------------------------------------------------------------------
+email_input = dbc.FormGroup(children=[
+    dbc.Label("Email", html_for="example-email"),
+    dbc.Input(type="email", id="example-email", placeholder="Enter email"),
+    dbc.FormText("Are you on email? You simply have to be these days", color="secondary"),
+])
+
+password_input = dbc.FormGroup(children=[
+    dbc.Label("Password", html_for="example-password"),
+    dbc.Input(type="password", id="example-password", placeholder="Enter password"),
+    dbc.FormText("A password stops mean people taking your stuff", color="secondary"),
+])
+
+# ---------------------------------------------------------------------------------------
+email_input_row = dbc.FormGroup(children=[
+    dbc.Label("Email", html_for="example-email-row", width=2),
+    dbc.Col(dbc.Input(type="email", id="example-email-row", placeholder="Enter email"), width=10)
+], row=True)
+
+password_input_row = dbc.FormGroup(children=[
+    dbc.Label("Password", html_for="example-password-row", width=2),
+    dbc.Col(dbc.Input(type="password", id="example-password-row", placeholder="Enter password"), width=10)
+], row=True)
+
+# ---------------------------------------------------------------------------------------
+radioitems = dbc.FormGroup(children=[
+    dbc.Label("Choose one"),
+    dbc.RadioItems(options=[
+        {"label": "Option 1", "value": 1},
+        {"label": "Option 2", "value": 2},
+    ], value=1)
+], className="bg-light")
+
+checklist = dbc.FormGroup(children=[
+    dbc.Label("Choose a bunch"),
+    dbc.Checklist(options=[
+        {"label": "Option 1", "value": 1},
+        {"label": "Option 2", "value": 2},
+    ], values=[1, 2]),
+], className="bg-light")
+
+# ---------------------------------------------------------------------------------------
+radioitems_inline = dbc.FormGroup(children=[
+    dbc.Label("Choose one"),
+    dbc.RadioItems(options=[
+        {"label": "Option 1", "value": 1},
+        {"label": "Option 2", "value": 2},
+    ], value=1, inline=True),
+], className="bg-light")
+
+checklist_inline = dbc.FormGroup(children=[
+    dbc.Label("Choose a bunch"),
+    dbc.Checklist(options=[
+        {"label": "Option 1", "value": 1},
+        {"label": "Option 2", "value": 2},
+    ], values=[1, 2], inline=True),
+], className="bg-light")
 
 
-# 创建Body
-body = dbc.Container(children=[
-    # Tab实例 ========================================================================================
-    html.Div(children=dbc.Tabs([
-        dbc.Tab(tab1_content, label="Tab 1"),
-        dbc.Tab(tab2_content, label="Tab 2"),
-    ]), className="mt-2"),
-
-    html.Div(children=[
-        dbc.Tabs([
-            dbc.Tab(label="Tab 1", tab_id="tab-1"),
-            dbc.Tab(label="Tab 2", tab_id="tab-2"),
-        ], id="tabs", active_tab="tab-1"),
-        html.Div(id="content")
-    ], className="mt-2"),
-
-    # DIV布局 ========================================================================================
-    dbc.Row(children=dbc.Col(html.Div("单独的DIV", className="border border-primary bg-light rounded p-2 mt-2"))),
-    dbc.Row(children=[
-        dbc.Col(html.Div("One of three columns", className="bg-secondary p-2 mr-2 rounded")),
-        dbc.Col(html.Div("One of three columns", className="bg-secondary p-2 rounded-top")),
-        dbc.Col(html.Div("One of three columns", className="bg-secondary p-2 ml-2 rounded-bottom")),
-    ], no_gutters=True, className="mt-2"),
-    dbc.Row(children=[
-        dbc.Col(html.Div("One of 4 columns", className="bg-info p-2 mr-2"), width=3),
-        dbc.Col(html.Div("Two of 4 columns", className="bg-info p-2")),
-        dbc.Col(html.Div("One of 4 columns", className="bg-info p-2 ml-2"), width=3),
-    ], no_gutters=True, className="mt-2"),
-    dbc.Row(children=dbc.Col(html.Div("A single, half-width column, width=6", className="bg-secondary p-2"), width=6), className="mt-2"),
-    dbc.Row(children=dbc.Col(html.Div("An automatically sized column", className="bg-secondary p-2"), width="auto"), className="mt-2"),
-
+# 创建layout
+layout = dbc.Container(children=[
     # 显示文字 ========================================================================================
     html.Div(children=[
         html.H1(children="Hello Dash H1"),
@@ -61,61 +106,21 @@ body = dbc.Container(children=[
         html.P(children=html.A(children="这是一个百度链接", href="http://baidu.com")),
         html.Label(children="这是一个Lable", className="text-info"),
         dcc.Markdown(children=markdown_text),
-    ]),
+    ], className="mt-2"),
     html.Div(children=[
-        dbc.Alert("primary!", color="primary"),
-        dbc.Alert("secondary!", color="secondary"),
-        dbc.Alert("success!", color="success"),
+        dbc.Alert("primary!", id="alert_memory", color="primary"),
+        dbc.Alert("secondary!", id="alert_local", color="secondary"),
+        dbc.Alert("success!", id="alert_session", color="success"),
         dbc.Alert("info!", color="info"),
         dbc.Alert("warning!", color="warning"),
         dbc.Alert("danger!", color="danger"),
-    ]),
-
-    # 卡片类 ========================================================================================
-    html.Div(children=dbc.Row(children=[
-        dbc.Col(children=dbc.Card([
-            dbc.CardHeader("Header"),
-            dbc.CardBody([
-                dbc.CardTitle("This card has a title"),
-                dbc.CardText("And some text"),
-            ]),
-        ])),
-        dbc.Col(children=dbc.Card([
-            dbc.CardBody([
-                dbc.CardTitle("This card has a title"),
-                dbc.CardText("and some text, but no header"),
-            ]),
-        ], outline=True, color="primary")),
-        dbc.Col(children=dbc.Card([
-            dbc.CardBody([
-                dbc.CardTitle("This card has a title"),
-                dbc.CardText("and some text, and a footer!"),
-            ]),
-            dbc.CardFooter("Footer"),
-        ], outline=True, color="danger")),
-        dbc.Col(children=dbc.Card([
-            dbc.CardBody([
-                dbc.CardTitle("Card title"),
-                dbc.CardSubtitle("Card subtitle")
-            ]),
-            dbc.CardImg(src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"),
-            dbc.CardBody([
-                dbc.CardText(
-                    "Some quick example text to build on the "
-                    "card title and make up the bulk of the "
-                    "card's content."
-                ),
-                dbc.CardLink("A link", href="#"),
-                dbc.CardLink("Another link", href="#"),
-            ]),
-        ])),
-    ])),
+    ], className="mt-2"),
 
     # 按钮触发类 ========================================================================================
     html.Div(children=[
-        dbc.Button("Primary", color="primary", className="mr-2"),
-        dbc.Button("Secondary", color="secondary", className="mr-2"),
-        dbc.Button("Success", color="success", className="mr-2"),
+        dbc.Button("Primary", id="button_memory", color="primary", className="mr-2"),
+        dbc.Button("Secondary", id="button_local", color="secondary", className="mr-2"),
+        dbc.Button("Success", id="button_session", color="success", className="mr-2"),
         dbc.Button("Info", color="info", className="mr-2"),
         dbc.Button("Warning", color="warning", className="mr-2"),
         dbc.Button("Danger", color="danger", className="mr-2"),
@@ -166,21 +171,12 @@ body = dbc.Container(children=[
     ), className="mt-2"),
 
     html.Div(children=dbc.Row(children=[
-        dbc.Col(dbc.DropdownMenu(label="Menu-md", bs_size="md", children=drop_down_list), className="mr-2"),
         dbc.Col(dbc.DropdownMenu(label="Menu-sm", bs_size="sm", children=drop_down_list), className="mr-2"),
+        dbc.Col(dbc.DropdownMenu(label="Menu-md", bs_size="md", children=drop_down_list), className="mr-2"),
+        dbc.Col(dbc.DropdownMenu(label="Menu-md", bs_size="lg", children=drop_down_list), className="mr-2"),
         dbc.Col(dbc.DropdownMenu(label="Menu-down", direction="down", children=drop_down_list), className="mr-2"),
         dbc.Col(dbc.DropdownMenu(label="Menu-left", direction="left", children=drop_down_list), className="mr-2"),
         dbc.Col(dbc.DropdownMenu(label="Menu-right", direction="right", children=drop_down_list), className="mr-2"),
-        dbc.Col(dcc.Dropdown(options=[
-            {"label": "New York City", "value": "NYC"},
-            {"label": u"Montréal", "value": "MTL"},
-            {"label": "San Francisco", "value": "SF"}
-        ], value="MTL"), className="mr-2"),
-        dbc.Col(dcc.Dropdown(options=[
-            {"label": "New York City", "value": "NYC"},
-            {"label": u"Montréal", "value": "MTL"},
-            {"label": "San Francisco", "value": "SF"}
-        ], value="MTL", multi=True), width=2)
     ], no_gutters=True), className="mt-2"),
 
     # 输入类 ========================================================================================
@@ -255,9 +251,29 @@ body = dbc.Container(children=[
         radioitems, checklist, radioitems_inline, checklist_inline
     ], className="mt-2"),
 
+    html.Div(children=dbc.Row(children=[
+        dbc.Col(dcc.Dropdown(options=[
+            {"label": "New York City", "value": "NYC"},
+            {"label": u"Montréal", "value": "MTL"},
+            {"label": "San Francisco", "value": "SF"}
+        ], value="MTL"), className="mr-2"),
+        dbc.Col(dcc.Dropdown(options=[
+            {"label": "New York City", "value": "NYC"},
+            {"label": u"Montréal", "value": "MTL"},
+            {"label": "San Francisco", "value": "SF"}
+        ], value="MTL", multi=True), width=8)
+    ], no_gutters=True), className="mt-2"),
+
+    # 文件上传 ========================================================================================
+    dcc.Upload(dbc.Button("Upload File"), className="mt-2"),
+    dcc.Upload(children=html.Div([
+        "Drag and Drop or ",
+        html.A("Select Files")
+    ], className="p-2 border border-secondary bg-light rounded text-center"), id="upload-data", multiple=True, className="mt-2"),
+
     # 展示类 ========================================================================================
     dbc.ListGroup(children=[
-        dbc.ListGroupItem("ListGroupItem ListGroupItem"),
+        dbc.ListGroupItem("ListGroupItem"),
         dbc.ListGroupItem("Internal link", href="/l/components/list_group"),
         dbc.ListGroupItem("External link", href="https://google.com"),
         dbc.ListGroupItem("Disabled link", href="https://google.com", disabled=True),
@@ -283,18 +299,35 @@ body = dbc.Container(children=[
             dbc.ListGroupItemText("And some more text underneath too"),
         ]),
     ], className="mt-2"),
-
-    # 表格Table ========================================================================================
-    html.Div(children=generate_table(df, size="sm"), className="mt-2"),
-    html.Div(children=generate_table(df, size="md"), className="mt-2"),
 ])
 
 
-# 创建布局
-app.layout = html.Div(children=[navbar, body])
-
-
 # 创建回调函数：回调函数中不能出现全局变量
+for store in ("memory", "local", "session"):
+    @app.callback(Output(store, "data"), [
+        Input("button_%s" % store, "n_clicks")
+    ], [
+        State(store, "data")
+    ])
+    def toggle_store_button(n_clicks, data):
+        if n_clicks is None:
+            raise dash.exceptions.PreventUpdate
+        data = data or {"clicks": 0}
+        data["clicks"] = data["clicks"] + 1
+        return data
+
+    @app.callback(Output("alert_%s" % store, "children"), [
+        Input(store, "modified_timestamp")
+    ], [
+        State(store, "data")
+    ])
+    def toggle_store_change(ts, data):
+        if ts is None:
+            raise dash.exceptions.PreventUpdate
+        data = data or {}
+        return "%s: %d" % (store, data.get("clicks", 0))
+
+
 @app.callback(Output("collapse", "is_open"), [
     Input("collapse-button", "n_clicks")
 ], [
@@ -340,18 +373,3 @@ def advance_progress(n):
 ])
 def advance_text(value):
     return "Processtext: %d" % value
-
-
-@app.callback(Output("content", "children"), [
-    Input("tabs", "active_tab")
-])
-def switch_tab(at):
-    if at == "tab-1":
-        return tab1_content
-    elif at == "tab-2":
-        return tab2_content
-    return html.P("This shouldn't ever be displayed...")
-
-
-if __name__ == "__main__":
-    app.run_server(host="0.0.0.0", debug=True)

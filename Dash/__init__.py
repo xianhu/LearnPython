@@ -1,21 +1,7 @@
 # _*_ coding: utf-8 _*_
 
 """
-配置文件
-"""
-
-import pandas as pd
-
-# 有用的数据
-df = pd.read_csv("Dash/data.csv")
-markdown_text = """
-### Dash and Markdown
-
-Dash apps can be written in Markdown.
-Dash uses the [CommonMark](http://commonmark.org/)
-specification of Markdown.
-Check out their [60 Second Markdown Tutorial](http://commonmark.org/help/)
-if this is your first introduction to Markdown!
+一些配置说明
 """
 
 # https://getbootstrap.com/docs/4.0/utilities
@@ -33,7 +19,7 @@ Borders:
 Color:
     Text: text-primary, text-light, text-dark, text-white, text-muted
     Backgroud: bg-primary, bg-light, bg-dark, bg-white, bg-gradient-primary, bg-gradient-light, bg-gradient-dark
-    
+
 Display:
     d-[sm/md/lg/xl]-[none/inline/inline-block/block/table/table-cell/table-row/flex/inline-flex]
     d-print-[none/inline/inline-block/block/table/table-cell/table-row/flex/inline-flex]
@@ -46,10 +32,10 @@ Flex:
     Align self: align-self-[start/end/center/baseline/stretch]
     Align content: align-content-[start/end/center/around/stretch]
     Wrap: flex-wrap, flex-nowrap, flex-wrap-reverse
-    
+
 Float:
     float-left, float-right, float-none, float-sm-left, float-sm-right, float-sm-none
-    
+
 Position:
     position-static, position-relative, position-absolute, position-fixed, position-sticky
 
@@ -70,7 +56,7 @@ Text:
 Vertical alignment:
     align-baseline, align-top, align-middle, align-bottom
     align-text-top, align-text-bottom
-    
+
 Visibility:
     visible, invisible
 """
