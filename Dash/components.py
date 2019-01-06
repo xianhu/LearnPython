@@ -20,7 +20,6 @@ drop_down_list = [
     dbc.DropdownMenuItem("Active", active=True)
 ]
 
-
 # ---------------------------------------------------------------------------------------
 email_input = dbc.FormGroup(children=[
     dbc.Label("Email", html_for="example-email"),
@@ -34,7 +33,6 @@ password_input = dbc.FormGroup(children=[
     dbc.FormText("A password stops mean people taking your stuff", color="secondary"),
 ])
 
-
 # ---------------------------------------------------------------------------------------
 email_input_row = dbc.FormGroup(children=[
     dbc.Label("Email", html_for="example-email-row", width=2),
@@ -45,7 +43,6 @@ password_input_row = dbc.FormGroup(children=[
     dbc.Label("Password", html_for="example-password-row", width=2),
     dbc.Col(dbc.Input(type="password", id="example-password-row", placeholder="Enter password"), width=10)
 ], row=True)
-
 
 # ---------------------------------------------------------------------------------------
 radioitems = dbc.FormGroup(children=[
@@ -64,7 +61,6 @@ checklist = dbc.FormGroup(children=[
     ], values=[1, 2]),
 ], className="bg-light")
 
-
 # ---------------------------------------------------------------------------------------
 radioitems_inline = dbc.FormGroup(children=[
     dbc.Label("Choose one"),
@@ -82,7 +78,6 @@ checklist_inline = dbc.FormGroup(children=[
     ], values=[1, 2], inline=True),
 ], className="bg-light")
 
-
 # ---------------------------------------------------------------------------------------
 tab1_content = dbc.Card(children=dbc.CardBody([
         dbc.CardText("This is tab 1!"),
@@ -97,6 +92,7 @@ tab2_content = dbc.Card(children=dbc.CardBody([
 )
 
 
+# ---------------------------------------------------------------------------------------
 def generate_table(dataframe, max_rows=10, size="md"):
     """
     创建表
