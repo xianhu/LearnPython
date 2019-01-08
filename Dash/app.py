@@ -9,7 +9,7 @@ import dash_bootstrap_components as dbc
 
 # 创建应用
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-app.__setattr__("title", "Dash Demo")
+app.title = "Dash Demo"
 
 server = app.server
 app.scripts.config.serve_locally = True

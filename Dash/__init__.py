@@ -4,6 +4,9 @@
 一些配置说明
 """
 
+# 安装及更新
+# pip3.6 install dash dash-core-components dash-html-components dash-table dash-bootstrap-components --upgrade
+
 # https://getbootstrap.com/docs/4.0/utilities
 """
 ALL:

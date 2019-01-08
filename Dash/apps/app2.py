@@ -39,25 +39,25 @@ drop_down_list = [
 # ---------------------------------------------------------------------------------------
 email_input = dbc.FormGroup(children=[
     dbc.Label("Email", html_for="example-email"),
-    dbc.Input(type="email", id="example-email", placeholder="Enter email"),
+    dbc.Input(type="email", placeholder="Enter email"),
     dbc.FormText("Are you on email? You simply have to be these days", color="secondary"),
 ])
 
 password_input = dbc.FormGroup(children=[
     dbc.Label("Password", html_for="example-password"),
-    dbc.Input(type="password", id="example-password", placeholder="Enter password"),
+    dbc.Input(type="password", placeholder="Enter password"),
     dbc.FormText("A password stops mean people taking your stuff", color="secondary"),
 ])
 
 # ---------------------------------------------------------------------------------------
 email_input_row = dbc.FormGroup(children=[
     dbc.Label("Email", html_for="example-email-row", width=2),
-    dbc.Col(dbc.Input(type="email", id="example-email-row", placeholder="Enter email"), width=10)
+    dbc.Col(dbc.Input(type="email", placeholder="Enter email"), width=10)
 ], row=True)
 
 password_input_row = dbc.FormGroup(children=[
     dbc.Label("Password", html_for="example-password-row", width=2),
-    dbc.Col(dbc.Input(type="password", id="example-password-row", placeholder="Enter password"), width=10)
+    dbc.Col(dbc.Input(type="password", placeholder="Enter password"), width=10)
 ], row=True)
 
 # ---------------------------------------------------------------------------------------
@@ -102,51 +102,62 @@ layout = dbc.Container(children=[
         html.H1(children="Hello Dash H1"),
         html.H2(children="Hello Dash H2"),
         html.H3(children="Hello Dash H3"),
-        html.H4(children=["This is a heading with a badge! ", dbc.Badge("New!", color="success")]),
+        html.H4(children=[
+            "This is a heading with a badge! ",
+            dbc.Badge("New!", color="success")
+        ]),
         html.P(children=html.A(children="这是一个百度链接", href="http://baidu.com")),
         html.Label(children="这是一个Lable", className="text-info"),
+        html.Pre(children="这是一个Pre，常用来显示计算机代码"),
         dcc.Markdown(children=markdown_text),
     ], className="mt-2"),
+
     html.Div(children=[
-        dbc.Alert("primary!", id="alert_memory", color="primary"),
-        dbc.Alert("secondary!", id="alert_local", color="secondary"),
-        dbc.Alert("success!", id="alert_session", color="success"),
+        dbc.Alert("primary!", color="primary", id="alert_memory"),
+        dbc.Alert("secondary!", color="secondary", id="alert_local"),
+        dbc.Alert("success!", color="success", id="alert_session"),
         dbc.Alert("info!", color="info"),
         dbc.Alert("warning!", color="warning"),
         dbc.Alert("danger!", color="danger"),
     ], className="mt-2"),
 
-    # 按钮触发类 ========================================================================================
+    # 按钮类 ========================================================================================
     html.Div(children=[
-        dbc.Button("Primary", id="button_memory", color="primary", className="mr-2"),
-        dbc.Button("Secondary", id="button_local", color="secondary", className="mr-2"),
-        dbc.Button("Success", id="button_session", color="success", className="mr-2"),
+        dbc.Button("Primary", color="primary", className="mr-2", id="button_memory"),
+        dbc.Button("Secondary", color="secondary", className="mr-2", id="button_local"),
+        dbc.Button("Success", color="success", className="mr-2", id="button_session"),
         dbc.Button("Info", color="info", className="mr-2"),
         dbc.Button("Warning", color="warning", className="mr-2"),
         dbc.Button("Danger", color="danger", className="mr-2"),
-        dbc.Button("outline", size="sm", outline=True, className="mr-2"),
-        dbc.Button("outline", size="md", outline=True, className="mr-2"),
-        dbc.Button("outline", size="lg", outline=True, className="mr-2"),
+        dbc.Button("outline", color="primary", className="mr-2", size="sm", outline=True),
+        dbc.Button("outline", color="secondary", className="mr-2", size="md", outline=True),
+        dbc.Button("outline", color="success", className="mr-2", size="lg", outline=True),
+        dbc.Button("outline", color="info", className="mr-2", size="md", outline=True),
+        dbc.Button("outline", color="warning", className="mr-2", size="sm", outline=True),
     ], className="mt-2"),
 
+    html.Div(children=dbc.ButtonGroup([
+        dbc.Button("Primary", color="primary"),
+        dbc.Button("Secondary", color="secondary"),
+        dbc.Button("Success", color="success"),
+        dbc.Button("Warning", color="warning"),
+        dbc.Button("Danger", color="danger"),
+        dbc.Button("Info", color="info"),
+    ]), className="mt-2"),
+
+    # 触发类 ========================================================================================
     html.Div(children=[
         dbc.Button("Open collapse", id="collapse-button"),
-        dbc.Collapse(
-            dbc.Card(dbc.CardBody("This content is hidden in the collapse")),
-            id="collapse"
-        )
+        dbc.Collapse(dbc.Card(dbc.CardBody("This content is hidden in the collapse")), id="collapse")
     ], className="mt-2"),
 
     html.Div(children=[
         dbc.Button("Toggle fade", id="fade-button"),
-        dbc.Fade(
-            dbc.Card(dbc.CardBody(dbc.CardText("This content fades in and out"))),
-            id="fade", is_in=True, appear=False,
-        ),
+        dbc.Fade(dbc.Card(dbc.CardBody(dbc.CardText("This content fades in and out"))), id="fade", is_in=True, appear=False),
     ], className="mt-2"),
 
     html.Div(children=[
-        html.P(["Click on the word ", html.Span("popover", id="popover-target", className="text-info")]),
+        html.P(children=["Click on the word ", html.Span("popover", id="popover-target", className="text-info")]),
         dbc.Popover([
             dbc.PopoverHeader("Popover header"),
             dbc.PopoverBody("Popover body"),
@@ -155,12 +166,13 @@ layout = dbc.Container(children=[
 
     html.Div(children=[
         html.P([
-            "I wonder what ", html.Span("floccinaucinihilipilification", id="tooltip-target", className="text-info"), " means?",
+            "I wonder what ",
+            html.Span("floccinaucinihilipilification", id="tooltip-target", className="text-info"),
+            " means?",
         ]),
         dbc.Tooltip(
             "Noun: rare, the action or habit of estimating something as worthless.",
-            target="tooltip-target",
-            placement="auto",  # top, left, bottom, right
+            target="tooltip-target", placement="auto",  # top, left, bottom, right
         ),
     ], className="mt-2"),
 
@@ -184,8 +196,12 @@ layout = dbc.Container(children=[
         dbc.Input(placeholder="A medium(large, small) input...", bs_size="md", className="mb-2"),
         dbc.Input(placeholder="Valid input...", valid=True, className="mb-2"),
         dbc.Input(placeholder="Invalid input...", invalid=True, className="mb-2"),
+        dbc.Input(placeholder="Enter text", type="text", className="mb-2"),
+        dbc.Input(placeholder="Enter password", type="password", className="mb-2"),
         dbc.Input(value=10, type="number", className="mb-2"),
-        dcc.Textarea(placeholder="Enter a value...", className="w-75"),
+        dbc.Input(value=10, type="range", className="mb-2"),
+        dbc.Textarea(placeholder="Enter a value...", className="mb-2"),
+        dbc.Textarea(placeholder="Enter a value...", className="mb-2", valid=True, bs_size="sm"),
     ], className="mt-2"),
 
     html.Div(children=[
@@ -203,12 +219,12 @@ layout = dbc.Container(children=[
             dbc.InputGroupAddon(".00", addon_type="append"),
         ], size="sm", className="mb-2"),
         dbc.InputGroup([
-            dbc.InputGroupAddon(dbc.Button("Random name", id="input-group-button"), addon_type="prepend"),
-            dbc.Input(id="input-group-button-input", placeholder="name"),
+            dbc.InputGroupAddon(dbc.Button("Random name"), addon_type="prepend"),
+            dbc.Input(placeholder="name"),
         ], className="mb-2"),
         dbc.InputGroup([
             dbc.DropdownMenu(drop_down_list, label="Generate", addon_type="prepend"),
-            dbc.Input(id="input-group-dropdown-input", placeholder="name"),
+            dbc.Input(placeholder="name"),
         ]),
     ], className="mt-2"),
 
@@ -226,11 +242,11 @@ layout = dbc.Container(children=[
         ], className="mr-3"),
         dbc.FormGroup([
             dbc.Label("Date", className="mr-2"),
-            dbc.DatePickerSingle(id="date-picker-inline", date=datetime.date(2018, 10, 17))
+            dbc.DatePickerSingle(date=datetime.date(2018, 10, 17))
         ], className="mr-3"),
         dbc.FormGroup([
             dbc.Label("Date", className="mr-2"),
-            dcc.DatePickerRange(id="date-picker-range", start_date=datetime.datetime(1997, 5, 3), end_date_placeholder_text="Select!")
+            dcc.DatePickerRange(start_date=datetime.datetime(1997, 5, 3), end_date_placeholder_text="Select!")
         ], className="mr-3"),
     ], inline=True, className="mt-2 p-2 bg-light"),
 
@@ -247,9 +263,7 @@ layout = dbc.Container(children=[
         dbc.Progress(id="progress", value=0, max=60, striped=True, animated=True),
         dcc.Interval(id="interval", interval=1000, n_intervals=0),
     ], className="mt-2"),
-    html.Div(children=[
-        radioitems, checklist, radioitems_inline, checklist_inline
-    ], className="mt-2"),
+    html.Div(children=[radioitems, checklist, radioitems_inline, checklist_inline], className="mt-2"),
 
     html.Div(children=dbc.Row(children=[
         dbc.Col(dcc.Dropdown(options=[
@@ -269,7 +283,7 @@ layout = dbc.Container(children=[
     dcc.Upload(children=html.Div([
         "Drag and Drop or ",
         html.A("Select Files")
-    ], className="p-2 border border-secondary bg-light rounded text-center"), id="upload-data", multiple=True, className="mt-2"),
+    ], className="p-2 border border-secondary bg-light rounded text-center"), multiple=True, className="mt-2"),
 
     # 展示类 ========================================================================================
     dbc.ListGroup(children=[
@@ -277,7 +291,7 @@ layout = dbc.Container(children=[
         dbc.ListGroupItem("Internal link", href="/l/components/list_group"),
         dbc.ListGroupItem("External link", href="https://google.com"),
         dbc.ListGroupItem("Disabled link", href="https://google.com", disabled=True),
-        dbc.ListGroupItem("Button", id="button-item", n_clicks=0, action=True),
+        dbc.ListGroupItem("Button", n_clicks=0, action=True),
     ], className="mt-2"),
 
     dbc.ListGroup(children=[
@@ -319,13 +333,14 @@ for store in ("memory", "local", "session"):
     @app.callback(Output("alert_%s" % store, "children"), [
         Input(store, "modified_timestamp")
     ], [
-        State(store, "data")
+        State(store, "data"),
+        State(store, "id")
     ])
-    def toggle_store_change(ts, data):
+    def toggle_store_change(ts, data, _id):
         if ts is None:
             raise dash.exceptions.PreventUpdate
         data = data or {}
-        return "%s: %d" % (store, data.get("clicks", 0))
+        return "%s: %s" % (_id, data.get("clicks", 0))
 
 
 @app.callback(Output("collapse", "is_open"), [
@@ -365,7 +380,7 @@ def toggle_popover(n, is_open):
     Input("interval", "n_intervals")
 ])
 def advance_progress(n):
-    return n % 101
+    return n % 61
 
 
 @app.callback(Output("progresstext", "children"), [

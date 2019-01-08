@@ -10,19 +10,16 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Output, Input
 
 from Dash.app import app
-from Dash.apps import app1, app2, app3
+from Dash.apps import app1, app2, app3, app4
 
 
 # 创建布局
 app.layout = html.Div([
     # The memory store will always get the default on page refreshes
     dcc.Store(id="memory"),
-    # The local store will take the initial data
-    # only the first time the page is loaded
-    # and keep it until it is cleared.
+    # The local store will take the initial data only the first time the page is loaded, and keep it until it is cleared.
     dcc.Store(id="local", storage_type="local"),
-    # Same as the local store but will lose the data
-    # when the browser/tab closes.
+    # Same as the local store but will lose the data when the browser/tab closes.
     dcc.Store(id="session", storage_type="session"),
 
     dcc.Location(id="url", refresh=False),
@@ -45,11 +42,13 @@ app.layout = html.Div([
 def display_page(pathname):
     if pathname == "/":
         return dbc.Container(children=[
-            dcc.Link("Navigate to '/app1'", href="/app1"),
+            dcc.Link("Navigate to '/app1'，布局相关", href="/app1"),
             html.Br(),
-            dcc.Link("Navigate to '/app2'", href="/app2"),
+            dcc.Link("Navigate to '/app2'，组件相关", href="/app2"),
             html.Br(),
-            dcc.Link("Navigate to '/app3'", href="/app3"),
+            dcc.Link("Navigate to '/app3'，画图", href="/app3"),
+            html.Br(),
+            dcc.Link("Navigate to '/app4'，dash-table", href="/app4"),
         ])
     if pathname == "/app1":
         return app1.layout
@@ -57,8 +56,10 @@ def display_page(pathname):
         return app2.layout
     elif pathname == "/app3":
         return app3.layout
+    elif pathname == "/app4":
+        return app4.layout
     else:
-        return "404"
+        return dbc.Container(html.H4("404, page not found", className="text-center pt-5"))
 
 
 if __name__ == "__main__":

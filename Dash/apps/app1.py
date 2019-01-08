@@ -18,12 +18,12 @@ df = pd.read_csv("apps/data.csv")
 tab1_content = dbc.Card(children=dbc.CardBody([
     dbc.CardText("This is tab 1!"),
     dbc.Button("Click here", color="success"),
-]))
+]), className="mt-1")
 
 tab2_content = dbc.Card(children=dbc.CardBody([
     dbc.CardText("This is tab 2!"),
     dbc.Button("Don't click here", color="danger"),
-]))
+]), className="mt-1")
 
 
 def generate_table(dataframe, max_rows=10, size="md"):
@@ -35,13 +35,13 @@ def generate_table(dataframe, max_rows=10, size="md"):
 
     # Rows
     rows = []
-    for i in range(max_rows):
+    for i_row in range(max_rows):
         td_list = []
-        for index, col in enumerate(dataframe.columns[:10]):
-            if index == 1:
-                td_list.append(html.Td(dcc.Link(dataframe.iloc[i][col], href=dataframe.iloc[i][col])))
+        for i_col, col in enumerate(dataframe.columns[:10]):
+            if i_col == 1:
+                td_list.append(html.Td(dcc.Link(dataframe.iloc[i_row][col], href=dataframe.iloc[i_row][col])))
             else:
-                td_list.append(html.Td(dataframe.iloc[i][col], className="text-center"))
+                td_list.append(html.Td(dataframe.iloc[i_row][col], className="text-center"))
         rows.append(html.Tr(td_list))
     return dbc.Table([html.Thead(html.Tr(headers)), html.Tbody(rows)], striped=True, bordered=True, hover=True, size=size)
 
@@ -49,25 +49,26 @@ def generate_table(dataframe, max_rows=10, size="md"):
 # 创建layout
 layout = dbc.Container(children=[
     # Tab实例 ========================================================================================
-    html.Div(children=dbc.Tabs([
+    html.Div(children=dbc.Tabs(children=[
         dbc.Tab(tab1_content, label="Tab 1"),
         dbc.Tab(tab2_content, label="Tab 2"),
     ]), className="mt-2"),
 
-    html.Div(children=[dbc.Tabs([
-        dbc.Tab(label="Tab 1", tab_id="tab-1"),
-        dbc.Tab(label="Tab 2", tab_id="tab-2"),
-    ], id="tabs", active_tab="tab-1"),
+    html.Div(children=[
+        dbc.Tabs(children=[
+            dbc.Tab(label="Tab 1", tab_id="tab-1"),
+            dbc.Tab(label="Tab 2", tab_id="tab-2"),
+        ], id="tabs", active_tab="tab-1"),
         html.Div(id="content"),
     ], className="mt-2"),
 
     # DIV布局 ========================================================================================
     dbc.Row(children=dbc.Col(html.Div("单独的DIV", className="border border-primary bg-light rounded p-2 mt-2"))),
     dbc.Row(children=[
-        dbc.Col(html.Div("One of three columns", className="bg-secondary p-2 mr-2 rounded")),
+        dbc.Col(html.Div("One of three columns", className="bg-secondary p-2 rounded")),
         dbc.Col(html.Div("One of three columns", className="bg-secondary p-2 rounded-top")),
-        dbc.Col(html.Div("One of three columns", className="bg-secondary p-2 ml-2 rounded-bottom")),
-    ], no_gutters=True, className="mt-2"),
+        dbc.Col(html.Div("One of three columns", className="bg-secondary p-2 rounded-bottom")),
+    ], className="mt-2"),
     dbc.Row(children=[
         dbc.Col(html.Div("One of 4 columns", className="bg-info p-2 mr-2"), width=3),
         dbc.Col(html.Div("Two of 4 columns", className="bg-info p-2")),
@@ -77,7 +78,7 @@ layout = dbc.Container(children=[
     dbc.Row(children=dbc.Col(html.Div("An automatically sized column", className="bg-secondary p-2"), width="auto"), className="mt-2"),
 
     # 卡片类 ========================================================================================
-    html.Div(children=dbc.Row(children=[
+    dbc.Row(children=[
         dbc.Col(children=dbc.Card([
             dbc.CardHeader("Header"),
             dbc.CardBody([
@@ -97,7 +98,7 @@ layout = dbc.Container(children=[
                 dbc.CardText("and some text, and a footer!"),
             ]),
             dbc.CardFooter("Footer"),
-        ], outline=True, color="danger")),
+        ], outline=False, color="primary")),
         dbc.Col(children=dbc.Card([
             dbc.CardBody([
                 dbc.CardTitle("Card title"),
@@ -105,16 +106,12 @@ layout = dbc.Container(children=[
             ]),
             dbc.CardImg(src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"),
             dbc.CardBody([
-                dbc.CardText(
-                    "Some quick example text to build on the "
-                    "card title and make up the bulk of the "
-                    "card's content."
-                ),
+                dbc.CardText("Some quick example text to build on the card title and make up the bulk of the card's content."),
                 dbc.CardLink("A link", href="#"),
                 dbc.CardLink("Another link", href="#"),
             ]),
         ])),
-    ]), className="mt-2"),
+    ], className="mt-2"),
 
     # 画图类 ========================================================================================
     dcc.Graph(id="example-graph", figure={
