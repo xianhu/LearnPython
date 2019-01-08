@@ -33,8 +33,11 @@ layout = dbc.Container(children=[
                 "name": "Trace 2",
                 "mode": "markers",
                 "marker": {"size": 12}
-            }]
-        }
+            }],
+            "layout": {
+                "title": "Dash Data Visualization"
+            },
+        },
     ),
 
     html.Div(children=dbc.Row(children=[

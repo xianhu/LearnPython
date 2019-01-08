@@ -11,7 +11,7 @@ from dash.dependencies import Output, Input
 
 from Dash.app import app
 from Dash.apps import app1, app2, app3, app4
-
+from Dash.advcom.navbar import nav_item1, nav_item2, drop_down, PLOTLY_LOGO
 
 # 创建布局
 app.layout = html.Div([
@@ -23,16 +23,20 @@ app.layout = html.Div([
     dcc.Store(id="session", storage_type="session"),
 
     dcc.Location(id="url", refresh=False),
-    dbc.Navbar(children=[
-        dbc.NavItem(dbc.NavLink("Link", href="#")),
-        dbc.DropdownMenu(children=[
-            dbc.DropdownMenuItem("Entry 1"),
-            dbc.DropdownMenuItem("Entry 2"),
-            dbc.DropdownMenuItem(divider=True),
-            dbc.DropdownMenuItem("Entry 3")
-        ], nav=True, in_navbar=True, label="Menu"),
-    ], brand="Demo", brand_href="/", sticky="top", color="light"),
-    html.Div(id="page-content")
+
+    # 定义一个较为复杂的导航栏
+    dbc.Navbar(children=dbc.Container(children=[
+        html.A(dbc.Row(children=[
+            dbc.Col(html.Img(src=PLOTLY_LOGO, height="30px")),
+            dbc.Col(dbc.NavbarBrand("DashDemo", className="ml-2")),
+        ], align="center", no_gutters=True), href="https://plot.ly"),
+        dbc.Collapse(children=dbc.Nav([nav_item1, nav_item2, drop_down], navbar=True), navbar=True),
+        dbc.Collapse(children=dbc.Row(children=[
+            dbc.Col(dbc.Input(type="search", placeholder="Search")),
+            dbc.Col(dbc.Button("Search", color="primary", className="ml-2"), width="auto"),
+        ], align="center", no_gutters=True, className="ml-auto flex-nowrap"), navbar=True),
+    ]), color="light", light=True),
+    html.Div(id="page-content"),
 ])
 
 
@@ -46,7 +50,7 @@ def display_page(pathname):
             html.Br(),
             dcc.Link("Navigate to '/app2'，组件相关", href="/app2"),
             html.Br(),
-            dcc.Link("Navigate to '/app3'，画图", href="/app3"),
+            dcc.Link("Navigate to '/app3'，画图相关", href="/app3"),
             html.Br(),
             dcc.Link("Navigate to '/app4'，dash-table", href="/app4"),
         ])
