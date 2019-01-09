@@ -4,6 +4,7 @@
 Dash实例
 """
 
+import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
@@ -61,7 +62,7 @@ def display_page(pathname):
     elif pathname == "/app3":
         return app3.layout
     elif pathname == "/app4":
-        return app4.layout
+        return app4.layout(pd.read_csv("apps/data.csv"))
     else:
         return dbc.Container(html.H4("404, page not found", className="text-center pt-5"))
 

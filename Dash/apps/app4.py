@@ -5,75 +5,178 @@ app4实例
 """
 
 import dash_table
-import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-from Dash.apps.app4data import *
+from dash.dependencies import Output, Input
+from Dash.app import app
 
 
 # 创建layout
-layout = dbc.Container(children=[
-    html.H3("DataTable Sizing", className="mt-2"),
-    html.Div(children=dash_table.DataTable(
-        data=df_election.to_dict('rows'),
-        columns=[{'id': c, 'name': c} for c in df_election.columns]
-    ), className="mt-2"),
+def layout(df_data):
+    return dbc.Container(children=[
+        html.Label(id="label", className="mt-2"),
+        html.Div(children=dash_table.DataTable(
+            id="datatable",
+            data=df_data.to_dict("rows"),
+            columns=[{"id": c, "name": c, "deletable": False, "editable_name": False} for c in df_data.columns[:10]],
 
-    dash_table.DataTable(
-            style_table={'width': '100%'},
-            style_data={'whiteSpace': 'normal'},
-            content_style='grow',
+            # # 数据可编辑
+            # editable=True,
+            # # 行可删除
+            # row_deletable=True,
+            # # 虚拟化，加载大数据
+            # virtualization=True,
+            #
+            # # 过滤: "fe", "be", True, False
+            # filtering=True,
+            # filtering_settings="",
+
+            # 排序: "fe", "be", True, False
+            sorting=True,
+            sorting_type="multi",
+            sorting_settings=[],
+
+            # 选择: multi|single
+            row_selectable="multi",
+            selected_rows=[],
+            selected_cells=[],
+
+            # # 分页功能
+            # pagination_settings={
+            #     "current_page": 0,
+            #     "page_size": 10
+            # },
+            # # 分页方式: "fe", "be", True, False
+            # pagination_mode="be",
+            #
+            # # 数据利用dropdown编辑
+            # column_static_dropdown=[{
+            #     "id": "climate",
+            #     "dropdown": [
+            #         {"label": i, "value": i} for i in ["a", "b"]
+            #     ]
+            # }, {
+            #     "id": "city",
+            #     "dropdown": [
+            #         {"label": i, "value": i} for i in ["c", "d"]
+            #     ]
+            # }],
+            # column_conditional_dropdowns=[],
+            #
+            # # 固定行、列
+            # n_fixed_rows=1,
+            # n_fixed_columns=1,
+            # # 像list一样：只有行边框
+            # style_as_list_view=True,
+            # # 多个表头：需columns配合
+            # merge_duplicate_headers=True,
+            # # 内容样式：fit|grow
+            # content_style="grow",
+            #
+            # # 其他样式
+            # style_table={
+            #     # 设置宽度
+            #     "height": "300px",
+            #     # 设置X轴平移
+            #     "overflowX": "scroll",
+            #     # 设置Y轴最大高度及平移
+            #     "maxHeight": "300px",
+            #     "overflowY": "scroll",
+            #     # 边框样式
+            #     "border": "thin lightgrey solid",
+            # },
+            #
+            # style_data={
+            #     # 忽略空白
+            #     "whiteSpace": "normal",
+            # },
+            # style_data_conditional=[
+            #     # 第4行高亮显示：也可以在style_cell中
+            #     {"if": {"row_index": 4}, "backgroundColor": "#3D9970", "color": "white"},
+            #     # 第3行的字体加粗
+            #     {"if": {"row_index": 3}, "fontWeight": "bold"},
+            #     # Temperature列高亮显示
+            #     {"if": {"column_id": "Temperature"}, "backgroundColor": "#3D9970", "color": "white"},
+            #     # 高亮部分Cell，if中添加一个filter
+            #     {
+            #         "if": {
+            #             "column_id": "Region",
+            #             "filter": "Region eq 'Montreal'"
+            #         }, "backgroundColor": "#3D9970", "color": "white",
+            #     }, {
+            #         "if": {
+            #             "column_id": "Humidity",
+            #             "filter": "Humidity eq num(20)"
+            #         }, "backgroundColor": "#3D9970", "color": "white",
+            #     }, {
+            #         "if": {
+            #             "column_id": "Temperature",
+            #             "filter": "Temperature > num(3.9)"
+            #         }, "backgroundColor": "#3D9970", "color": "white",
+            #     },
+            # ],
+            #
+            # style_header={
+            #     # 设置表头
+            #     "textAlign": "center",
+            #     "fontWeight": "bold",
+            #     "backgroundColor": "white",
+            # },
+            # style_header_conditional=[],
+
+            style_cell={
+                # 基本设置
+                # "color": "white",
+                # "fontSize": "medium",
+                "padding": "5px",
+                # "width": "180px",
+                "minWidth": "0px",
+                "maxWidth": "180px",
+                # 多行显示
+                "whiteSpace": "no-wrap",
+                "overflow": "hidden",
+                # 显示省略号
+                "textOverflow": "ellipsis",
+                # 文本对齐方式
+                "textAlign": "center",
+            },
+            # style_cell_conditional=[
+            #     # 自定义列宽
+            #     {"if": {"column_id": "Date"}, "width": "30%"},
+            #     {"if": {"column_id": "Region"}, "width": "30%"},
+            #     {"if": {"column_id": "Temperature"}, "width": "130px"},
+            #     {"if": {"column_id": "Humidity"}, "width": "130px"},
+            #     {"if": {"column_id": "Pressure"}, "width": "130px"},
+            #     # 自定义文本对齐方式
+            #     {"if": {"column_id": "Region"}, "textAlign": "left"},
+            # ] + [
+            #    # 自定义文本对齐方式：for循环
+            #    {"if": {"column_id": c}, "textAlign": "left"} for c in ["Date", "Region"]
+            # ] + [
+            #     # Striped行
+            #     {"if": {"row_index": "odd"}, "backgroundColor": "rgb(248, 248, 248)"}
+            # ],
+            #
+            # style_filter={},
+            # style_filter_conditional=[],
+
             css=[{
-                'selector': '.dash-cell div.dash-cell-value',
-                'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
+                "selector": ".dash-cell div.dash-cell-value",
+                "rule": "display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;"
             }],
-            data=df_election.to_dict('rows'),
-            columns=[{'id': c, 'name': c} for c in df_election.columns]
-        ),
+        ), className="mt-2"),
+    ])
 
-    html.Div(children=dash_table.DataTable(
-        data=df_election.to_dict('rows'),
-        columns=[{'id': c, 'name': c} for c in df_election.columns],
-        style_cell={
-            'whiteSpace': 'no-wrap',
-            'overflow': 'hidden',
-            'textOverflow': 'ellipsis',
-            'maxWidth': 0,
-        },
-    ), className="mt-2"),
 
-    dash_table.DataTable(
-    style_data={'whiteSpace': 'normal'},
-        style_cell={
-            'whiteSpace': 'no-wrap',
-            'overflow': 'hidden',
-            'textOverflow': 'ellipsis',
-            'maxWidth': 0,
-        },
-        css=[{
-        'selector': '.dash-cell div.dash-cell-value',
-        'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
-    }],
-    data=df_long.to_dict('rows'),
-    columns=[{'id': c, 'name': c} for c in df_long.columns]
-)
-],
-)
-
-#
-# import dash
-#
-# app = dash.Dash(
-#     __name__, external_stylesheets=["https://codepen.io/chriddyp/pen/dZVMbK.css"]
-# )
-# app.config["suppress_callback_exceptions"] = True
-#
-# server = app.server
-#
-# app.layout = layout
-#
-# app.css.config.serve_locally = True
-# app.scripts.config.serve_locally = True
-#
-# if __name__ == "__main__":
-#     app.run_server(debug=True)
+@app.callback(Output("label", "children"), [
+    Input("datatable", "data"),
+    Input("datatable", "selected_rows")
+])
+def update_date(rows, selected_rows):
+    if rows is None:
+        rows = []
+    if selected_rows is None:
+        selected_rows = []
+    string = "总行数：%d" % len(rows)
+    string += "，被选中的行：%s" % ",".join(map(str, selected_rows))
+    return string
