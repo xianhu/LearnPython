@@ -113,22 +113,22 @@ layout = dbc.Container(children=[
     ], className="mt-2"),
 
     html.Div(children=[
-        dbc.Alert("primary!", color="primary", id="alert_memory"),
-        dbc.Alert("secondary!", color="secondary", id="alert_local"),
-        dbc.Alert("success!", color="success", id="alert_session"),
+        dbc.Alert("primary!", color="primary", id="alert-memory"),
+        dbc.Alert("secondary!", color="secondary", id="alert-local"),
+        dbc.Alert("success!", color="success", id="alert-session"),
         dbc.Alert("info!", color="info"),
         dbc.Alert("warning!", color="warning"),
-        dbc.Alert("danger!", color="danger"),
+        dbc.Alert("danger!", color="danger", id="alert-danger", is_open=True, fade=True),
     ], className="mt-2"),
 
     # 按钮类 ========================================================================================
     html.Div(children=[
-        dbc.Button("primary", color="primary", className="mr-2", id="button_memory"),
-        dbc.Button("secondary", color="secondary", className="mr-2", id="button_local"),
-        dbc.Button("success", color="success", className="mr-2", id="button_session"),
+        dbc.Button("primary", color="primary", className="mr-2", id="button-memory"),
+        dbc.Button("secondary", color="secondary", className="mr-2", id="button-local"),
+        dbc.Button("success", color="success", className="mr-2", id="button-session"),
         dbc.Button("info", color="info", className="mr-2"),
         dbc.Button("warning", color="warning", className="mr-2"),
-        dbc.Button("danger", color="danger", className="mr-2"),
+        dbc.Button("danger", color="danger", className="mr-2", id="button-danger"),
         dbc.Button("primary", color="primary", className="mr-2", size="sm", outline=True),
         dbc.Button("secondary", color="secondary", className="mr-2", size="md", outline=True),
         dbc.Button("success", color="success", className="mr-2", size="lg", outline=True),
@@ -177,7 +177,7 @@ layout = dbc.Container(children=[
     ], className="mt-2"),
 
     html.Div(children=dcc.ConfirmDialogProvider(
-        id="confirm",
+        # id="confirm",
         children=dbc.Button("ConfirmDialogProvider", color="primary"),
         message="Danger danger! Are you sure you want to continue?"
     ), className="mt-2"),
@@ -319,7 +319,7 @@ layout = dbc.Container(children=[
 # 创建回调函数：回调函数中不能出现全局变量
 for store in ("memory", "local", "session"):
     @app.callback(Output(store, "data"), [
-        Input("button_%s" % store, "n_clicks")
+        Input("button-%s" % store, "n_clicks")
     ], [
         State(store, "data"),
         State(store, "modified_timestamp"),
@@ -332,7 +332,7 @@ for store in ("memory", "local", "session"):
         data["ts"] = ts
         return data
 
-    @app.callback(Output("alert_%s" % store, "children"), [
+    @app.callback(Output("alert-%s" % store, "children"), [
         Input(store, "modified_timestamp")
     ], [
         State(store, "data"),
@@ -345,13 +345,24 @@ for store in ("memory", "local", "session"):
         return "%s: %s, ts=%s" % (name, data["clicks"], data["ts"])
 
 
+@app.callback(Output("alert-danger", "is_open"), [
+    Input("button-danger", "n_clicks")
+], [
+    State("alert-danger", "is_open")
+])
+def toggle_danger_button(n_clicks, is_open):
+    if n_clicks:
+        return not is_open
+    return is_open
+
+
 @app.callback(Output("collapse", "is_open"), [
     Input("collapse-button", "n_clicks")
 ], [
     State("collapse", "is_open")
 ])
-def toggle_collapse(n, is_open):
-    if n:
+def toggle_collapse(n_clicks, is_open):
+    if n_clicks:
         return not is_open
     return is_open
 
@@ -389,4 +400,4 @@ def advance_progress(n):
     Input("progress", "value"),
 ])
 def advance_text(value):
-    return "Processtext: %d" % value
+    return "Process-text: %d" % value
