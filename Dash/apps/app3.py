@@ -43,27 +43,19 @@ layout = dbc.Container(children=[
     html.Div(children=dbc.Row(children=[
         dbc.Col(children=dbc.Card([
             dbc.CardHeader("Hover Data"),
-            dbc.CardBody([
-                dbc.CardText(html.Pre(id="hover-data")),
-            ]),
+            dbc.CardBody(dbc.CardText(html.Pre(id="hover-data"))),
         ])),
         dbc.Col(children=dbc.Card([
             dbc.CardHeader("Click Data"),
-            dbc.CardBody([
-                dbc.CardText(html.Pre(id="click-data")),
-            ]),
+            dbc.CardBody(dbc.CardText(html.Pre(id="click-data"))),
         ])),
         dbc.Col(children=dbc.Card([
             dbc.CardHeader("Selected Data"),
-            dbc.CardBody([
-                dbc.CardText(html.Pre(id="selected-data")),
-            ]),
+            dbc.CardBody(dbc.CardText(html.Pre(id="selected-data"))),
         ])),
         dbc.Col(children=dbc.Card([
             dbc.CardHeader("Zoom and Relayout Data"),
-            dbc.CardBody([
-                dbc.CardText(html.Pre(id="relayout-data")),
-            ]),
+            dbc.CardBody(dbc.CardText(html.Pre(id="relayout-data"))),
         ])),
     ]), className="mt-2"),
 ])

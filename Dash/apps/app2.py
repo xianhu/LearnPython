@@ -39,25 +39,25 @@ drop_down_list = [
 # ---------------------------------------------------------------------------------------
 email_input = dbc.FormGroup(children=[
     dbc.Label("Email", html_for="example-email"),
-    dbc.Input(type="email", placeholder="Enter email"),
+    dbc.Input(placeholder="Enter email", type="email"),
     dbc.FormText("Are you on email? You simply have to be these days", color="secondary"),
 ])
 
 password_input = dbc.FormGroup(children=[
     dbc.Label("Password", html_for="example-password"),
-    dbc.Input(type="password", placeholder="Enter password"),
+    dbc.Input(placeholder="Enter password", type="password"),
     dbc.FormText("A password stops mean people taking your stuff", color="secondary"),
 ])
 
 # ---------------------------------------------------------------------------------------
 email_input_row = dbc.FormGroup(children=[
     dbc.Label("Email", html_for="example-email-row", width=2),
-    dbc.Col(dbc.Input(type="email", placeholder="Enter email"), width=10)
+    dbc.Col(dbc.Input(placeholder="Enter email", type="email"), width=10)
 ], row=True)
 
 password_input_row = dbc.FormGroup(children=[
     dbc.Label("Password", html_for="example-password-row", width=2),
-    dbc.Col(dbc.Input(type="password", placeholder="Enter password"), width=10)
+    dbc.Col(dbc.Input(placeholder="Enter password", type="password"), width=10)
 ], row=True)
 
 # ---------------------------------------------------------------------------------------
@@ -123,20 +123,20 @@ layout = dbc.Container(children=[
 
     # 按钮类 ========================================================================================
     html.Div(children=[
-        dbc.Button("Primary", color="primary", className="mr-2", id="button_memory"),
-        dbc.Button("Secondary", color="secondary", className="mr-2", id="button_local"),
-        dbc.Button("Success", color="success", className="mr-2", id="button_session"),
-        dbc.Button("Info", color="info", className="mr-2"),
-        dbc.Button("Warning", color="warning", className="mr-2"),
-        dbc.Button("Danger", color="danger", className="mr-2"),
-        dbc.Button("outline", color="primary", className="mr-2", size="sm", outline=True),
-        dbc.Button("outline", color="secondary", className="mr-2", size="md", outline=True),
-        dbc.Button("outline", color="success", className="mr-2", size="lg", outline=True),
-        dbc.Button("outline", color="info", className="mr-2", size="md", outline=True),
-        dbc.Button("outline", color="warning", className="mr-2", size="sm", outline=True),
+        dbc.Button("primary", color="primary", className="mr-2", id="button_memory"),
+        dbc.Button("secondary", color="secondary", className="mr-2", id="button_local"),
+        dbc.Button("success", color="success", className="mr-2", id="button_session"),
+        dbc.Button("info", color="info", className="mr-2"),
+        dbc.Button("warning", color="warning", className="mr-2"),
+        dbc.Button("danger", color="danger", className="mr-2"),
+        dbc.Button("primary", color="primary", className="mr-2", size="sm", outline=True),
+        dbc.Button("secondary", color="secondary", className="mr-2", size="md", outline=True),
+        dbc.Button("success", color="success", className="mr-2", size="lg", outline=True),
+        dbc.Button("info", color="info", className="mr-2", size="md", outline=True),
+        dbc.Button("warning", color="warning", className="mr-2", size="sm", outline=True),
     ], className="mt-2"),
 
-    html.Div(children=dbc.ButtonGroup([
+    html.Div(children=dbc.ButtonGroup(children=[
         dbc.Button("Primary", color="primary"),
         dbc.Button("Secondary", color="secondary"),
         dbc.Button("Success", color="success"),
@@ -201,25 +201,25 @@ layout = dbc.Container(children=[
         dbc.Input(value=10, type="number", className="mb-2"),
         dbc.Input(value=10, type="range", className="mb-2"),
         dbc.Textarea(placeholder="Enter a value...", className="mb-2"),
-        dbc.Textarea(placeholder="Enter a value...", className="mb-2", valid=True, bs_size="sm"),
+        dbc.Textarea(placeholder="Enter a value(sm)...", className="mb-2", valid=True, bs_size="sm"),
     ], className="mt-2"),
 
     html.Div(children=[
         dbc.InputGroup([
             dbc.InputGroupAddon("@", addon_type="prepend"),
-            dbc.Input(placeholder="username, size=lg"),
-        ], size="lg", className="mb-2"),
+            dbc.Input(placeholder="username"),
+        ], size="md", className="mb-2"),
         dbc.InputGroup([
-            dbc.Input(placeholder="username, size=md"),
+            dbc.Input(placeholder="username"),
             dbc.InputGroupAddon("@example.com", addon_type="append"),
         ], className="mb-2"),
         dbc.InputGroup([
             dbc.InputGroupAddon("$", addon_type="prepend"),
-            dbc.Input(placeholder="Amount, size=sm", type="number"),
+            dbc.Input(placeholder="Amount", type="number"),
             dbc.InputGroupAddon(".00", addon_type="append"),
-        ], size="sm", className="mb-2"),
+        ], size="md", className="mb-2"),
         dbc.InputGroup([
-            dbc.InputGroupAddon(dbc.Button("Random name"), addon_type="prepend"),
+            dbc.InputGroupAddon(dbc.Button("Random"), addon_type="prepend"),
             dbc.Input(placeholder="name"),
         ], className="mb-2"),
         dbc.InputGroup([
@@ -234,11 +234,11 @@ layout = dbc.Container(children=[
     dbc.Form(children=[
         dbc.FormGroup([
             dbc.Label("Email", className="mr-2"),
-            dbc.Input(type="email", placeholder="Enter email")
+            dbc.Input(placeholder="Enter email", type="email")
         ], className="mr-3"),
         dbc.FormGroup([
             dbc.Label("Password", className="mr-2"),
-            dbc.Input(type="password", placeholder="Enter password")
+            dbc.Input(placeholder="Enter password", type="password")
         ], className="mr-3"),
         dbc.FormGroup([
             dbc.Label("Date", className="mr-2"),
@@ -253,7 +253,7 @@ layout = dbc.Container(children=[
     # 表单类 ========================================================================================
     html.Div(children=[
         dbc.Label("Slider", html_for="slider"),
-        dcc.Slider(min=0, max=9, marks={i: "Label {}".format(i) if i == 1 else str(i) for i in range(1, 6)}, value=5),
+        dcc.Slider(min=0, max=9, marks={i: "Label {}".format(i) for i in range(1, 10)}, value=5),
         html.Br(),
         dbc.Label("RangeSlider", html_for="range-slider"),
         dcc.RangeSlider(count=1, min=-5, max=10, step=0.5, value=[-3, 7])
@@ -321,13 +321,15 @@ for store in ("memory", "local", "session"):
     @app.callback(Output(store, "data"), [
         Input("button_%s" % store, "n_clicks")
     ], [
-        State(store, "data")
+        State(store, "data"),
+        State(store, "modified_timestamp"),
     ])
-    def toggle_store_button(n_clicks, data):
+    def toggle_store_button(n_clicks, data, ts):
         if n_clicks is None:
             raise dash.exceptions.PreventUpdate
-        data = data or {"clicks": 0}
+        data = data or {"clicks": 0, "ts": -1}
         data["clicks"] = data["clicks"] + 1
+        data["ts"] = ts
         return data
 
     @app.callback(Output("alert_%s" % store, "children"), [
@@ -336,11 +338,11 @@ for store in ("memory", "local", "session"):
         State(store, "data"),
         State(store, "id")
     ])
-    def toggle_store_change(ts, data, _id):
+    def toggle_store_change(ts, data, name):
         if ts is None:
             raise dash.exceptions.PreventUpdate
-        data = data or {}
-        return "%s: %s" % (_id, data.get("clicks", 0))
+        data = data or {"clicks": 0, "ts": -1}
+        return "%s: %s, ts=%s" % (name, data["clicks"], data["ts"])
 
 
 @app.callback(Output("collapse", "is_open"), [

@@ -12,7 +12,7 @@ from dash.dependencies import Output, Input
 
 from Dash.app import app
 from Dash.apps import app1, app2, app3, app4
-from Dash.advcom.navbar import nav_item1, nav_item2, drop_down, PLOTLY_LOGO
+from Dash.advcom.navbar import nav_item_list, PLOTLY_LOGO
 
 # 创建布局
 app.layout = html.Div([
@@ -26,13 +26,13 @@ app.layout = html.Div([
     dcc.Location(id="url", refresh=False),
 
     # 定义一个较为复杂的导航栏
-    dbc.Navbar(children=dbc.Container(children=[
-        html.A(dbc.Row(children=[
+    dbc.Navbar(children=dbc.Container([
+        html.A(dbc.Row([
             dbc.Col(html.Img(src=PLOTLY_LOGO, height="30px")),
             dbc.Col(dbc.NavbarBrand("DashDemo", className="ml-2")),
         ], align="center", no_gutters=True), href="https://plot.ly"),
-        dbc.Collapse(children=dbc.Nav([nav_item1, nav_item2, drop_down], navbar=True), navbar=True),
-        dbc.Collapse(children=dbc.Row(children=[
+        dbc.Collapse(dbc.Nav(nav_item_list, navbar=True), navbar=True),
+        dbc.Collapse(dbc.Row([
             dbc.Col(dbc.Input(type="search", placeholder="Search")),
             dbc.Col(dbc.Button("Search", color="primary", className="ml-2"), width="auto"),
         ], align="center", no_gutters=True, className="ml-auto flex-nowrap"), navbar=True),
@@ -54,7 +54,7 @@ def display_page(pathname):
             dcc.Link("Navigate to '/app3'，画图相关", href="/app3"),
             html.Br(),
             dcc.Link("Navigate to '/app4'，dash-table", href="/app4"),
-        ])
+        ], className="mt-2")
     if pathname == "/app1":
         return app1.layout
     elif pathname == "/app2":
@@ -64,7 +64,7 @@ def display_page(pathname):
     elif pathname == "/app4":
         return app4.layout(pd.read_csv("apps/data.csv"))
     else:
-        return dbc.Container(html.H4("404, page not found", className="text-center pt-5"))
+        return dbc.Container(html.H4("404, page not found", className="text-center mt-5"))
 
 
 if __name__ == "__main__":

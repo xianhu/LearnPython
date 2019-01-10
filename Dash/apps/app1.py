@@ -11,9 +11,6 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Output, Input
 from Dash.app import app
 
-# 全局变量
-df = pd.read_csv("apps/data.csv")
-
 # 构造components
 tab1_content = dbc.Card(children=dbc.CardBody([
     dbc.CardText("This is tab 1!"),
@@ -30,10 +27,6 @@ def generate_table(dataframe, max_rows=10, size="md"):
     """
     创建表
     """
-    # Headers
-    headers = [html.Th(col, className="text-center") if index != 1 else html.Th(col) for index, col in enumerate(dataframe.columns[:10])]
-
-    # Rows
     rows = []
     for i_row in range(max_rows):
         td_list = []
@@ -43,6 +36,7 @@ def generate_table(dataframe, max_rows=10, size="md"):
             else:
                 td_list.append(html.Td(dataframe.iloc[i_row][col], className="text-center"))
         rows.append(html.Tr(td_list))
+    headers = [html.Th(col, className="text-center") if index != 1 else html.Th(col) for index, col in enumerate(dataframe.columns[:10])]
     return dbc.Table([html.Thead(html.Tr(headers)), html.Tbody(rows)], striped=True, bordered=True, hover=True, size=size)
 
 
@@ -120,13 +114,15 @@ layout = dbc.Container(children=[
             {"x": [1, 2, 3], "y": [2, 4, 5], "type": "bar", "name": u"Montréal"},
         ],
         "layout": {
-            "title": "Dash Data Visualization"
+            "title": "Dash Data Visualization",
+            "xaxis": {"title": "类别", },
+            "yaxis": {"title": "数量", },
         }
     }, className="mt-2"),
 
     # 表格Table ========================================================================================
-    html.Div(children=generate_table(df, size="sm"), className="mt-2"),
-    html.Div(children=generate_table(df, size="md"), className="mt-2"),
+    html.Div(children=generate_table(pd.read_csv("apps/data.csv"), size="sm"), className="mt-2"),
+    html.Div(children=generate_table(pd.read_csv("apps/data.csv"), size="md"), className="mt-2"),
 ])
 
 
