@@ -23,6 +23,11 @@ Flask-Migrate
 Flask-HTTPAuth
 Flask-Bootstrap
 Flask-SQLAlchemy
+dash
+dash-table
+dash-core-components
+dash-html-components
+dash-bootstrap-components
 gunicorn
 uWSGI
 numpy
