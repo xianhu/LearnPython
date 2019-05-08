@@ -1,14 +1,15 @@
 # Dockerfile by xianhu: build a docker image
 # centos6:
-#         docker build -t user/centos6:v6.9.4 .
-#         docker run -it --name test [-p -v] user/centos6
+#         docker build -t user/centos:v6.10.1 .
+#         docker run -it --name test [-p -v] user/centos
 #         docker attach test
 # centos7:
-#         docker build -t user/centos7:v6.9.4 .
-#         docker run -dt --privileged --name test [-p -v] user/centos7
+#         docker build -t user/centos:v7.0.1 .
+#         docker run -dt --privileged --name test [-p -v] user/centos
 #         docker exec -it test /bin/bash
 
-FROM centos:6.9
+# FROM centos:7
+FROM centos:6.10
 MAINTAINER xianhu <qixianhu@qq.com>
 
 # change system environments
@@ -53,11 +54,8 @@ RUN yum clean all
 # install libs of python3
 ADD ./requirements.txt /root/
 WORKDIR /root/
-RUN pip3.6 install --upgrade pip
-RUN pip3.6 install -r requirements.txt
-
-# clean everything
-RUN rm -rf /root/*
+# RUN pip3.6 install --upgrade pip
+# RUN pip3.6 install -r requirements.txt
 
 # centos6
 CMD /bin/bash
