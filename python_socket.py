@@ -24,19 +24,23 @@ def server_func(port):
 
     # 4. 接收客户端连接
     sock_obj, address = server.accept()
-    print("客户端来自于：", address)
+    sock_obj.settimeout(3)
+    print("客户端：%s，超时时间：%s" % (address, sock_obj.gettimeout()))
 
     while True:
-        # 5. 接收客户端发送的消息
-        recv_data = sock_obj.recv(1024).decode("utf-8")
-        print("客户端端(%s) -> 服务端: %s" % (address, recv_data))
-        if recv_data == "quit":
-            break
+        try:
+            # 5. 接收客户端发送的消息
+            recv_data = sock_obj.recv(1024).decode("utf-8")
+            print("客户端端 -> 服务端: %s" % recv_data)
+            if recv_data == "quit":
+                break
 
-        # 6. 给客户端回复消息
-        send_data = "received[%s]" % recv_data
-        sock_obj.send(send_data.encode("utf-8"))
-        print("服务端 -> 客户端(%s): %s" % (address, send_data))
+            # 6. 给客户端回复消息
+            send_data = "received[%s]" % recv_data
+            sock_obj.send(send_data.encode("utf-8"))
+            print("服务端 -> 客户端: %s" % send_data)
+        except Exception as excep:
+            print("error: ", excep)
 
     # 7. 关闭socket对象
     sock_obj.close()
