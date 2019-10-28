@@ -1,6 +1,6 @@
 # Dockerfile by xianhu: build a docker image
 # centos6:
-#         docker build -t user/centos:v6.10.1 .
+#         docker build -t user/centos:v6.10.2 .
 #         docker run -it --name test [-p -v] user/centos
 #         docker attach test
 # centos7:
