@@ -1,11 +1,11 @@
 # Dockerfile by xianhu: build a docker image
 # centos6:
 #         docker build -t user/centos:v6.10.2 .
-#         docker run -it --name test [-p -v] user/centos
+#         docker run -it --name test [-p -v] user/centos:v6.10.2
 #         docker attach test
 # centos7:
 #         docker build -t user/centos:v7.0.1 .
-#         docker run -dt --privileged --name test [-p -v] user/centos
+#         docker run -dt --privileged --name test [-p -v] user/centos:v7.0.1
 #         docker exec -it test /bin/bash
 
 # FROM centos:7
