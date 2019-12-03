@@ -10,15 +10,17 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
-# 第三方 SMTP 服务（以腾讯企业邮件为例）
+# 第三方 SMTP 服务（以腾讯企业邮件和QQ邮箱为例）
 mail_host = "smtp.exmail.qq.com"
+# mail_host = "smtp.qq.com"
 mail_user = "from@from.com.cn"
-mail_pass = "pwd"
+# mail_user = "from@qq.com"
+mail_pass = "授权码"
 mail_sender = mail_user
+mail_port = 465
 mail_receivers = ["to@to.com", "to@qq.com"]
 
 # 设置邮件格式、内容等 -- 普通格式 ================================================
-msg_plain = "邮件内容"
 message = MIMEText("邮件内容", "plain", "utf-8")
 
 # 设置邮件格式、内容等 -- HTML格式 ===============================================
@@ -61,8 +63,7 @@ message["Subject"] = Header("邮件标题", "utf-8")
 
 try:
     # 登录，并发送邮件
-    smtpObj = smtplib.SMTP()
-    smtpObj.connect(mail_host, 25)
+    smtpObj = smtplib.SMTP_SSL(mail_host, mail_port)
     smtpObj.login(mail_user, mail_pass)
     smtpObj.sendmail(mail_sender, mail_receivers, message.as_string())
     print("success")
