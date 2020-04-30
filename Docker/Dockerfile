@@ -1,7 +1,7 @@
 # Dockerfile by xianhu: build a docker image
 # centos6:
-#         docker build -t user/centos:v6.10.2 .
-#         docker run -it --name test [-p -v] user/centos:v6.10.2
+#         docker build -t user/centos:v6.10.3 .
+#         docker run -it --name test [-p -v] user/centos:v6.10.3
 #         docker attach test
 # centos7:
 #         docker build -t user/centos:v7.0.1 .
@@ -36,6 +36,9 @@ RUN yum install -y crontabs
 RUN yum install -y zlib-devel
 RUN yum install -y sqlite-devel
 RUN yum install -y openssl-devel
+RUN yum install -y libSM.x86_64
+RUN yum install -y libXrender.x86_64
+RUN yum install -y libXext.x86_64
 
 # install python
 RUN yum install -y https://centos6.iuscommunity.org/ius-release.rpm
