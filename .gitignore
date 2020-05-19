@@ -13,6 +13,7 @@
 *.csv
 .*
 
+venv/
 test/
 data/
 build/
