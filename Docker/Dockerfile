@@ -1,6 +1,6 @@
 # Dockerfile by xianhu: build a docker image
-# docker build -t user/centos:v7.8.1 .
-# docker run -it --name test [-p -v] user/centos:v7.8.1
+# docker build -t xianhu/centos:v7.8.2 .
+# docker run -it --name test [-p -v] xianhu/centos:v7.8.2
 
 FROM centos:7.8.2003
 MAINTAINER xianhu <qixianhu@qq.com>
