@@ -1,6 +1,12 @@
 # Dockerfile by xianhu: build a docker image
 # docker build -t xianhu/centos:v7.8.2 .
-# docker run -it --name test [-p -v] xianhu/centos:v7.8.2
+
+# 普通进入
+# docker run -it --name test [-p -v] xianhu/centos:v7.8.2 (ctrl+p/q即可退出，attach重新进入)
+
+# 特权进入
+# docker run -it --name test -d [-p -v] --privileged=true xianhu/centos:v7.8.2 /usr/sbin/init
+# docker exec -it test /bin/bash (不能使用attach进入，退出直接exit即可)
 
 FROM centos:7.8.2003
 MAINTAINER xianhu <qixianhu@qq.com>
