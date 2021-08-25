@@ -9,7 +9,6 @@
 # docker exec -it test /bin/bash (不能使用attach进入，退出直接exit即可)
 
 FROM centos:7.8.2003
-MAINTAINER xianhu <qixianhu@qq.com>
 
 # change system environments
 ENV LANG "en_US.UTF-8"
