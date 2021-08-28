@@ -2,7 +2,7 @@
 
 """
 测试celery
-运行：
+运行：celery -A celery1:app worker -l INFO
 """
 
 import time
