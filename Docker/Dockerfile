@@ -1,13 +1,12 @@
 # Dockerfile by xianhu: build a docker image
-# docker build --rm -t xianhu/centos:v7.8.4 .
 
-# 普通进入
-# docker run -it --name test [-p -v] xianhu/centos:v7.8.4 /bin/bash
-# docker attach test (ctrl+p/q即可退出，attach重新进入)
+# 构建镜像
+# docker build --rm -t xianhu/centos:v7.8.5 .
 
 # 特权进入
-# docker run -it --name test [-p -v] -d --privileged=true xianhu/centos:v7.8.4
+# docker run --name test [-p -v] -d --privileged=true xianhu/centos:v7.8.5
 # docker exec -it test /bin/bash (不能使用attach进入，退出直接exit即可)
+# docker exec test pwd (也可以直接执行命令)
 
 # 基础镜像
 FROM centos:7.8.2003
@@ -47,13 +46,13 @@ WORKDIR /root/
 RUN tar xvzf Python-3.8.12.tgz
 WORKDIR /root/Python-3.8.12/
 RUN ./configure && make && make install
-WORKDIR /root/
 
 # clean root and yum cache
+WORKDIR /root/
 RUN rm -rf /root/* && yum clean all
 
-# RUN python3 -m pip install --upgrade pip -i http://pypi.douban.com/simple/
-# RUN python3 -m pip install -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/
+# expose
+EXPOSE 8088
 
 # entry
 CMD /usr/sbin/init
