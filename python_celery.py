@@ -2,16 +2,18 @@
 
 """
 测试celery
-运行：celery -A celery1:app worker -l INFO
+终端运行：celery -A python_celery:app worker -l INFO
 """
 
 import time
+
 from celery import Celery
 
-broker = 'redis://152.136.149.221:9002/10'   # 用redis做broker，中间件
-backend = 'redis://152.136.149.221:9002/11'    # 用redis做broken，用来保存结果
+broker = "redis://localhost:6379/10"  # 用redis做broker，中间件
+backend = "redis://localhost:6379/11"  # 用redis做broken，用来保存结果
 
-app = Celery('tasks',broker=broker,backend=backend)
+app = Celery("tasks", broker=broker, backend=backend)
+
 
 @app.task
 def add(x, y):

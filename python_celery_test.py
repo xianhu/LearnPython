@@ -5,13 +5,14 @@
 """
 
 import time
+
 from python_celery import add
 
 if __name__ == "__main__":
     result = []
     for i in range(10):
-        result.append(add.delay(1, 2))
+        result.append(add.delay(i, i))
     print("----", time.time())
-    for i in result:
-        print(i, i.get())
+    for index, item in enumerate(result):
+        print(index, item.get())
     print("----", time.time())
