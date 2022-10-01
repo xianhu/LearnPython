@@ -285,7 +285,7 @@
         def __missing__(self, key):
             self[key] = []
             return self[key]
-    dct = dict()
+    dct = Dict()
     dct["foo"].append(1)    # 这有点类似于collections.defalutdict
     dct["foo"]              # [1]
     
