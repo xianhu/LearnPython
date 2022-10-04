@@ -655,9 +655,12 @@
     basestring()                        # str和unicode的超类，不能直接调用，可以用作isinstance判断
     format(value [, format_spec])       # 格式化输出字符串，格式化的参数顺序从0开始，如“I am {0},I like {1}”
     enumerate(sequence[, start=0])      # 返回一个可枚举的对象，注意它有第二个参数
-    iter(obj[, sentinel])               # 生成一个对象的迭代器，第二个参数表示分隔符
-    max(iterable[, args...][key])       # 返回集合中的最大值
-    min(iterable[, args...][key])       # 返回集合中的最小值
+    iter(iterable)                      # 生成一个对象的迭代器
+    iter(callable, sentinel)            # 当第二个参数存在， 即哨兵参数存在，则第一个参数必须是可调用对象，即函数等，
+# 以此种方式创建的迭代器对象将会调用object，可调用对象参数调用时不需要参数，如果可调用对象调用后返回值与哨兵对象值相同，
+# 则结束调用。
+    max(iterable, *[, default=obj, key=func])       # 返回集合中的最大值，default为无最大值时的返回值，key为比较函数
+    min(iterable, *[, default=obj, key=func])       # 返回集合中的最小值
     dict([arg])                         # 创建数据字典
     list([iterable])                    # 将一个集合类转换为另外一个集合类
     set()                               # set对象实例化
