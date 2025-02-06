@@ -10,7 +10,7 @@ import threading
 
 
 # 生产者、消费者例子
-def consumer():         # 定义消费者，由于有yeild关键词，此消费者为一个生成器
+def consumer():         # 定义消费者，由于有yield关键词，此消费者为一个生成器
     print("[Consumer] Init Consumer ......")
     r = "init ok"       # 初始化返回结果，并在启动消费者时，返回给生产者
     while True:
