@@ -209,9 +209,8 @@ with open("massive-body") as f:
 
 # 事件挂钩, 可用的钩子: response(从一个请求产生的响应)
 # 你可以通过传递一个 {hook_name: callback_function} 字典给 hooks 请求参数为每个请求分配一个钩子函数
-def print_url(resp):
+def print_url(resp, *args, **kargs) -> None:
     print(resp.url)
-    return
 requests.get("http://httpbin.org", hooks=dict(response=print_url))
 
 # 代理
