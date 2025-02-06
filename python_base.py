@@ -83,7 +83,7 @@
     t = set("Hello")                             # 创建一个字符的集合，返回{'l', 'H', 'e', 'o'}
     a = t | s;    t.union(s)                     # t 和 s的并集
     b = t & s;    t.intersection(s)              # t 和 s的交集
-    c = t – s;    t.difference(s)                # 求差集（项在t中, 但不在s中）
+    c = t - s;    t.difference(s)                # 求差集（项在t中, 但不在s中）
     d = t ^ s;    t.symmetric_difference(s)      # 对称差集（项在t或s中, 但不会同时出现在二者中）
     t.add('x');   t.remove('H')                  # 增加/删除一个item
     s.update([10,37,42])                         # 利用[......]更新s集合
